@@ -110,15 +110,38 @@ int main(int argc, char** argv) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
     const GLuint VERTEX_ATTR_POSITION = 0;
-    const GLuint VERTEX_ATTR_COLOR = 1
-            ;
+    const GLuint VERTEX_ATTR_COLOR = 1;
+
     glEnableVertexAttribArray(VERTEX_ATTR_POSITION);
     glEnableVertexAttribArray(VERTEX_ATTR_COLOR);
+
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     glVertexAttribPointer(VERTEX_ATTR_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*) offsetof(Vertex2DColor, position));
     glVertexAttribPointer(VERTEX_ATTR_COLOR, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex2DColor), (const GLvoid*) offsetof(Vertex2DColor, color));
+//   glVertexAttribPointer(CUBE_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (const GLvoid*) (sizeof(GLfloat)));
+
+
+
+    const GLuint CUBE_POSITION = 2;
+    glm::vec3 positions[] = {
+        glm::vec3(0.5, .6, 0.2),
+        glm::vec3(0.5, 1, 1)
+    };
+//    glEnableVertexAttribArray(CUBE_POSITION);
+    GLuint position_buffer;
+    glGenBuffers(1, &position_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
+    glVertexAttribPointer(CUBE_POSITION, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(CUBE_POSITION);
+    // This is the important bit... set the divisor for the color array
+    // to 1 to get OpenGL to give us a new value of "color" per-instance
+    // rather than per-vertex.
+    glVertexAttribDivisor(CUBE_POSITION, 1);
+
+
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
@@ -136,39 +159,43 @@ int main(int argc, char** argv) {
 
         glClear(GL_COLOR_BUFFER_BIT);
 
+        glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * 2, positions, GL_DYNAMIC_DRAW);
         glBindVertexArray(vao);
 
-        // => On utilise glDrawElements à la place de glDrawArrays; cela indique à OpenGL qu'il doit utiliser
-        // l'IBO enregistré dans le VAO
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+//        // => On utilise glDrawElements à la place de glDrawArrays; cela indique à OpenGL qu'il doit utiliser
+//        // l'IBO enregistré dans le VAO
+//          glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        glUniform3fv(
-            uColor,
-            1,
-            glm::value_ptr(glm::vec3(1, 0.1, 1))
-        );
+//        glUniform3fv(
+//            uColor,
+//            1,
+//            glm::value_ptr(glm::vec3(1, 0.1, 1))
+//        );
 
-        glUniform3fv(
-            uPosition,
-            1,
-            glm::value_ptr(glm::vec3(-0.5, 0.5, 0))
-        );
+//        glUniform3fv(
+//            uPosition,
+//            1,
+//            glm::value_ptr(glm::vec3(-0.5, 0.5, 0))
+//        );
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        glUniform3fv(
-            uColor,
-            1,
-            glm::value_ptr(glm::vec3(0.1, 0.1, 1))
-        );
+//        glUniform3fv(
+//            uColor,
+//            1,
+//            glm::value_ptr(glm::vec3(0.1, 0.1, 1))
+//        );
 
-        glUniform3fv(
-            uPosition,
-            1,
-            glm::value_ptr(glm::vec3(0.5, 0.5, 0))
-        );
-
+//        glUniform3fv(
+//            uPosition,
+//            1,
+//            glm::value_ptr(glm::vec3(0.5, 0.5, 0))
+//        );
+        glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 2);
         glBindVertexArray(0);
+
+
 
         // Update the display
         windowManager.swapBuffers();
