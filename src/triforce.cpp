@@ -34,99 +34,99 @@ struct Vertex {
     glm::vec2 texCoords;
 };
 
-int main(int argc, char** argv) {
-    // Initialize SDL and open a window
-    SDLWindowManager windowManager(800, 600, "triforce");
+//int main(int argc, char** argv) {
+//    // Initialize SDL and open a window
+//    SDLWindowManager windowManager(800, 600, "triforce");
 
-    // Initialize glew for OpenGL3+ support
-    GLenum glewInitError = glewInit();
-    if(GLEW_OK != glewInitError) {
-        std::cerr << glewGetErrorString(glewInitError) << std::endl;
-        return EXIT_FAILURE;
-    }
+//    // Initialize glew for OpenGL3+ support
+//    GLenum glewInitError = glewInit();
+//    if(GLEW_OK != glewInitError) {
+//        std::cerr << glewGetErrorString(glewInitError) << std::endl;
+//        return EXIT_FAILURE;
+//    }
 
-    std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
+//    std::cout << "OpenGL Version : " << glGetString(GL_VERSION) << std::endl;
+//    std::cout << "GLEW Version : " << glewGetString(GLEW_VERSION) << std::endl;
 
-    /*********************************
-     * HERE SHOULD COME THE INITIALIZATION CODE
-     *********************************/
+//    /*********************************
+//     * HERE SHOULD COME THE INITIALIZATION CODE
+//     *********************************/
 
-    FilePath applicationPath(argv[0]);
-    Program program = loadProgram(applicationPath.dirPath() + "/shaders/tex2D.vs.glsl",
-                                  applicationPath.dirPath() + "/shaders/tex2D.fs.glsl");
-    program.use();
+//    FilePath applicationPath(argv[0]);
+//    Program program = loadProgram(applicationPath.dirPath() + "/shaders/tex2D.vs.glsl",
+//                                  applicationPath.dirPath() + "/shaders/tex2D.fs.glsl");
+//    program.use();
 
-    GLint uTexture = glGetUniformLocation(program.getGLId(), "uTexture");
-    glUniform1i(uTexture, 0);
+//    GLint uTexture = glGetUniformLocation(program.getGLId(), "uTexture");
+//    glUniform1i(uTexture, 0);
 
-    auto pImg = loadImage(applicationPath.dirPath() + "/assets/textures/triforce.png");
-    if(!pImg) {
-        std::cerr << "Unable to load the texture" << std::endl;
-        return EXIT_FAILURE;
-    }
+//    auto pImg = loadImage(applicationPath.dirPath() + "/assets/textures/triforce.png");
+//    if(!pImg) {
+//        std::cerr << "Unable to load the texture" << std::endl;
+//        return EXIT_FAILURE;
+//    }
 
-    GLuint texture;
+//    GLuint texture;
 
-    glGenTextures(1, &texture);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
+//    glGenTextures(1, &texture);
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pImg->getWidth(), pImg->getHeight(), 0, GL_RGBA, GL_FLOAT, pImg->getPixels());
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pImg->getWidth(), pImg->getHeight(), 0, GL_RGBA, GL_FLOAT, pImg->getPixels());
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    GLuint vbo, vao;
+//    GLuint vbo, vao;
 
-    glGenBuffers(1, &vbo);
-    glGenVertexArrays(1, &vao);
+//    glGenBuffers(1, &vbo);
+//    glGenVertexArrays(1, &vao);
 
-    Vertex triangle[] = {
-        { glm::vec2(-1, -1), glm::vec2(0, 1) },
-        { glm::vec2(1, -1), glm::vec2(1, 1) },
-        { glm::vec2(0, 1), glm::vec2(0.5, 0) }
-    };
+//    Vertex triangle[] = {
+//        { glm::vec2(-1, -1), glm::vec2(0, 1) },
+//        { glm::vec2(1, -1), glm::vec2(1, 1) },
+//        { glm::vec2(0, 1), glm::vec2(0.5, 0) }
+//    };
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
+//    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(triangle), triangle, GL_STATIC_DRAW);
 
-    glBindVertexArray(vao);
+//    glBindVertexArray(vao);
 
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+//    glEnableVertexAttribArray(0);
+//    glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, position));
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, texCoords));
+//    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, position));
+//    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*) offsetof(Vertex, texCoords));
 
-    // Application loop:
-    bool done = false;
-    while(!done) {
-        // Event loop:
-        SDL_Event e;
-        while(windowManager.pollEvent(e)) {
-            if(e.type == SDL_QUIT) {
-                done = true; // Leave the loop after this iteration
-            }
-        }
+//    // Application loop:
+//    bool done = false;
+//    while(!done) {
+//        // Event loop:
+//        SDL_Event e;
+//        while(windowManager.pollEvent(e)) {
+//            if(e.type == SDL_QUIT) {
+//                done = true; // Leave the loop after this iteration
+//            }
+//        }
 
-        /*********************************
-         * HERE SHOULD COME THE RENDERING CODE
-         *********************************/
-        glClear(GL_COLOR_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+//        /*********************************
+//         * HERE SHOULD COME THE RENDERING CODE
+//         *********************************/
+//        glClear(GL_COLOR_BUFFER_BIT);
+//        glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        // Update the display
-        windowManager.swapBuffers();
-    }
+//        // Update the display
+//        windowManager.swapBuffers();
+//    }
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glBindVertexArray(0);
+//    glBindTexture(GL_TEXTURE_2D, 0);
 
-    glDeleteBuffers(1, &vbo);
-    glDeleteVertexArrays(1, &vao);
-    glDeleteTextures(1, &texture);
+//    glDeleteBuffers(1, &vbo);
+//    glDeleteVertexArrays(1, &vao);
+//    glDeleteTextures(1, &texture);
 
-    return EXIT_SUCCESS;
-}
+//    return EXIT_SUCCESS;
+//}
