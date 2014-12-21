@@ -30,7 +30,7 @@ if(UPEMLV)
     set(OPENGL_LIBRARIES /usr/lib/x86_64-linux-gnu/libGL.so.1)
 endif(UPEMLV)
 
-include_directories(${SDL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} glimac/include third-party/include)
+include_directories(${SDL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} include/ glimac/include third-party/include)
 
 set(ALL_LIBRARIES glimac ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY})
 
@@ -77,8 +77,8 @@ macro(ADD_ASSET_DIRECTORY directory)
     endif()
 endmacro()
 
-file(GLOB HEADER_FILES src/*.hpp) # get all headers
-file(GLOB SRC_FILES src/*.cpp) # get all sources files
+file(GLOB_RECURSE HEADER_FILES src/*.hpp include/*.hpp) # get all headers
+file(GLOB_RECURSE SRC_FILES src/*.cpp) # get all sources files
 file(GLOB_RECURSE SHADER_FILES shaders/*.glsl) # get all shaders
 file(GLOB_RECURSE ASSET_FILES assets/*) # get all the assets
 
