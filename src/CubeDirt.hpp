@@ -4,11 +4,11 @@
 
 #include "CubeData.hpp"
 
-class CubeFoundation : public CubeData{
+class CubeDirt : public CubeData{
 
     protected:
         int durability() const;
 
 	public:
-        CubeFoundation();
+        CubeDirt();
 };
