@@ -3,5 +3,5 @@
 CubeRock::CubeRock() : CubeData::CubeData(m_position, m_gravity, m_life, m_idTexture) {}
 
 int CubeRock::durability() const{
-    return -1;
+    return 15;
 }
