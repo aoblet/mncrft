@@ -7,13 +7,13 @@ class CubeData{
         static const int maxLevels_texture = 6;
 
         int m_life;
-        glm::vec3 m_position;
         bool m_gravity;
         int computeCurrentLevel_texture() const;
 
 	public:
         int m_currentLevel_texture; //texture stuff in public => vao offsetof
         GLint m_idTexture;
+        glm::vec3 m_position;
 
         CubeData(glm::vec3 const& position, bool gravity, int life, GLint idTexture);
         virtual ~CubeData();
