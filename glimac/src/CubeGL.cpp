@@ -28,7 +28,7 @@ namespace glimac{
 
     CubeGL::CubeGL():m_size_vertices(0){
         glm::vec3 first_position, switch_position1, switch_position2, third_position, normal;
-        glm::vec2 texCoords[]= {glm::vec2(0,1./6), glm::vec2(0,0), glm::vec2(1./6,0)}; //0=firstPoint, 1=swithPoint, 2=thirdPoint
+        glm::vec2 texCoords[]= {glm::vec2(0,1), glm::vec2(0,0), glm::vec2(1./6,0)}; //0=firstPoint, 1=swithPoint, 2=thirdPoint
         //texCoords modified at each call of addTriangle
 
         //face 1
