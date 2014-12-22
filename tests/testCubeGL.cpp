@@ -162,8 +162,8 @@ int main(int argc, char** argv) {
 
         if(windowManager.isMouseButtonPressed(SDL_BUTTON_LEFT)){
             glm::ivec2 mouseCurrenPosition = windowManager.getMousePosition();
-            freeCamera.rotateLeft(-(mouseCurrenPosition.x -previousMousePosition.x)/2);
-            freeCamera.rotateUp(-( mouseCurrenPosition.y -previousMousePosition.y)/2);
+            freeCamera.rotateLeft(-(mouseCurrenPosition.x -previousMousePosition.x)/2.);
+            freeCamera.rotateUp(-( mouseCurrenPosition.y -previousMousePosition.y)/2.);
             previousMousePosition = mouseCurrenPosition;
         }
 
