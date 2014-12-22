@@ -5,7 +5,6 @@
 #include "CubeData.hpp"
 
 class CubeFoundation : public CubeData{
-
     protected:
         int durability() const;
 
