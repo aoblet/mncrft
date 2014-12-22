@@ -10,5 +10,5 @@ class CubeFoundation : public CubeData{
         int durability() const;
 
 	public:
-        CubeFoundation();
+        CubeFoundation(glm::vec3 const& position, GLint idTexture);
 };

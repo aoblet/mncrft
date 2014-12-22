@@ -10,5 +10,5 @@ class CubeSand : public CubeData{
         int durability() const;
 
 	public:
-        CubeSand();
+        CubeSand(glm::vec3 const& position, GLint idTexture);
 };

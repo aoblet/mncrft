@@ -10,5 +10,5 @@ class CubeDirt : public CubeData{
         int durability() const;
 
 	public:
-        CubeDirt();
+        CubeDirt(glm::vec3 const& position, GLint idTexture);
 };

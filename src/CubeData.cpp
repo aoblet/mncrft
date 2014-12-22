@@ -1,12 +1,12 @@
 #include "CubeData.hpp"
 
-CubeData::CubeData(glm::vec3 position, bool gravity, int life, GLint idTexture) : m_position(position), m_gravity(gravity), m_life(life), m_idTexture(idTexture){}
+CubeData::CubeData(glm::vec3 const& position, bool gravity, float life, GLint idTexture) : m_position(position), m_gravity(gravity), m_life(life), m_idTexture(idTexture){}
 
 glm::vec3 CubeData::position() const{
 	return this->m_position;
 }
 
-int CubeData::life() const{
+float CubeData::life() const{
     return this->m_life;
 }
 
@@ -22,7 +22,7 @@ void CubeData::setIdTexture(GLint idText){
     this->m_idTexture = idText;
 }
 
-void CubeData::setLife(int damage){
+void CubeData::setLife(float damage){
     this-> m_life -= damage;
 }
 
