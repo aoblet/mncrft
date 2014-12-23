@@ -59,11 +59,13 @@ layout(location = 3) in mat3 scale_matrix;
 out vec2 vPosition;
 out vec2 vTexture;
 out vec3 vColor;
+flat out int index;
 
 void main() {
     vPosition = aVertexPosition;
     vTexture = aVertexTexture;
     vColor = trianglePosition;
+    index = gl_InstanceID;
 
     mat3 M = scale_matrix;
 //    gl_Position = vec4(aVertexPosition, 0, 1) + vec4(trianglePosition, 0);

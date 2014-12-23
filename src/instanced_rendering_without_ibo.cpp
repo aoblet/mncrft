@@ -182,6 +182,11 @@ int main(int argc, char** argv) {
      exit(0);
  }
 
+ std::unique_ptr<Image> texture_img_2 = loadImage("/home/mathias/Development/mncrft/assets/textures/triforcecaca.png");
+ if (texture_img_2 == NULL) {
+     exit(0);
+ }
+
 
  GLuint textures;
  glGenTextures(1, &textures);
@@ -220,7 +225,7 @@ int main(int argc, char** argv) {
              texture_img_1->getHeight(),
              1,
              GL_RGBA,
-             GL_UNSIGNED_BYTE,
+             GL_FLOAT,
              texture_img_1->getPixels()
  );
 
@@ -230,17 +235,19 @@ int main(int argc, char** argv) {
              0,
              0,
              1, // i
-             texture_img_1->getWidth(),
-             texture_img_1->getHeight(),
+             texture_img_2->getWidth(),
+             texture_img_2->getHeight(),
              1,
              GL_RGBA,
-             GL_UNSIGNED_BYTE,
-             texture_img_1->getPixels()
+             GL_FLOAT,
+             texture_img_2->getPixels()
  );
 
 
- glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
- glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+ glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+ glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+ glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+ glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
  glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 
