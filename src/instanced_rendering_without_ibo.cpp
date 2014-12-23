@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include <glimac/Program.hpp>
 #include <glimac/FilePath.hpp>
+#include <glimac/Image.hpp>
 #include <iostream>
 #include <cmath>
 
@@ -175,7 +176,7 @@ int main(int argc, char** argv) {
 
  // Texture stuff
 
- std::unique_ptr<Image> texture_img = loadImage("/home/mathias/Dropbox/IMAC-Mathias/a2/synthese-d-image/GLImac-Template/assets/textures/triforce.png");
+ std::unique_ptr<Image> texture_img = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce.png");
  if (texture_img == NULL) {
      exit(0);
  }
@@ -230,6 +231,8 @@ int main(int argc, char** argv) {
 
     glBindBuffer(GL_ARRAY_BUFFER, scale_matrix_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instanceCount, &scale_matrix, GL_DYNAMIC_DRAW);
+
+    glBindTexture(GL_TEXTURE_2D, texture);
 
     glBindVertexArray(vao);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 3, instanceCount);
