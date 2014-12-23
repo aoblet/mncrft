@@ -90,7 +90,6 @@ int main(int argc, char** argv) {
     uMVPMatrix = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
-    std::cout << uMVPMatrix << std::endl;
 
     CubeGL cube;
     GLuint vbo, vao;
@@ -98,10 +97,34 @@ int main(int argc, char** argv) {
     cube.generateVbo(&vbo);
     cube.generateVao(&vao, vbo, 0, 1, 2);
 
+    // Cube positions for instanced rendering
+    // Setup instance rendering
+    const GLuint CUBE_POSITION_loc = 3;
+
+
+    glm::vec3 cubePositions[] = {
+      glm::vec3(0, 0, 1),
+      glm::vec3(0, 1, 0)
+    };
+
+
+    // Create buffer
+    GLuint cubePosition_buffer;
+    glGenBuffers(1, &cubePosition_buffer);
+
+    // Binding buffer
+    glBindVertexArray(vao); // why?!
+    glBindBuffer(GL_ARRAY_BUFFER, cubePosition_buffer);
+    // Describing buffer
+    glEnableVertexAttribArray(CUBE_POSITION_loc);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * 2, cubePositions, GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(CUBE_POSITION_loc, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), 0);
+    glVertexAttribDivisor(CUBE_POSITION_loc, 1);
+
     glEnable(GL_DEPTH_TEST);
 
     // Application loop:
-    FreeFlyCamera freeCamera(0,0,10);
+    FreeFlyCamera freeCamera(0,0,5);
 
     glm::mat4 matrixView(freeCamera.getViewMatrix());
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
@@ -160,10 +183,11 @@ int main(int argc, char** argv) {
          * HERE SHOULD COME THE RENDERING CODE
          *********************************/
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBindVertexArray(vao);
 
-        glDrawArrays(GL_TRIANGLES, 0, cube.sizeVertices());
+        glDrawArraysInstanced(GL_TRIANGLES, 0, cube.sizeVertices(), 2);
 
         // Update the display
         windowManager.swapBuffers();
