@@ -5,6 +5,7 @@
 #include <glimac/Image.hpp>
 #include <iostream>
 #include <cmath>
+#include <vector>
 
 using namespace glimac;
 
@@ -176,30 +177,71 @@ int main(int argc, char** argv) {
 
  // Texture stuff
 
- std::unique_ptr<Image> texture_img = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce.png");
- if (texture_img == NULL) {
+ std::unique_ptr<Image> texture_img_1 = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce.png");
+ if (texture_img_1 == NULL) {
      exit(0);
  }
 
 
- GLuint texture;
- glGenTextures(1, &texture);
- glBindTexture(GL_TEXTURE_2D, texture);
- glTexImage2D(
-     GL_TEXTURE_2D,
+ GLuint textures;
+ glGenTextures(1, &textures);
+ glBindTexture(GL_TEXTURE_2D_ARRAY, textures);
+// glTexImage2D(
+//     GL_TEXTURE_2D,
+//     0,
+//     GL_RGBA,
+//     texture_img->getWidth(),
+//     texture_img->getHeight(),
+//     0,
+//     GL_RGBA,
+//     GL_FLOAT,
+//     texture_img->getPixels()
+// );
+ glTexImage3D(
+     GL_TEXTURE_2D_ARRAY,
      0,
      GL_RGBA,
-     texture_img->getWidth(),
-     texture_img->getHeight(),
+     texture_img_1->getWidth(),
+     texture_img_1->getHeight(),
+     2, //number of texture
      0,
      GL_RGBA,
-     GL_FLOAT,
-     texture_img->getPixels()
+     GL_UNSIGNED_BYTE,
+     NULL
  );
 
- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
- glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
- glBindTexture(GL_TEXTURE_2D, 0);
+ glTexSubImage3D(
+             GL_TEXTURE_2D_ARRAY,
+             0,
+             0,
+             0,
+             0, // i
+             texture_img_1->getWidth(),
+             texture_img_1->getHeight(),
+             1,
+             GL_RGBA,
+             GL_UNSIGNED_BYTE,
+             texture_img_1->getPixels()
+ );
+
+ glTexSubImage3D(
+             GL_TEXTURE_2D_ARRAY,
+             0,
+             0,
+             0,
+             1, // i
+             texture_img_1->getWidth(),
+             texture_img_1->getHeight(),
+             1,
+             GL_RGBA,
+             GL_UNSIGNED_BYTE,
+             texture_img_1->getPixels()
+ );
+
+
+ glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+ glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+ glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
 
 
@@ -232,7 +274,7 @@ int main(int argc, char** argv) {
     glBindBuffer(GL_ARRAY_BUFFER, scale_matrix_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instanceCount, &scale_matrix, GL_DYNAMIC_DRAW);
 
-    glBindTexture(GL_TEXTURE_2D, texture);
+    glBindTexture(GL_TEXTURE_2D_ARRAY, textures);
 
     glBindVertexArray(vao);
     glDrawArraysInstanced(GL_TRIANGLES, 0, 3, instanceCount);
