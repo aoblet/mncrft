@@ -176,7 +176,6 @@ int main(int argc, char** argv) {
 
 
  // Texture stuff
-
  std::unique_ptr<Image> texture_img_1 = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce.png");
  if (texture_img_1 == NULL) {
      exit(0);
