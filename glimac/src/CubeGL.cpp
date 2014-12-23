@@ -2,6 +2,7 @@
 #include "glimac/CubeGL.hpp"
 #include "glimac/glm.hpp"
 #include <stdexcept>
+#include <iostream>
 
 namespace glimac{
     const ShapeVertex* CubeGL::getDataPointer() const{
@@ -89,7 +90,6 @@ namespace glimac{
     void CubeGL::generateVbo(GLuint * vbo) const{
         if(!vbo)
             throw std::invalid_argument("Vbo cubeGL: invalid argument");
-
         glGenBuffers(1, vbo);
         glBindBuffer(GL_ARRAY_BUFFER, *vbo);
 
@@ -118,7 +118,7 @@ namespace glimac{
             3,
             GL_FLOAT,
             GL_FALSE,
-            m_size_vertices* sizeof(ShapeVertex),
+            sizeof(ShapeVertex),
             (GLvoid*) offsetof(ShapeVertex, position)
         );
 
@@ -127,9 +127,10 @@ namespace glimac{
             2,
             GL_FLOAT,
             GL_FALSE,
-            m_size_vertices* sizeof(ShapeVertex),
+            sizeof(ShapeVertex),
             (GLvoid*) offsetof(ShapeVertex, texCoords)
         );
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 }
