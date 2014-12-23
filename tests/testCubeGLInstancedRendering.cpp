@@ -99,6 +99,7 @@ int main(int argc, char** argv) {
     cube.generateVao(&vao, vbo, 0, 1, 2);
 
     glEnable(GL_DEPTH_TEST);
+
     // Application loop:
     FreeFlyCamera freeCamera(0,0,10);
 
