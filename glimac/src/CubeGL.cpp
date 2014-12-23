@@ -1,5 +1,8 @@
+#include <GL/glew.h>
 #include "glimac/CubeGL.hpp"
 #include "glimac/glm.hpp"
+#include <stdexcept>
+
 namespace glimac{
     const ShapeVertex* CubeGL::getDataPointer() const{
         return &(m_vertices[0]);
@@ -81,5 +84,52 @@ namespace glimac{
 
         //update size of vertices
         m_size_vertices = m_vertices.size();
+    }
+
+    void CubeGL::generateVbo(GLuint * vbo) const{
+        if(!vbo)
+            throw std::invalid_argument("Vbo cubeGL: invalid argument");
+
+        glGenBuffers(1,vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, *vbo);
+
+        glBufferData(GL_ARRAY_BUFFER,
+                     m_size_vertices*sizeof(ShapeVertex),
+                     this->getDataPointer(),
+                     GL_STATIC_DRAW
+        );
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
+    void CubeGL::generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexTextureCoordShader) const{
+        if(!vao)
+            throw std::invalid_argument("Vao cubeGL: invalid argument");
+
+        glGenVertexArrays(1, vao);
+        glBindVertexArray(*vao);
+
+        glEnableVertexAttribArray(indexPositionShader);
+        glEnableVertexAttribArray(indexTextureCoordShader);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+        glVertexAttribPointer(
+            indexPositionShader,
+            3,
+            GL_FLOAT,
+            GL_FALSE,
+            m_size_vertices* sizeof(ShapeVertex),
+            (GLvoid*) offsetof(ShapeVertex, position)
+        );
+
+        glVertexAttribPointer(
+            indexTextureCoordShader,
+            2,
+            GL_FLOAT,
+            GL_FALSE,
+            m_size_vertices* sizeof(ShapeVertex),
+            (GLvoid*) offsetof(ShapeVertex, texCoords)
+        );
+        glBindVertexArray(0);
     }
 }
