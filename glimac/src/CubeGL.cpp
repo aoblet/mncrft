@@ -90,7 +90,7 @@ namespace glimac{
         if(!vbo)
             throw std::invalid_argument("Vbo cubeGL: invalid argument");
 
-        glGenBuffers(1,vbo);
+        glGenBuffers(1, vbo);
         glBindBuffer(GL_ARRAY_BUFFER, *vbo);
 
         glBufferData(GL_ARRAY_BUFFER,
