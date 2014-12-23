@@ -25,7 +25,7 @@ namespace glimac{
         m_vertices.push_back(ShapeVertex(switch_position2,normal, texCoords[1]));
         m_vertices.push_back(ShapeVertex(third_position , normal, texCoords[2]));
 
-        texCoords[0].x += 1./6; texCoords[2].x += 1./6; //step offset first & thrid coord
+        texCoords[0].x += 1./6; texCoords[2].x += 1./6; //step offset first & third coord
         texCoords[1].y = 0; //reset y of swith_coord
     }
 
