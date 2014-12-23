@@ -17,6 +17,6 @@ namespace glimac {
             GLsizei sizeVertices() const;
 
             void generateVbo(GLuint * vbo) const;
-            void generateVao(GLuint * vao, GLuint const& vbo, int const indexPositionShader, int const indexTextureCoordShader) const;
+            void generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexNormalShader, const int indexTextureCoordShader) const;
     };
 }

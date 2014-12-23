@@ -102,7 +102,7 @@ namespace glimac{
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void CubeGL::generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexTextureCoordShader) const{
+    void CubeGL::generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexNormalShader, const int indexTextureCoordShader)  const{
         if(!vao)
             throw std::invalid_argument("Vao cubeGL: invalid argument");
 
@@ -110,7 +110,10 @@ namespace glimac{
         glBindVertexArray(*vao);
 
         glEnableVertexAttribArray(indexPositionShader);
+        glEnableVertexAttribArray(indexNormalShader);
         glEnableVertexAttribArray(indexTextureCoordShader);
+
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
         glVertexAttribPointer(
@@ -123,6 +126,15 @@ namespace glimac{
         );
 
         glVertexAttribPointer(
+            indexNormalShader,
+            3,
+            GL_FLOAT,
+            GL_FALSE,
+            sizeof(ShapeVertex),
+            (GLvoid*) offsetof(ShapeVertex, normal)
+        );
+
+        glVertexAttribPointer(
             indexTextureCoordShader,
             2,
             GL_FLOAT,
@@ -130,6 +142,7 @@ namespace glimac{
             sizeof(ShapeVertex),
             (GLvoid*) offsetof(ShapeVertex, texCoords)
         );
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
