@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     const int WIDTH = 800;
     const int HEIGHT = 600;
     // Initialize SDL and open a window
-    SDLWindowManager windowManager(WIDTH, HEIGHT, "cubeData");
+    SDLWindowManager windowManager(WIDTH, HEIGHT, "cubeData Instanced Rendering");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -95,30 +95,8 @@ int main(int argc, char** argv) {
     CubeGL cube;
     GLuint vbo, vao;
 
-    cube.
-
-    // glGenBuffers(1, &vbo);
-    // glGenVertexArrays(1, &vao);
-
-    // Vertex triangle[] = {
-    //     { glm::vec2(-1, -1), glm::vec2(0, 1) },
-    //     { glm::vec2(1, -1), glm::vec2(1, 1) },
-    //     { glm::vec2(0, 1), glm::vec2(0.5, 0) }
-    // };
-
-
-    // glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    // glBufferData(GL_ARRAY_BUFFER, cube.sizeVertices()*sizeof(ShapeVertex), cube.getDataPointer(), GL_STATIC_DRAW);
-
-    glBindVertexArray(vao);
-
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid*) offsetof(ShapeVertex, position));
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid*) offsetof(ShapeVertex, normal));
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(ShapeVertex), (const GLvoid*) offsetof(ShapeVertex, texCoords));
+    cube.generateVbo(&vbo);
+    cube.generateVao(&vao, vbo, 0, 1, 2);
 
     glEnable(GL_DEPTH_TEST);
     // Application loop:
@@ -181,6 +159,9 @@ int main(int argc, char** argv) {
          * HERE SHOULD COME THE RENDERING CODE
          *********************************/
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBindVertexArray(vao);
+
         glDrawArrays(GL_TRIANGLES, 0, cube.sizeVertices());
 
         // Update the display
