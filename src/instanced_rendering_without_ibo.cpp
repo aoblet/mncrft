@@ -170,6 +170,41 @@ int main(int argc, char** argv) {
 
  glBindVertexArray(0);
 
+
+
+
+ // Texture stuff
+
+ std::unique_ptr<Image> texture_img = loadImage("/home/mathias/Dropbox/IMAC-Mathias/a2/synthese-d-image/GLImac-Template/assets/textures/triforce.png");
+ if (texture_img == NULL) {
+     exit(0);
+ }
+
+
+ GLuint texture;
+ glGenTextures(1, &texture);
+ glBindTexture(GL_TEXTURE_2D, texture);
+ glTexImage2D(
+     GL_TEXTURE_2D,
+     0,
+     GL_RGBA,
+     texture_img->getWidth(),
+     texture_img->getHeight(),
+     0,
+     GL_RGBA,
+     GL_FLOAT,
+     texture_img->getPixels()
+ );
+
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+ glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+ glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+
+
+
   // Application loop:
   bool done = false;
   int instanceCount = 2;
