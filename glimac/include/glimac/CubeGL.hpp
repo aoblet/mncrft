@@ -11,8 +11,12 @@ namespace glimac {
             void addTriangle(glm::vec3 const& first_position, glm::vec3 const& switch_position1, glm::vec3 const& switch_position2,
                              glm::vec3 const& third_position, glm::vec3 const& normal, glm::vec2 *texCoords);
         public:
+            CubeGL();
+
             const ShapeVertex * getDataPointer() const;
             GLsizei sizeVertices() const;
-            CubeGL();
+
+            void generateVbo(GLuint * vbo) const;
+            void generateVao(GLuint * vao, GLuint const& vbo, int const indexPositionShader, int const indexTextureCoordShader) const;
     };
 }
