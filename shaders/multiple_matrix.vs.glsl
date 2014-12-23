@@ -59,7 +59,7 @@ layout(location = 3) in mat3 scale_matrix;
 out vec2 vPosition;
 out vec2 vTexture;
 out vec3 vColor;
-flat out int index;
+flat out int index; // Add flat to not interpolate the index
 
 void main() {
     vPosition = aVertexPosition;
