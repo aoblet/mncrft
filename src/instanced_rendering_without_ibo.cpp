@@ -29,8 +29,7 @@ glm::mat3 scale(float sx, float sy) {
   return glm::mat3(
     glm::vec3(sx, 0, 0),
     glm::vec3(0, sy, 0),
-    glm::vec3(0, 0, 1)
-  );
+    glm::vec3(0, 0, 1));
 };
 
 glm::mat3 rotate(float degree) {
@@ -76,9 +75,9 @@ int main(int argc, char** argv) {
   glGenBuffers(1, &vbo);
   glBindBuffer(GL_ARRAY_BUFFER, vbo);
   Vertex2DUV vertices[] = {
-    Vertex2DUV(glm::vec2(-1, -1), glm::vec2(0, 0)),
-    Vertex2DUV(glm::vec2( 1, -1), glm::vec2(0, 0)),
-    Vertex2DUV(glm::vec2( 0,  1), glm::vec2(0, 0))
+    Vertex2DUV(glm::vec2(-1, -1), glm::vec2(0, 1)),
+    Vertex2DUV(glm::vec2( 1, -1), glm::vec2(1, 1)),
+    Vertex2DUV(glm::vec2( 0,  1), glm::vec2(.5, 0))
   };
   glBufferData(
     GL_ARRAY_BUFFER,
@@ -123,8 +122,8 @@ int main(int argc, char** argv) {
   const GLuint TRIANGLE_POSITION_loc = 2;
 
   glm::vec3 positions[] = {
-    glm::vec3(-0.5, 0, 0),
-    glm::vec3(0.5, 0, 0)
+    glm::vec3(0, 1, 0),
+    glm::vec3(1, 0, 0)
   };
 
   // Create buffer
@@ -143,18 +142,37 @@ int main(int argc, char** argv) {
   glVertexAttribDivisor(TRIANGLE_POSITION_loc, 1);
 
 
-//     glBindBuffer(GL_ARRAY_BUFFER, 0);
-  glBindVertexArray(0);
+  // Create buffer
+  const GLuint scale_loc = 3;
+  glm::mat3 scale_matrix = scale(.5, .5);
+  std::cout << scale_matrix << std::endl;
+
+  GLuint scale_matrix_buffer;
+
+  glGenBuffers(1, &scale_matrix_buffer);
+  // Likewise, we can do the same with the model matrix. Note that a
+  // matrix input to the vertex shader consumes N consecutive input
+  // locations, where N is the number of columns in the matrix. So...
+  // we have four vertex attributes to set up.
+  glBindBuffer(GL_ARRAY_BUFFER, scale_matrix_buffer);
+  // Loop over each column of the matrix...
+ for (int i = 0; i < 4; i++) {
+   // Set up the vertex attribute
+   glVertexAttribPointer(scale_loc + i,              // Location
+                         4, GL_FLOAT, GL_FALSE,       // vec4
+                         sizeof(glm::mat4),                // Stride
+                         (void *)(sizeof(glm::vec4) * i)); // Start offset
+   // Enable it
+   glEnableVertexAttribArray(scale_loc + i);
+   // Make it instanced
+   glVertexAttribDivisor(scale_loc + i, 1);
+ }
+
+ glBindVertexArray(0);
 
   // Application loop:
   bool done = false;
-  float rotation_clockwise = 0;
-  float rotation_clockwise1 = 0;
-  float rotation_counterclockwise = 0;
-
-  glm::mat3 matrix_transform, matrix_transform1, matrix_scale;
-  glm::vec3 vec_color;
-  matrix_scale = scale(.25, .25);
+  int instanceCount = 2;
 
   while(!done) {
     // Event loop:
@@ -173,10 +191,13 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glBindBuffer(GL_ARRAY_BUFFER, position_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * 2, positions, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * instanceCount, positions, GL_DYNAMIC_DRAW);
+
+    glBindBuffer(GL_ARRAY_BUFFER, scale_matrix_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instanceCount, &scale_matrix, GL_DYNAMIC_DRAW);
 
     glBindVertexArray(vao);
-    glDrawArraysInstanced(GL_TRIANGLES, 0, 3, 2);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 3, instanceCount);
     glBindVertexArray(0);
 
     // Update the display

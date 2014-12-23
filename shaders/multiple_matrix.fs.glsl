@@ -9,5 +9,5 @@ uniform vec3 uColor;
 out vec3 fFragColor;
 
 void main() {
-    fFragColor = vec3(1);
+    fFragColor = vColor;
 }
