@@ -32,10 +32,10 @@ using namespace glimac;
  *
  *********************************/
 
-struct Vertex {
-    glm::vec2 position;
-    glm::vec2 texCoords;
-};
+//struct Vertex {
+//    glm::vec2 position;
+//    glm::vec2 texCoords;
+//};
 
 
 
