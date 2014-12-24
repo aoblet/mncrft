@@ -141,6 +141,8 @@ int main(int argc, char** argv) {
     // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(CUBE_POSITION_loc, 1);
 
+
+
     // Texture stuff
     Textures textures(false);
     textures.setUpTexturesTEST(
