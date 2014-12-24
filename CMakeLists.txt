@@ -32,7 +32,7 @@ endif(UPEMLV)
 
 include_directories(${SDL_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLEW_INCLUDE_DIR} include/ glimac/include third-party/include)
 
-set(ALL_LIBRARIES glimac ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY})
+set(ALL_LIBRARIES glimac ${SDL_LIBRARY} ${OPENGL_LIBRARIES} ${GLEW_LIBRARY} ${CMAKE_SOURCE_DIR}/third-party/lib/libjsoncpp.a)
 
 # Add the glimac library
 add_subdirectory(glimac)
