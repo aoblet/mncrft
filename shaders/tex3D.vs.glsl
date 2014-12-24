@@ -13,6 +13,7 @@ out vec3 vFragPosition;
 out vec3 vFragNormal;
 out vec2 vFragTexCoords;
 
+flat out int index; // Add flat to not interpolate the index
 flat out vec3 color;
 
 void main(){
@@ -20,5 +21,6 @@ void main(){
         vFragNormal 	= aVertexNormal;
         vFragTexCoords 	= aVertexTexCoords;
         color = cubePosition;
+        index = gl_InstanceID;
         gl_Position 	= uMVPMatrix*(vec4(aVertexPosition,1) + vec4(cubePosition, 0));
 }

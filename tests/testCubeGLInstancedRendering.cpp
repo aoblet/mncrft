@@ -6,6 +6,7 @@
 #include <iostream>
 #include <glimac/CubeGL.hpp>
 #include <glimac/FreeFlyCamera.hpp>
+#include "Textures.hpp"
 
 using namespace glimac;
 
@@ -140,6 +141,12 @@ int main(int argc, char** argv) {
     // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(CUBE_POSITION_loc, 1);
 
+    // Texture stuff
+    Textures textures(false);
+    textures.setUpTexturesTEST(
+      "/home/mathias/Development/mncrft/assets/textures/dust.png",
+      "/home/mathias/Development/mncrft/assets/textures/durt.png"
+    );
 
     glEnable(GL_DEPTH_TEST);
 
@@ -204,19 +211,14 @@ int main(int argc, char** argv) {
          *********************************/
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-          // we don't have to bind vao and vbo before drawing
-//        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-//        glBindVertexArray(vao);
+
+        glBindTexture(GL_TEXTURE_2D_ARRAY, textures.idTexture());
 
         glDrawArraysInstanced(GL_TRIANGLES, 0, cube.sizeVertices(), 2);
 
         // Update the display
         windowManager.swapBuffers();
     }
-
-    // we don't have to unbind because nothing is binded
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    glBindVertexArray(0);
 
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);
