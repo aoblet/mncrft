@@ -141,6 +141,72 @@ int main(int argc, char** argv) {
     glVertexAttribDivisor(CUBE_POSITION_loc, 1);
 
 
+    // Loading textures
+    // Texture stuff
+    std::unique_ptr<Image> texture_img_1 = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce2.png");
+    if (texture_img_1 == NULL) {
+        exit(0);
+    }
+
+    std::unique_ptr<Image> texture_img_2 = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce3.png");
+    if (texture_img_2 == NULL) {
+        exit(0);
+    }
+
+
+    GLuint textures;
+    glGenTextures(1, &textures);
+    glBindTexture(GL_TEXTURE_2D_ARRAY, textures);
+
+    glTexImage3D(
+        GL_TEXTURE_2D_ARRAY,
+        0,
+        GL_RGBA,
+        texture_img_1->getWidth(),
+        texture_img_1->getHeight(),
+        2, //number of texture
+        0,
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        NULL
+    );
+
+    glTexSubImage3D(
+        GL_TEXTURE_2D_ARRAY,
+        0,
+        0,
+        0,
+        0, // i
+        texture_img_1->getWidth(),
+        texture_img_1->getHeight(),
+        1,
+        GL_RGBA,
+        GL_FLOAT,
+        texture_img_1->getPixels()
+    );
+
+    glTexSubImage3D(
+        GL_TEXTURE_2D_ARRAY,
+        0,
+        0,
+        0,
+        1, // i
+        texture_img_2->getWidth(),
+        texture_img_2->getHeight(),
+        1,
+        GL_RGBA,
+        GL_FLOAT,
+        texture_img_2->getPixels()
+    );
+
+
+    glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
+    glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
+
+
     glEnable(GL_DEPTH_TEST);
 
     // Application loop:
@@ -207,6 +273,9 @@ int main(int argc, char** argv) {
           // we don't have to bind vao and vbo before drawing
 //        glBindBuffer(GL_ARRAY_BUFFER, vbo);
 //        glBindVertexArray(vao);
+
+
+        glBindTexture(GL_TEXTURE_2D_ARRAY, textures);
 
         glDrawArraysInstanced(GL_TRIANGLES, 0, cube.sizeVertices(), 2);
 
