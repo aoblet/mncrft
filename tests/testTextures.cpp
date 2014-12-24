@@ -17,7 +17,10 @@ int main(int argc, char** argv) {
 
     bool setUpTextureForGame = false;
     Textures texture(setUpTextureForGame);
-    texture.setUpTexturesTEST("assets/textures/triforce.png");
+    texture.setUpTexturesTEST(
+      "/home/mathias/Development/mncrft/assets/textures/dust.png",
+      "/home/mathias/Development/mncrft/assets/textures/durt.png"
+    );
 
 
 
