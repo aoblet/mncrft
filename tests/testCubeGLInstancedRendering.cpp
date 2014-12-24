@@ -128,7 +128,7 @@ int main(int argc, char** argv) {
 
     // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(CUBE_POSITION_loc, 1);
-//    glBindVertexArray(0);
+    glBindVertexArray(0);
 
 
 
@@ -141,7 +141,7 @@ int main(int argc, char** argv) {
     GLuint cubeTextureId_buffer;
     glGenBuffers(1, &cubeTextureId_buffer);
 
-//    glBindVertexArray(vao); // do not forget to bind a vao
+    glBindVertexArray(vao); // do not forget to bind a vao
 
     // Binding buffer
     glBindBuffer(GL_ARRAY_BUFFER, cubeTextureId_buffer);
@@ -167,15 +167,14 @@ int main(int argc, char** argv) {
 
     // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(CUBE_TEXTURE_ID_loc, 1);
-//    glBindVertexArray(0);
-
+    glBindVertexArray(0);
 
 
     // Texture stuff
     Textures textures(false);
     textures.setUpTexturesTEST(
-      "/home/mathias/Development/mncrft/assets/textures/dust.png",
-      "/home/mathias/Development/mncrft/assets/textures/dirt.png"
+      "assets/textures/dust.png",
+      "assets/textures/dirt.png"
     );
 
     glEnable(GL_DEPTH_TEST);
@@ -244,7 +243,11 @@ int main(int argc, char** argv) {
 
         glBindTexture(GL_TEXTURE_2D_ARRAY, textures.idTexture());
 
+        glBindVertexArray(vao);
+
         glDrawArraysInstanced(GL_TRIANGLES, 0, cube.sizeVertices(), 2);
+
+        glBindVertexArray(0);
 
         // Update the display
         windowManager.swapBuffers();
