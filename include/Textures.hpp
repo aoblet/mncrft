@@ -34,7 +34,7 @@ class Textures{
 
         void loadSetImages();
         void tranformImagesToTextures(int sizeLevel = Textures::SIZE_LEVEL_TEXURES); //customizable for test
-        void setUpTexturesTEST(std::string const& texturePath);//1 texture ONLY
+        void setUpTexturesTEST(std::string const& texturePath0, std::string const& texturePath1);//1 texture ONLY
 
         ~Textures();
         Textures(bool setUp=true);

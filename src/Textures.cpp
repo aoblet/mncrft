@@ -116,13 +116,18 @@ void Textures::tranformImagesToTextures(int sizeLevel){
     glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 }
 
-void Textures::setUpTexturesTEST(std::string const& texturePath){
-    std::unique_ptr<glimac::Image> imageTmp = glimac::loadImage(texturePath);
-    if(!imageTmp)
+void Textures::setUpTexturesTEST(std::string const& texturePath0, std::string const& texturePath1){
+    std::unique_ptr<glimac::Image> imageTmp0 = glimac::loadImage(texturePath0);
+    if(!imageTmp0)
         throw std::invalid_argument("Textures:setUpTexturesTEST(): bad path for texture");
 
-    m_pictures.resize(1);
-    m_pictures[0].push_back(std::move(imageTmp));
+    std::unique_ptr<glimac::Image> imageTmp1 = glimac::loadImage(texturePath1);
+    if(!imageTmp1)
+        throw std::invalid_argument("Textures:setUpTexturesTEST(): bad path for texture");
+
+    m_pictures.resize(2);
+    m_pictures[0].push_back(std::move(imageTmp0));
+    m_pictures[1].push_back(std::move(imageTmp1));
     this->tranformImagesToTextures(1);
 }
 
