@@ -97,11 +97,12 @@ int main(int argc, char** argv) {
     cube.generateVbo(&vbo);
     cube.generateVao(&vao, vbo, 0, 1, 2);
 
+
     // Cube positions for instanced rendering
     // Setup instance rendering
     const GLuint CUBE_POSITION_loc = 3;
 
-
+    // Fake cube positions
     glm::vec3 cubePositions[] = {
       glm::vec3(0, 0, 1),
       glm::vec3(0, 1, 0)
@@ -112,14 +113,33 @@ int main(int argc, char** argv) {
     GLuint cubePosition_buffer;
     glGenBuffers(1, &cubePosition_buffer);
 
+    glBindVertexArray(vao); // do not forget to bind a vao
+
     // Binding buffer
-    glBindVertexArray(vao); // why?!
     glBindBuffer(GL_ARRAY_BUFFER, cubePosition_buffer);
-    // Describing buffer
     glEnableVertexAttribArray(CUBE_POSITION_loc);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * 2, cubePositions, GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(CUBE_POSITION_loc, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), 0);
+
+    // Describing data
+    glVertexAttribPointer(
+      CUBE_POSITION_loc,
+      3,
+      GL_FLOAT,
+      GL_FALSE,
+      sizeof(glm::vec3),
+      NULL
+    );
+
+    // Binding data
+    glBufferData(
+      GL_ARRAY_BUFFER,
+      sizeof(glm::vec3) * 2, // 2 = size of cubePositions array
+      cubePositions,
+      GL_DYNAMIC_DRAW
+    );
+
+    // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(CUBE_POSITION_loc, 1);
+
 
     glEnable(GL_DEPTH_TEST);
 
@@ -184,8 +204,9 @@ int main(int argc, char** argv) {
          *********************************/
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBindVertexArray(vao);
+          // we don't have to bind vao and vbo before drawing
+//        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+//        glBindVertexArray(vao);
 
         glDrawArraysInstanced(GL_TRIANGLES, 0, cube.sizeVertices(), 2);
 
@@ -193,8 +214,9 @@ int main(int argc, char** argv) {
         windowManager.swapBuffers();
     }
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    // we don't have to unbind because nothing is binded
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glBindVertexArray(0);
 
     glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);
