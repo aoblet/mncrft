@@ -143,12 +143,12 @@ int main(int argc, char** argv) {
 
     // Loading textures
     // Texture stuff
-    std::unique_ptr<Image> texture_img_1 = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce2.png");
+    std::unique_ptr<Image> texture_img_1 = loadImage("/home/mathias/Development/mncrft/assets/textures/durt.png");
     if (texture_img_1 == NULL) {
         exit(0);
     }
 
-    std::unique_ptr<Image> texture_img_2 = loadImage("/home/mathias/Development/mncrft/assets/textures/triforce3.png");
+    std::unique_ptr<Image> texture_img_2 = loadImage("/home/mathias/Development/mncrft/assets/textures/dust.png");
     if (texture_img_2 == NULL) {
         exit(0);
     }
