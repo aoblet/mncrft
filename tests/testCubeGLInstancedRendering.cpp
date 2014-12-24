@@ -208,7 +208,10 @@ int main(int argc, char** argv) {
 //    glBindTexture(GL_TEXTURE_2D_ARRAY, 0);
 
     Textures textures(false);
-    textures.setUpTexturesTEST("/home/mathias/Development/mncrft/assets/textures/dust.png");
+    textures.setUpTexturesTEST(
+      "/home/mathias/Development/mncrft/assets/textures/dust.png",
+      "/home/mathias/Development/mncrft/assets/textures/durt.png"
+    );
 
     glEnable(GL_DEPTH_TEST);
 
