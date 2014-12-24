@@ -3,9 +3,10 @@
 
 in vec3 vFragPosition;
 in vec3 vFragNormal;
-//flat in vec3 color;
+flat in vec3 color;
 in vec2 vFragTexCoords;
 flat in int index; // Add flat to avoid interpolation
+flat in int textureId;
 
 out vec3 fFragColor;
 
@@ -16,5 +17,5 @@ void main(){
 //        fFragColor = texture(uTexture,vFragTexCoords).xyz;
 //        fFragColor = vec3(1, 0, 0);
 //        fFragColor = color;
-    fFragColor = texture2DArray(uTexture, vec3(vFragTexCoords, index)).rgb;
+    fFragColor = texture2DArray(uTexture, vec3(vFragTexCoords, textureId)).rgb;
 }

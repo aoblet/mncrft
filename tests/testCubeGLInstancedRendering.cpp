@@ -6,7 +6,10 @@
 #include <iostream>
 #include <glimac/CubeGL.hpp>
 #include <glimac/FreeFlyCamera.hpp>
+#include <vector>
 #include "Textures.hpp"
+#include "CubeDirt.hpp"
+#include "CubeSand.hpp"
 
 using namespace glimac;
 
@@ -32,10 +35,6 @@ using namespace glimac;
  *
  *********************************/
 
-//struct Vertex {
-//    glm::vec2 position;
-//    glm::vec2 texCoords;
-//};
 
 
 
@@ -64,25 +63,6 @@ int main(int argc, char** argv) {
                                   applicationPath.dirPath() + "/shaders/tex3D.fs.glsl");
     program.use();
 
-    GLint uTexture = glGetUniformLocation(program.getGLId(), "uTexture");
-    glUniform1i(uTexture, 0);
-
-    auto pImg = loadImage(applicationPath.dirPath() + "/assets/textures/triforce2.png");
-    if(!pImg) {
-        std::cerr << "Unable to load the texture" << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    GLuint texture;
-
-    glGenTextures(1, &texture);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, pImg->getWidth(), pImg->getHeight(), 0, GL_RGBA, GL_FLOAT, pImg->getPixels());
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     GLint uMVPMatrix;
     GLint uMVMatrix;
@@ -98,19 +78,27 @@ int main(int argc, char** argv) {
     cube.generateVbo(&vbo);
     cube.generateVao(&vao, vbo, 0, 1, 2);
 
+    CubeDirt cubeDirt(
+      glm::vec3(0, 0, 0),
+      0
+    );
+
+    CubeSand cubeSand(
+      glm::vec3(0, 1, 0),
+      1
+    );
 
     // Cube positions for instanced rendering
     // Setup instance rendering
     const GLuint CUBE_POSITION_loc = 3;
 
     // Fake cube positions
-    glm::vec3 cubePositions[] = {
-      glm::vec3(0, 0, 1),
-      glm::vec3(0, 1, 0)
+    std::vector<glm::vec3> cubePositions = {
+      cubeDirt.position(),
+      cubeSand.position()
     };
 
-
-    // Create buffer
+    // Create position buffer
     GLuint cubePosition_buffer;
     glGenBuffers(1, &cubePosition_buffer);
 
@@ -133,13 +121,53 @@ int main(int argc, char** argv) {
     // Binding data
     glBufferData(
       GL_ARRAY_BUFFER,
-      sizeof(glm::vec3) * 2, // 2 = size of cubePositions array
-      cubePositions,
+      sizeof(glm::vec3) * cubePositions.size(),
+      &cubePositions[0],
       GL_DYNAMIC_DRAW
     );
 
     // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(CUBE_POSITION_loc, 1);
+//    glBindVertexArray(0);
+
+
+
+    const GLuint CUBE_TEXTURE_ID_loc = 4;
+    std::vector<int> cubeTextureIds = {
+      cubeDirt.idTexture(),
+      cubeSand.idTexture()
+    };
+    // Create textureId buffer
+    GLuint cubeTextureId_buffer;
+    glGenBuffers(1, &cubeTextureId_buffer);
+
+//    glBindVertexArray(vao); // do not forget to bind a vao
+
+    // Binding buffer
+    glBindBuffer(GL_ARRAY_BUFFER, cubeTextureId_buffer);
+    glEnableVertexAttribArray(CUBE_TEXTURE_ID_loc);
+
+    // Describing data
+    glVertexAttribPointer(
+      CUBE_TEXTURE_ID_loc,
+      1,
+      GL_FLOAT,
+      GL_FALSE,
+      sizeof(int),
+      NULL
+    );
+
+    // Binding data
+    glBufferData(
+      GL_ARRAY_BUFFER,
+      sizeof(int) * cubeTextureIds.size(),
+      &cubeTextureIds[0],
+      GL_DYNAMIC_DRAW
+    );
+
+    // Iterate for each instance (instanced rendering stuff)
+    glVertexAttribDivisor(CUBE_TEXTURE_ID_loc, 1);
+//    glBindVertexArray(0);
 
 
 
