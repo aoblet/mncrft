@@ -2,6 +2,7 @@
 #include "glimac/CubeGL.hpp"
 #include "glimac/glm.hpp"
 #include <stdexcept>
+#include <iostream>
 
 namespace glimac{
     const ShapeVertex* CubeGL::getDataPointer() const{
@@ -25,7 +26,7 @@ namespace glimac{
         m_vertices.push_back(ShapeVertex(switch_position2,normal, texCoords[1]));
         m_vertices.push_back(ShapeVertex(third_position , normal, texCoords[2]));
 
-        texCoords[0].x += 1./6; texCoords[2].x += 1./6; //step offset first & thrid coord
+        texCoords[0].x += 1./6; texCoords[2].x += 1./6; //step offset first & third coord
         texCoords[1].y = 0; //reset y of swith_coord
     }
 
@@ -89,8 +90,7 @@ namespace glimac{
     void CubeGL::generateVbo(GLuint * vbo) const{
         if(!vbo)
             throw std::invalid_argument("Vbo cubeGL: invalid argument");
-
-        glGenBuffers(1,vbo);
+        glGenBuffers(1, vbo);
         glBindBuffer(GL_ARRAY_BUFFER, *vbo);
 
         glBufferData(GL_ARRAY_BUFFER,
@@ -102,7 +102,7 @@ namespace glimac{
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void CubeGL::generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexTextureCoordShader) const{
+    void CubeGL::generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexNormalShader, const int indexTextureCoordShader)  const{
         if(!vao)
             throw std::invalid_argument("Vao cubeGL: invalid argument");
 
@@ -110,7 +110,10 @@ namespace glimac{
         glBindVertexArray(*vao);
 
         glEnableVertexAttribArray(indexPositionShader);
+        glEnableVertexAttribArray(indexNormalShader);
         glEnableVertexAttribArray(indexTextureCoordShader);
+
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
         glVertexAttribPointer(
@@ -118,8 +121,17 @@ namespace glimac{
             3,
             GL_FLOAT,
             GL_FALSE,
-            m_size_vertices* sizeof(ShapeVertex),
+            sizeof(ShapeVertex),
             (GLvoid*) offsetof(ShapeVertex, position)
+        );
+
+        glVertexAttribPointer(
+            indexNormalShader,
+            3,
+            GL_FLOAT,
+            GL_FALSE,
+            sizeof(ShapeVertex),
+            (GLvoid*) offsetof(ShapeVertex, normal)
         );
 
         glVertexAttribPointer(
@@ -127,9 +139,11 @@ namespace glimac{
             2,
             GL_FLOAT,
             GL_FALSE,
-            m_size_vertices* sizeof(ShapeVertex),
+            sizeof(ShapeVertex),
             (GLvoid*) offsetof(ShapeVertex, texCoords)
         );
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
     }
 }
