@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     Textures texture(setUpTextureForGame);
     texture.setUpTexturesTEST(
       "assets/textures/dust.png",
-      "assets/textures/durt.png"
+      "assets/textures/dirt.png"
     );
 
 

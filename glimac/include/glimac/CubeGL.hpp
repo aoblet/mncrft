@@ -12,11 +12,13 @@ namespace glimac {
                              glm::vec3 const& third_position, glm::vec3 const& normal, glm::vec2 *texCoords);
         public:
             CubeGL();
+            ~CubeGL();
+            GLuint m_vbo;
 
             const ShapeVertex * getDataPointer() const;
             GLsizei sizeVertices() const;
 
-            void generateVbo(GLuint * vbo) const;
-            void generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexNormalShader, const int indexTextureCoordShader) const;
+            void generateVbo(GLuint * vbo) const; //vbo parameter: customizable for outside
+            void configureVao(GLuint *vao, const int indexPositionShader, const int indexNormalShader, const int indexTextureCoordShader) const;
     };
 }

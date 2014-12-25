@@ -4,7 +4,6 @@
 
 class CubeLight: public CubeData{
     public:
-        int durability() const;
         CubeLight(glm::vec3 const& post, GLint idTexture);
 
 };
