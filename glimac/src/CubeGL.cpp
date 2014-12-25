@@ -5,6 +5,10 @@
 #include <iostream>
 
 namespace glimac{
+    CubeGL::~CubeGL(){
+        glDeleteBuffers(1,&m_vbo);
+    }
+
     const ShapeVertex* CubeGL::getDataPointer() const{
         return &(m_vertices[0]);
     }
@@ -85,6 +89,7 @@ namespace glimac{
 
         //update size of vertices
         m_size_vertices = m_vertices.size();
+        this->generateVbo(&m_vbo);
     }
 
     void CubeGL::generateVbo(GLuint * vbo) const{
@@ -102,11 +107,10 @@ namespace glimac{
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void CubeGL::generateVao(GLuint *vao, const GLuint &vbo, const int indexPositionShader, const int indexNormalShader, const int indexTextureCoordShader)  const{
+    void CubeGL::configureVao(GLuint *vao, const int indexPositionShader, const int indexNormalShader, const int indexTextureCoordShader)  const{
         if(!vao)
             throw std::invalid_argument("Vao cubeGL: invalid argument");
 
-        glGenVertexArrays(1, vao);
         glBindVertexArray(*vao);
 
         glEnableVertexAttribArray(indexPositionShader);
@@ -114,7 +118,7 @@ namespace glimac{
         glEnableVertexAttribArray(indexTextureCoordShader);
 
 
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 
         glVertexAttribPointer(
             indexPositionShader,
