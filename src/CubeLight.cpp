@@ -1,7 +1,7 @@
 #include "CubeLight.hpp"
 
-CubeLight::CubeLight(const glm::vec3 &post, GLint idTexture):CubeData(m_position,true,1,idTexture){}
+CubeLight::CubeLight(const glm::vec3 &post, GLint idTexture):CubeData(post,true,1,idTexture,1){}
 
-int CubeLight::durability() const{
-    return 1;
-}
+//int CubeLight::durability() const{
+//    return 1;
+//}

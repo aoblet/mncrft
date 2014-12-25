@@ -1,13 +1,13 @@
 #pragma once
+#include "Textures.hpp"
 #include <glimac/glm.hpp>
 #include <GL/gl.h>
 
 class CubeData{
-    protected:
-        static const int maxLevels_texture = 6;
-
+    private:
         int m_life;
         bool m_gravity;
+        const int m_durability;
         int computeCurrentLevel_texture() const;
 
 	public:
@@ -15,16 +15,16 @@ class CubeData{
         GLint m_idTexture;
         glm::vec3 m_position;
 
-        CubeData(glm::vec3 const& position, bool gravity, int life, GLint idTexture);
-        virtual ~CubeData();
+        CubeData(glm::vec3 const& position, bool gravity, int life, GLint idTexture, int durability);
+        ~CubeData();
 
-        virtual glm::vec3 position() const;
-        virtual int durability() const = 0;
-        virtual float life() const;
-        virtual GLint idTexture() const;
-        virtual int currentLevel_texture() const;
+        glm::vec3 position() const;
+        int durability() const;
+        float life() const;
+        GLint idTexture() const;
+        int currentLevel_texture() const;
 
-        virtual void setPosition(glm::vec3 const& pos);
-        virtual void inflictDamage(float damage);
-        virtual void setIdTexture(GLint newId);
+        void setPosition(glm::vec3 const& pos);
+        void inflictDamage(float damage);
+        void setIdTexture(GLint newId);
 };
