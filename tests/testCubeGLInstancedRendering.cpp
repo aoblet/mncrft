@@ -73,10 +73,9 @@ int main(int argc, char** argv) {
     uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
 
     CubeGL cube;
-    GLuint vbo, vao;
+    GLuint vao;
 
-    cube.generateVbo(&vbo);
-    cube.generateVao(&vao, vbo, 0, 1, 2);
+    cube.configureVao(&vao, 0, 1, 2);
 
     CubeDirt cubeDirt(
       glm::vec3(0, 0, 0),
@@ -238,6 +237,7 @@ int main(int argc, char** argv) {
         /*********************************
          * HERE SHOULD COME THE RENDERING CODE
          *********************************/
+        glClearColor(0.45,0.6,0.9,1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
@@ -253,8 +253,6 @@ int main(int argc, char** argv) {
         windowManager.swapBuffers();
     }
 
-    glDeleteBuffers(1, &vbo);
     glDeleteVertexArrays(1, &vao);
-
     return EXIT_SUCCESS;
 }
