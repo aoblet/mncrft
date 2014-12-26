@@ -17,6 +17,6 @@ class Level{
         Level();
         void test_cubesToJson(bool save=true);
         void test_jsonToCubes(std::string const& filePath);
-        void gameToJson(Game const& game, std::string const& filePath, bool save=false);
+        void gameToJson(Game const& game, std::string const& filePath, bool save=false, bool readable=true);
         void jsonToCubes(std::string const& filePath, std::vector<CubeData> & cubeDataOutput, std::vector<CubeLight> & cubeLightOutput);
 };

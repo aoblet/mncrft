@@ -41,7 +41,7 @@ void Level::cubeObjectToJsonObject(const CubeData &cubeObject, Json::Value &json
 }
 
 
-void Level::gameToJson(const Game &game, const std::string &filePath, bool save){
+void Level::gameToJson(const Game &game, const std::string &filePath, bool save, bool readable){
     Json::Value fromScratch;
     Json::Value arrayCubes;
 
@@ -63,8 +63,15 @@ void Level::gameToJson(const Game &game, const std::string &filePath, bool save)
 
     if(save){
         // write in a nice readible way
-        Json::StyledWriter styledWriter;
-        File::write(filePath,styledWriter.write(fromScratch));
+        Json::Writer * jsonWriter; //abstraact
+
+        if(readable)
+            jsonWriter = new Json::StyledWriter;
+        else
+            jsonWriter = new Json::FastWriter;
+
+        File::write(filePath,jsonWriter->write(fromScratch));
+        delete jsonWriter;
     }
 }
 
