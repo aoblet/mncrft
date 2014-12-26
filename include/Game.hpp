@@ -12,9 +12,7 @@
 
 class Game{
     private:
-
         CubeData* *** m_voxels; //pointers in 3d
-        std::vector<CubeLight> m_light_list;
 
         time_t m_time; //timestamp
         std::vector<Player*> m_players;
@@ -24,6 +22,8 @@ class Game{
 
     public:
         std::vector<CubeData> m_cube_list;
+        std::vector<CubeLight> m_light_list;
+
         ProgramShader_main m_ProgramShader_main;
         glimac::CubeGL m_cubeGL_model;
 

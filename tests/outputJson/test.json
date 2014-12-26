@@ -1,0 +1,244 @@
+{
+   "Cubes" : [
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 1,
+            "y" : 1,
+            "z" : 1
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 2,
+            "y" : 2,
+            "z" : 2
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 2,
+            "y" : 2,
+            "z" : 2
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 3,
+            "y" : 3,
+            "z" : 3
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 3,
+            "y" : 3,
+            "z" : 3
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 4,
+            "y" : 4,
+            "z" : 4
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 4,
+            "y" : 4,
+            "z" : 4
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 5,
+            "y" : 5,
+            "z" : 5
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 5,
+            "y" : 5,
+            "z" : 5
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 6,
+            "y" : 6,
+            "z" : 6
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 6,
+            "y" : 6,
+            "z" : 6
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 7,
+            "y" : 7,
+            "z" : 7
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 7,
+            "y" : 7,
+            "z" : 7
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 8,
+            "y" : 8,
+            "z" : 8
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 8,
+            "y" : 8,
+            "z" : 8
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 9,
+            "y" : 9,
+            "z" : 9
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 9,
+            "y" : 9,
+            "z" : 9
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      },
+      {
+         "position" : {
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
+         },
+         "type" : "CubeLight"
+      }
+   ]
+}
