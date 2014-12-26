@@ -11,6 +11,7 @@
 #include "CubeDirt.hpp"
 #include "CubeSand.hpp"
 #include "Game.hpp"
+#include "Level.hpp"
 
 using namespace glimac;
 
@@ -102,5 +103,8 @@ int main(int argc, char** argv) {
         // Update the display
         windowManager.swapBuffers();
     }
+
+    Level level;
+    level.gameToJson(game,"../../tests/outputJson/game.json",true,false);
     return EXIT_SUCCESS;
 }
