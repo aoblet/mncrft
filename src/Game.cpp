@@ -5,26 +5,49 @@
 #include "CubeSand.hpp"
 #include "Textures.hpp"
 #include <glimac/CubeGL.hpp>
+const int Game::CUBEGL_VERTEX_ATTRIBUT_POSITION = 0;
+const int Game::CUBEGL_VERTEX_ATTRIBUT_NORMAL = 1;
+const int Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE = 2;
+const int Game::VOXEL_ATTRIBUT_POSITION = 3;
+const int Game::VOXEL_ATTRIBUT_TEXTURE_ID = 4;
+const int Game::SIZE_MAX_GRID = 500;
 
-void Game::initScene(const Level &level){
-    //m_cube_list = std::move(level.cubeList());
-    //m_light_list = std::move(level.lightList());
-    //m_cubeGL.generateVbo(&m_vbo_cubeGL);
-    //m_cubeGL.generateVao(&m_vao_cubeGL,m_vbo_cubeGL,Game::CUBEGL_VERTEX_ATTRIBUT_POSITION,Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE);
 
+void Game::initScene(){
+    m_cubeGL_model.configureVao(&m_vao_cubeData,Game::CUBEGL_VERTEX_ATTRIBUT_POSITION,
+                                                Game::CUBEGL_VERTEX_ATTRIBUT_NORMAL,
+                                                Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE);
+
+    m_utils.loadCubes(m_fileLoad);
+    m_utils.initVoxels();
+    m_utils.configureVoxels();
+    m_utils.configureVboVaoCubeData();
+    m_utils.configureVboVaoCubeLight();
 }
 
-Game::Game(const std::string &currentDir, bool test):m_textures(!test),m_ProgramShader_main(currentDir,"tex3D"){
-    glGenVertexArrays(1,&m_vao);
+Game::Game(const std::string &currentDir, std::string const& fileLoad, const std::string &fileSave, bool test)
+           :m_textures(!test), m_ProgramShader_main(currentDir,"tex3D"), m_utils(*this), m_fileLoad(fileLoad), m_fileSave(fileSave) {
+
+    glGenVertexArrays(1,&m_vao_cubeLight);
+    glGenVertexArrays(1,&m_vao_cubeData);
+
+    if(test)
+        return;
+
+    this->initScene();
 }
+
 Game::~Game(){
-    glDeleteBuffers(1,&m_vao);
+    m_utils.deleteVboVaoCubeData();
+    m_utils.deleteVboVaoCubeCubeLight();
 }
 
 void Game::generateGridTest(){
-    m_cubeGL_model.configureVao(&m_vao, Game::CUBEGL_VERTEX_ATTRIBUT_POSITION,
-                                        Game::CUBEGL_VERTEX_ATTRIBUT_NORMAL,
-                                        Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE);
+    //configure all stuff inside (vbo-vao cubes)
+    glGenVertexArrays(1,&m_vao_cubeData);
+    m_cubeGL_model.configureVao(&m_vao_cubeData, Game::CUBEGL_VERTEX_ATTRIBUT_POSITION,
+                                                 Game::CUBEGL_VERTEX_ATTRIBUT_NORMAL,
+                                                 Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE);
 
     m_textures.setUpTexturesTEST(
       "assets/textures/dust.png",
@@ -40,7 +63,7 @@ void Game::generateGridTest(){
         }
     }
 
-    glBindVertexArray(m_vao);
+    glBindVertexArray(m_vao_cubeData);
 
     glGenBuffers(1,&m_vbo_cubeData);
     // Binding buffer
@@ -79,5 +102,6 @@ void Game::generateGridTest(){
     // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(Game::VOXEL_ATTRIBUT_POSITION, 1);
     glVertexAttribDivisor(Game::VOXEL_ATTRIBUT_TEXTURE_ID, 1);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
     glBindVertexArray(0);
 }

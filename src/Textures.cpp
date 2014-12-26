@@ -24,7 +24,7 @@ Textures::Textures(bool setUp){
 
     this->loadFolderPaths();
     this->loadSetImages();
-
+    this->tranformImagesToTextures(Textures::SIZE_LEVEL_TEXURES);
 }
 
 void Textures::loadFolderPaths(){
@@ -57,6 +57,9 @@ void Textures::loadSetImages(){
             for(std::vector<std::string>::const_iterator it_extension=it_extension_begin; it_extension != it_extension_end; ++it_extension){
                 imageTmp = glimac::loadImage(it->second + std::to_string(j) + "."+ *it_extension);
                 found_file = imageTmp ? true : false; //ternary form constrained cause of pointer
+
+                if(found_file)
+                    break;
             }
             if(!found_file)
                 throw std::invalid_argument("Textures: loadSetImage: no file found for: " + it->second + " image: "+ std::to_string(j));

@@ -4,7 +4,7 @@ project(Imacraft)
 
 set(EXECUTABLE_NAME Imacraft)
 
-add_definitions(-std=c++11 -Wno-invalid-offsetof)
+add_definitions(-std=c++11 -Wno-invalid-offsetof -g)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
