@@ -1,9 +1,14 @@
+#include <glimac/SDLWindowManager.hpp>
+#include <iostream>
 #include <json/value.h>
 #include <json/writer.h>
 #include <json/reader.h>
-#include <iostream>
+
+using namespace glimac;
 
 int main(){
+    SDLWindowManager windowManager(800, 600, "triforce");
+
     // ---- create from scratch ----
 
     Json::Value fromScratch;
@@ -14,6 +19,7 @@ int main(){
     fromScratch["number"] = 2;
     fromScratch["array"] = array;
     fromScratch["object"]["hello"] = "world";
+    fromScratch["object"]["hello"] = "lol";
 
 
     // write in a nice readible way
