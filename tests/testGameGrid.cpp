@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
     }
 
     bool TEST = true;
-    Game game(argv[0],TEST);
+    Game game(argv[0],"../../tests/outputJson/game.json","",TEST);
     game.generateGridTest();
     game.m_ProgramShader_main.m_program.use();
 
@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
     glm::ivec2 previousMousePosition= glm::ivec2(0,0);
     double speedMoveKey = 0.01;
     // Application loop:
-    glBindVertexArray(game.m_vao);
+    glBindVertexArray(game.m_vao_cubeData);
     glBindTexture(GL_TEXTURE_2D_ARRAY, game.m_textures.idTexture());
 
     int sizeCube = game.m_cube_list.size();
@@ -104,7 +104,7 @@ int main(int argc, char** argv) {
         windowManager.swapBuffers();
     }
 
-    Level level;
-    level.gameToJson(game,"../../tests/outputJson/game.json",true,false);
+    //Level level;
+    //level.gameToJson(game,"../../tests/outputJson/game.json",true,false);
     return EXIT_SUCCESS;
 }
