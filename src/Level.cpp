@@ -76,7 +76,7 @@ void Level::gameToJson(const Game &game, const std::string &filePath, bool save,
 }
 
 
-void jsonToCubes(std::string const& filePath, std::vector<CubeData> & cubeDataOutput, std::vector<CubeLight> & cubeLightOutput){
+void Level::jsonToCubes(std::string const& filePath, std::vector<CubeData> & cubeDataOutput, std::vector<CubeLight> & cubeLightOutput){
     Json::Reader reader;
     Json::Value parsedFromString;
     std::string jsonString;
@@ -109,12 +109,12 @@ void jsonToCubes(std::string const& filePath, std::vector<CubeData> & cubeDataOu
         else
             break;
 
-        if(!tmp){
+        if(tmp){
             cubeDataOutput.push_back(*tmp);
             delete tmp;
             tmp = nullptr;
         }
-        else if(!tmpLight){
+        else if(tmpLight){
             cubeLightOutput.push_back(*tmpLight);
             delete tmpLight;
             tmpLight = nullptr;
