@@ -15,6 +15,8 @@
 
 using namespace glimac;
 
+// desired framerate in milliseconds
+static const Uint32 FRAMERATE = 1000 / 60;
 
 int main(int argc, char** argv) {
     const int WIDTH = 800;
@@ -51,8 +53,14 @@ int main(int argc, char** argv) {
     int sizeCube = game.m_cube_list.size();
     int sizeCubeGL = game.m_cubeGL_model.sizeVertices();
 
+    Uint32 startTime;
+    Uint32 elapsedTime;
+
     bool done = false;
     while(!done) {
+
+        startTime = SDL_GetTicks();
+
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
@@ -102,6 +110,14 @@ int main(int argc, char** argv) {
 
         // Update the display
         windowManager.swapBuffers();
+
+
+        // calculating elapsed time
+        elapsedTime = SDL_GetTicks() - startTime;
+        // wait if necesssary
+        if(elapsedTime < FRAMERATE) {
+          SDL_Delay(FRAMERATE - elapsedTime);
+        }
     }
 
     //Level level;
