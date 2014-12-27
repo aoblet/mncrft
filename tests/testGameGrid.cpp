@@ -53,10 +53,13 @@ int main(int argc, char** argv) {
     int sizeCube = game.m_cube_list.size();
     int sizeCubeGL = game.m_cubeGL_model.sizeVertices();
 
+    Uint32 startTime;
+    Uint32 elapsedTime;
+
     bool done = false;
     while(!done) {
 
-        Uint32 startTime = SDL_GetTicks();
+        startTime = SDL_GetTicks();
 
         // Event loop:
         SDL_Event e;
@@ -110,7 +113,7 @@ int main(int argc, char** argv) {
 
 
         // calculating elapsed time
-        Uint32 elapsedTime = SDL_GetTicks() - startTime;
+        elapsedTime = SDL_GetTicks() - startTime;
         // wait if necesssary
         if(elapsedTime < FRAMERATE) {
           SDL_Delay(FRAMERATE - elapsedTime);
