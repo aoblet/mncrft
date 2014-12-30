@@ -9,7 +9,6 @@ namespace glimac {
     class Skybox{
 
         public:
-            Skybox();
             ~Skybox();
 
             GLuint m_skyboxVBO;

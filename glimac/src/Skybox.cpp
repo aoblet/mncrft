@@ -11,20 +11,10 @@ namespace glimac{
         glm::vec3 m_position;
         glm::vec2 m_txcoord;
 
-        Vertex3DCube(){}
         Vertex3DCube(glm::vec3 m_position, glm::vec2 m_txcoord):
-            m_position(m_position), m_txcoord(m_txcoord) {}
+           m_position(m_position), m_txcoord(m_txcoord) {}
     };
 
-    struct VertexSkybox{
-        glm::vec3 m_skposition;
-
-        VertexSkybox(){}
-        VertexSkybox(glm::vec3 m_skposition):
-            m_skposition(m_skposition) {}
-    };
-
-    Skybox::Skybox(){}
     Skybox::~Skybox(){
         glDeleteBuffers(1, &m_skyboxVBO);
         glDeleteVertexArrays(1, &m_skyboxVAO);
@@ -67,7 +57,6 @@ namespace glimac{
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, skBTex->getWidth(), skBTex->getHeight(), 0, GL_RGBA, GL_FLOAT, skBTex->getPixels());
         }
 
-
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -78,93 +67,93 @@ namespace glimac{
     void Skybox::bindSkyboxBuffer(GLuint &cubeVBO, GLuint &cubeVAO){
 
         Vertex3DCube cubeVertices[] = {
-                   // Positions          // Texture Coords
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
+                                    // Positions          // Texture Coords
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
 
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
 
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec2(0.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec2(0.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
 
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(0.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(0.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
 
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
 
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-                   Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f))
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
+           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f))
                };
 
-        VertexSkybox skyboxVertices[] = {
+        glm::vec3 skyboxVertices[] = {
             // Positions
-            VertexSkybox(glm::vec3(-1.0f,  1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(-1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(-1.0f,  1.0f, -1.0f)),
+            glm::vec3(-1.0f,  1.0f, -1.0f),
+            glm::vec3(-1.0f, -1.0f, -1.0f),
+            glm::vec3(1.0f, -1.0f, -1.0f),
+            glm::vec3(1.0f, -1.0f, -1.0f),
+            glm::vec3(1.0f,  1.0f, -1.0f),
+            glm::vec3(-1.0f,  1.0f, -1.0f),
 
-            VertexSkybox(glm::vec3(-1.0f, -1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(-1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(-1.0f,  1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(-1.0f,  1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(-1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(-1.0f, -1.0f,  1.0f)),
+            glm::vec3(-1.0f, -1.0f,  1.0f),
+            glm::vec3(-1.0f, -1.0f, -1.0f),
+            glm::vec3(-1.0f,  1.0f, -1.0f),
+            glm::vec3(-1.0f,  1.0f, -1.0f),
+            glm::vec3(-1.0f,  1.0f,  1.0f),
+            glm::vec3(-1.0f, -1.0f,  1.0f),
 
-            VertexSkybox(glm::vec3(1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f, -1.0f)),
+            glm::vec3(1.0f, -1.0f, -1.0f),
+            glm::vec3(1.0f, -1.0f,  1.0f),
+            glm::vec3(1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f,  1.0f, -1.0f),
+            glm::vec3(1.0f, -1.0f, -1.0f),
 
-            VertexSkybox(glm::vec3(-1.0f, -1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(-1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(-1.0f, -1.0f,  1.0f)),
+            glm::vec3(-1.0f, -1.0f,  1.0f),
+            glm::vec3(-1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f, -1.0f,  1.0f),
+            glm::vec3(-1.0f, -1.0f,  1.0f),
 
-            VertexSkybox(glm::vec3(-1.0f,  1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(-1.0f,  1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(-1.0f,  1.0f, -1.0f)),
+            glm::vec3(-1.0f,  1.0f, -1.0f),
+            glm::vec3(1.0f,  1.0f, -1.0f),
+            glm::vec3(1.0f,  1.0f,  1.0f),
+            glm::vec3(1.0f,  1.0f,  1.0f),
+            glm::vec3(-1.0f,  1.0f,  1.0f),
+            glm::vec3(-1.0f,  1.0f, -1.0f),
 
-            VertexSkybox(glm::vec3(-1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(-1.0f, -1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f, -1.0f)),
-            VertexSkybox(glm::vec3(-1.0f, -1.0f,  1.0f)),
-            VertexSkybox(glm::vec3(1.0f, -1.0f,  1.0f))
+            glm::vec3(-1.0f, -1.0f, -1.0f),
+            glm::vec3(-1.0f, -1.0f,  1.0f),
+            glm::vec3(1.0f, -1.0f, -1.0f),
+            glm::vec3(1.0f, -1.0f, -1.0f),
+            glm::vec3(-1.0f, -1.0f,  1.0f),
+            glm::vec3(1.0f, -1.0f,  1.0f)
         };
 
         // Setup cubeMap VAO
@@ -174,10 +163,10 @@ namespace glimac{
         glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
-        //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DCube), (GLvoid*) offsetof(Vertex3DCube, m_position));
         glEnableVertexAttribArray(1);
-        //glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3DCube), (GLvoid*) offsetof(Vertex3DCube, m_txcoord));
         glBindVertexArray(0);
 
@@ -187,11 +176,11 @@ namespace glimac{
         glGenBuffers(1, &m_skyboxVBO);
         glBindVertexArray(m_skyboxVAO);
         glBindBuffer(GL_ARRAY_BUFFER, m_skyboxVBO);
-        //glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+
         glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
-        //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(VertexSkybox), (GLvoid*) offsetof(VertexSkybox, m_skposition));
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexSkybox), (GLvoid*)0);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (GLvoid*)0);
         glBindVertexArray(0);
     }
 
