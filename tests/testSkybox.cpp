@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     const int WIDTH = 800;
     const int HEIGHT = 600;
     // Initialize SDL and open a window
-    SDLWindowManager windowManager(WIDTH, HEIGHT, "Skybox Class Suppa Crew");
+    SDLWindowManager windowManager(WIDTH, HEIGHT, "Skybox Class - Edited");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
     //////////////////////////////////////////////////////
     Skybox sk;
 
-    GLuint texture, cubeVAO, cubeVBO, skyboxVAO, skyboxVBO;
+    GLuint texture, cubeVAO, cubeVBO;
 
     sk.loadSkyboxTexture(texture, applicationPath.dirPath());
 
@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
     uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
     std::cout << uMVPMatrix << std::endl;
 
-    sk. bindSkyboxBuffer(cubeVBO, cubeVAO, skyboxVBO, skyboxVAO);
+    sk. bindSkyboxBuffer(cubeVBO, cubeVAO);
 
     glEnable(GL_DEPTH_TEST);
     // Application loop:
@@ -150,7 +150,7 @@ int main(int argc, char** argv) {
 
         //////////////////////////////////////////////////
 
-        sk.renderSkybox(skyboxVAO, texture);
+        sk.renderSkybox(texture);
 
         //////////////////////////////////////////////////
 
@@ -162,8 +162,6 @@ int main(int argc, char** argv) {
     glBindVertexArray(0);
 
     //////////////////////////////////////////////////
-
-    sk.deleteSkybox(skyboxVBO, skyboxVAO);
 
     //////////////////////////////////////////////////
 

@@ -12,10 +12,12 @@ namespace glimac {
             Skybox();
             ~Skybox();
 
-            void renderSkybox(GLuint &skyboxVAO, GLuint &texture);
-            void deleteSkybox(GLuint &skyboxVBO, GLuint &skyboxVAO);
+            GLuint m_skyboxVBO;
+            GLuint m_skyboxVAO;
+
+            void renderSkybox(GLuint &texture);
             void loadSkyboxTexture(GLuint &texture, FilePath path);
-            void bindSkyboxBuffer(GLuint &cubeVBO, GLuint &cubeVAO, GLuint &skyboxVBO, GLuint &skyboxVAO);
+            void bindSkyboxBuffer(GLuint &cubeVBO, GLuint &cubeVAO);
 
     };
 }
