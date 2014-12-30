@@ -20,6 +20,7 @@ public:
     bool isMouseButtonPressed(uint32_t button) const;
 
     glm::ivec2 getMousePosition() const;
+    glm::ivec2 getMouseMotionRelative() const;
 
     void swapBuffers();
 

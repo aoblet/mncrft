@@ -38,6 +38,12 @@ glm::ivec2 SDLWindowManager::getMousePosition() const {
     return mousePos;
 }
 
+glm::ivec2 SDLWindowManager::getMouseMotionRelative() const {
+    glm::ivec2 mousePos;
+    SDL_GetRelativeMouseState(&mousePos.x, &mousePos.y);
+    return mousePos;
+}
+
 void SDLWindowManager::swapBuffers() {
     SDL_GL_SwapBuffers();
 }
