@@ -24,6 +24,6 @@ void main(){
         vFragTexCoords 	= aVertexTexCoords;
         color = cubePosition;
         index = gl_InstanceID;
-        textureId = cubeTextureId;
-        gl_Position 	= uMVPMatrix*(vec4(aVertexPosition,1) + vec4(cubePosition, 0));
+        textureId = 6*cubeTextureId;
+        gl_Position = uMVPMatrix*(vec4(aVertexPosition,1) + vec4(cubePosition, 0));
 }
