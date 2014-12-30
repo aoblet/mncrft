@@ -9,11 +9,14 @@ class GameUtilities{
     public:
         GameUtilities(Game & game);
         void loadCubes(std::string const& filePath);
-        void saveCubes(std::string const& filePath);
+        void saveGame(std::string const& filePath);
+
         void initVoxels();
         void configureVoxels();
         void configureVboVaoCubeData();
         void configureVboVaoCubeLight();
         void deleteVboVaoCubeData();
         void deleteVboVaoCubeCubeLight();
+        void deleteVoxels();
+        void configurePositionPlayer();
 };

@@ -21,8 +21,11 @@ static const Uint32 FRAMERATE = 1000 / 60;
 int main(int argc, char** argv) {
     const int WIDTH = 800;
     const int HEIGHT = 600;
+
     // Initialize SDL and open a window
-    SDLWindowManager windowManager(WIDTH, HEIGHT, "testGrid");
+    SDLWindowManager windowManager(WIDTH, HEIGHT, "testGamePlayer");
+    SDL_ShowCursor(0);
+    SDL_WM_GrabInput( SDL_GRAB_ON );
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -31,30 +34,29 @@ int main(int argc, char** argv) {
         throw std::logic_error("Error glew setup");
     }
 
-    bool TEST = true;
-    Game game(argv[0],"../../tests/outputJson/game.json","",TEST);
-    game.generateGridTest();
+    bool TEST = false;
+    Game game(argv[0],"../../tests/outputJson/game.json","../../tests/outputJson/game.json",TEST);
     game.m_ProgramShader_main.m_program.use();
 
-    glEnable(GL_DEPTH_TEST);
+    Player& player1 = game.m_player;
 
-    FreeFlyCamera freeCamera(0,0,0);
-    glm::mat4 matrixView(freeCamera.getViewMatrix());
+    glm::mat4 matrixView(player1.camera().getViewMatrix());
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
     glm::mat4 MVMatrix = glm::translate(glm::mat4(1),glm::vec3(0,0,-5));
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
-    glm::ivec2 previousMousePosition= glm::ivec2(0,0);
-    double speedMoveKey = 0.01;
-    // Application loop:
+
+    glEnable(GL_DEPTH_TEST);
     glBindVertexArray(game.m_vao_cubeData);
     glBindTexture(GL_TEXTURE_2D_ARRAY, game.m_textures.idTexture());
 
+    //faster (test)
     int sizeCube = game.m_cube_list.size();
     int sizeCubeGL = game.m_cubeGL_model.sizeVertices();
 
     Uint32 startTime;
     Uint32 elapsedTime;
+    glm::ivec2 mouseCurrenPosition;
 
     bool done = false;
     while(!done) {
@@ -64,39 +66,19 @@ int main(int argc, char** argv) {
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
-            if(e.type == SDL_QUIT) {
+            if(e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
                 done = true; // Leave the loop after this iteration
             }
-
-            if(e.type == SDL_MOUSEBUTTONDOWN){
-                if(e.button.button == SDL_BUTTON_LEFT){
-                    previousMousePosition = windowManager.getMousePosition();
-                }
-            }
         }
 
-        if(windowManager.isKeyPressed(SDLK_z)){
-            freeCamera.moveFront(speedMoveKey);
-        }
-        if(windowManager.isKeyPressed(SDLK_q)){
-            freeCamera.moveLeft(speedMoveKey);
-        }
-        if(windowManager.isKeyPressed(SDLK_s)){
-            freeCamera.moveFront(-speedMoveKey);
-        }
-        if(windowManager.isKeyPressed(SDLK_d)){
-            freeCamera.moveLeft(-speedMoveKey);
-        }
+        player1.handleMove(windowManager);
+
+        mouseCurrenPosition = windowManager.getMouseMotionRelative();
+        player1.m_camera.rotateLeft(-(mouseCurrenPosition.x)/2.);
+        player1.m_camera.rotateUp(-( mouseCurrenPosition.y)/2.);
 
 
-        if(windowManager.isMouseButtonPressed(SDL_BUTTON_LEFT)){
-            glm::ivec2 mouseCurrenPosition = windowManager.getMousePosition();
-            freeCamera.rotateLeft(-(mouseCurrenPosition.x -previousMousePosition.x)/2.);
-            freeCamera.rotateUp(-( mouseCurrenPosition.y -previousMousePosition.y)/2.);
-            previousMousePosition = mouseCurrenPosition;
-        }
-
-        matrixView = freeCamera.getViewMatrix();
+        matrixView = player1.camera().getViewMatrix();
         MVMatrix = matrixView ;
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
@@ -111,16 +93,12 @@ int main(int argc, char** argv) {
         // Update the display
         windowManager.swapBuffers();
 
-
-        // calculating elapsed time
+        // calculating elapsed time && wait if necessary
         elapsedTime = SDL_GetTicks() - startTime;
-        // wait if necesssary
         if(elapsedTime < FRAMERATE) {
           SDL_Delay(FRAMERATE - elapsedTime);
         }
     }
 
-    //Level level;
-    //level.gameToJson(game,"../../tests/outputJson/game.json",true,true);
     return EXIT_SUCCESS;
 }

@@ -8,9 +8,14 @@ void GameUtilities::loadCubes(std::string const& filePath){
     level.jsonToCubes(filePath,m_game.m_cube_list, m_game.m_light_list);
 }
 
-void GameUtilities::saveCubes(std::string const& filePath){
+void GameUtilities::saveGame(std::string const& filePath){
     Level level;
     level.gameToJson(m_game,filePath,true,true);
+}
+
+void GameUtilities::configurePositionPlayer(){
+    Level level;
+    level.jsonToPlayerPosition(m_game.m_fileLoad,m_game.m_player);
 }
 
 void GameUtilities::initVoxels(){
@@ -128,3 +133,14 @@ void GameUtilities::deleteVboVaoCubeCubeLight(){
     glDeleteBuffers(1,&m_game.m_vbo_cubeLight);
     glDeleteBuffers(1,&m_game.m_vao_cubeLight);
 }
+
+void GameUtilities::deleteVoxels(){
+    for(int i=0; i<Game::SIZE_MAX_GRID; ++i){
+        for(int j=0; j<Game::SIZE_MAX_GRID; ++j){
+            delete[] m_game.m_voxels[i][j];
+        }
+        delete[] m_game.m_voxels[i];
+    }
+    delete[] m_game.m_voxels;
+}
+

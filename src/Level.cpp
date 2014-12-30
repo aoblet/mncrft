@@ -59,11 +59,19 @@ void Level::gameToJson(const Game &game, const std::string &filePath, bool save,
         arrayCubes.append(cubeObjectJson);
     }
 
-    fromScratch["Cubes"] = arrayCubes;
+    //Player
+    fromScratch["Player"]["position"]["x"] = game.player().position().x;
+    fromScratch["Player"]["position"]["y"] = game.player().position().y;
+    fromScratch["Player"]["position"]["z"] = game.player().position().z;
 
+    fromScratch["Player"]["camera"]["phi"] = game.player().camera().phi();
+    fromScratch["Player"]["camera"]["theta"] = game.player().camera().theta();
+
+
+    fromScratch["Cubes"] = arrayCubes;
     if(save){
         // write in a nice readible way
-        Json::Writer * jsonWriter; //abstraact
+        Json::Writer * jsonWriter; //abstract
 
         if(readable)
             jsonWriter = new Json::StyledWriter;
@@ -83,7 +91,7 @@ void Level::jsonToCubes(std::string const& filePath, std::vector<CubeData> & cub
     File::read(filePath,jsonString);
 
     if(!(reader.parse(jsonString,parsedFromString)))
-        throw std::invalid_argument("fail to parse json: TEST");
+        throw std::invalid_argument("fail to parse json");
 
     Json::Value rootCubes = parsedFromString["Cubes"];
     for(Json::Value::iterator it=rootCubes.begin(); it != rootCubes.end(); ++it){
@@ -124,6 +132,32 @@ void Level::jsonToCubes(std::string const& filePath, std::vector<CubeData> & cub
     }
 }
 
+void Level::jsonToPlayerPosition(std::string const& filePath, Player & player){
+    Json::Reader reader;
+    Json::Value parsedFromString;
+    std::string jsonString;
+    File::read(filePath,jsonString);
+
+    if(!(reader.parse(jsonString,parsedFromString)))
+        throw std::invalid_argument("fail to parse json");
+
+    Json::Value rootPlayer = parsedFromString["Player"];
+    if(rootPlayer.size() == 0)
+        return;
+
+    //position player
+    glm::vec3 newPosition = glm::vec3(rootPlayer["position"]["x"].asFloat(),
+                                      rootPlayer["position"]["y"].asFloat(),
+                                      rootPlayer["position"]["z"].asFloat());
+    player.setPosition(newPosition);
+
+    //camera config
+    Json::Value cameraConfig;
+    if((cameraConfig = rootPlayer["camera"]).size() != 0){
+        player.camera().setPhi(cameraConfig["phi"].asFloat());
+        player.camera().setTheta(cameraConfig["theta"].asFloat());
+    }
+}
 
 void Level::test_cubesToJson(bool save){
 

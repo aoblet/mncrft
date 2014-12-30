@@ -18,6 +18,7 @@ void Game::initScene(){
                                                 Game::CUBEGL_VERTEX_ATTRIBUT_NORMAL,
                                                 Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE);
 
+    m_utils.configurePositionPlayer();
     m_utils.loadCubes(m_fileLoad);
     m_utils.initVoxels();
     m_utils.configureVoxels();
@@ -26,7 +27,8 @@ void Game::initScene(){
 }
 
 Game::Game(const std::string &currentDir, std::string const& fileLoad, const std::string &fileSave, bool test)
-           :m_textures(!test), m_ProgramShader_main(currentDir,"tex3D"), m_utils(*this), m_fileLoad(fileLoad), m_fileSave(fileSave) {
+           :m_textures(!test), m_ProgramShader_main(currentDir,"tex3D"), m_utils(*this), m_fileLoad(fileLoad),
+            m_fileSave(fileSave), m_test(test),m_player(this,glm::vec3(40,60,50)){
 
     glGenVertexArrays(1,&m_vao_cubeLight);
     glGenVertexArrays(1,&m_vao_cubeData);
@@ -38,8 +40,13 @@ Game::Game(const std::string &currentDir, std::string const& fileLoad, const std
 }
 
 Game::~Game(){
-    m_utils.deleteVboVaoCubeData();
-    m_utils.deleteVboVaoCubeCubeLight();
+    //TODO remove after tests
+    if(!m_test){
+        m_utils.deleteVboVaoCubeData();
+        m_utils.deleteVboVaoCubeCubeLight();
+        m_utils.deleteVoxels();
+        m_utils.saveGame(m_fileSave);
+    }
 }
 
 void Game::generateGridTest(){
@@ -50,18 +57,41 @@ void Game::generateGridTest(){
                                                  Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE);
 
     m_textures.setUpTexturesTEST(
-      "assets/textures/dust.png",
-      "assets/textures/dirt.png"
+      "assets/textures/cubes/foundation/1.png",
+      "assets/textures/cubes/foundation/1.png"
     );
 
     int y=0;
     for(int x=0; x<100; ++x){
         for(int z=0; z<100; ++z){
-            m_cube_list.push_back(CubeDirt(glm::vec3(x,0,z),1));
-            if(x%2)
-                m_cube_list.push_back(CubeSand(glm::vec3(x,1,z),0));
+            m_cube_list.push_back(CubeDirt(glm::vec3(x,0,z),Textures::INDEX_TEXTURE_DIRT));
+            if(z<10){
+                m_cube_list.push_back(CubeSand(glm::vec3(x,1,z),Textures::INDEX_TEXTURE_SAND));
+                m_cube_list.push_back(CubeSand(glm::vec3(x,2,z),Textures::INDEX_TEXTURE_SAND));
+                m_cube_list.push_back(CubeSand(glm::vec3(x,3,z),Textures::INDEX_TEXTURE_SAND));
+
+            }
+
         }
     }
+
+    for(int z=0; z<50; ++z){
+        m_cube_list.push_back(CubeSand(glm::vec3(40,z,50),Textures::INDEX_TEXTURE_SAND));
+        m_cube_list.push_back(CubeSand(glm::vec3(40,z,50),Textures::INDEX_TEXTURE_SAND));
+        m_cube_list.push_back(CubeSand(glm::vec3(40,z,50),Textures::INDEX_TEXTURE_SAND));
+    }
+
+    //stair
+    m_cube_list.push_back(CubeSand(glm::vec3(1+20,7,5),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(1+20,6,6),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(1+20,5,7),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(1+20,4,8),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(1+20,3,9),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(1+20,2,10),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(1+20,1,11),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(2+20,1,12),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(3+20,1,13),Textures::INDEX_TEXTURE_SAND));
+    m_cube_list.push_back(CubeSand(glm::vec3(2+20,1,14),Textures::INDEX_TEXTURE_SAND));
 
     glBindVertexArray(m_vao_cubeData);
 
@@ -105,3 +135,25 @@ void Game::generateGridTest(){
     glBindBuffer(GL_ARRAY_BUFFER,0);
     glBindVertexArray(0);
 }
+
+CubeData* *** const Game::voxels() const{
+    return m_voxels;
+}
+
+std::vector<Player> &Game::players(){
+    return m_players;
+}
+
+
+std::vector<Player> Game::players() const{
+    return m_players;
+}
+
+Player& Game::player(){
+    return m_player;
+}
+
+Player Game::player() const{
+    return m_player;
+}
+
