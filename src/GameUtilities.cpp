@@ -48,11 +48,12 @@ void GameUtilities::configureVboVaoCubeData(){
     glEnableVertexAttribArray(Game::VOXEL_ATTRIBUT_TEXTURE_ID);
 
     glGenBuffers(1,&m_game.m_vbo_cubeData);
+    //Arbitrary size: 1 millions
     glBindBuffer(GL_ARRAY_BUFFER, m_game.m_vbo_cubeData);
     glBufferData(
       GL_ARRAY_BUFFER,
-      sizeof(CubeData) * m_game.m_cube_list.size(),
-      &m_game.m_cube_list[0],
+      sizeof(CubeData) * 1000000,
+      NULL,
       GL_DYNAMIC_DRAW
     );
 
@@ -88,12 +89,12 @@ void GameUtilities::configureVboVaoCubeLight(){
     glEnableVertexAttribArray(Game::VOXEL_ATTRIBUT_POSITION);
     glEnableVertexAttribArray(Game::VOXEL_ATTRIBUT_TEXTURE_ID);
 
-    glGenBuffers(1,&m_game.m_vbo_cubeData);
-    glBindBuffer(GL_ARRAY_BUFFER, m_game.m_vbo_cubeData);
+    glGenBuffers(1,&m_game.m_vbo_cubeLight);
+    glBindBuffer(GL_ARRAY_BUFFER, m_game.m_vbo_cubeLight);
     glBufferData(
       GL_ARRAY_BUFFER,
-      sizeof(CubeLight) * m_game.m_cube_list.size(),
-      &m_game.m_cube_list[0],
+      sizeof(CubeLight) * m_game.m_light_list.size(),
+      &m_game.m_light_list[0],
       GL_DYNAMIC_DRAW
     );
 
@@ -143,4 +144,19 @@ void GameUtilities::deleteVoxels(){
     }
     delete[] m_game.m_voxels;
 }
+
+void GameUtilities::updateVboCubeData(int startPosCube, int endPosCube){
+    if(endPosCube < startPosCube || startPosCube <0 || endPosCube<0)
+        throw std::invalid_argument("Update vbo cubeData: wrong parameter index cubes");
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_game.m_vbo_cubeData);
+    glBufferSubData(
+        GL_ARRAY_BUFFER,
+        startPosCube*sizeof(CubeData),
+        (endPosCube - startPosCube +1)*sizeof(CubeData) ,
+        &(m_game.m_cube_list[startPosCube])
+    );
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+}
+
 
