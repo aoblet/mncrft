@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     double speedMoveKey = 0.01;
     // Application loop:
     glBindVertexArray(game.m_vao_cubeData);
-    glBindTexture(GL_TEXTURE_2D_ARRAY, game.m_textures.idTexture());
+    glBindTexture(GL_TEXTURE_2D_ARRAY, game.textures().idTexture());
 
     int sizeCube = game.m_cube_list.size();
     int sizeCubeGL = game.m_cubeGL_model.sizeVertices();

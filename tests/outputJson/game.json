@@ -104010,7 +104010,15 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
+            "y" : 0,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
             "y" : 0,
             "z" : 50
          },
@@ -104019,566 +104027,566 @@
       {
          "position" : {
             "x" : 40,
+            "y" : 1,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 1,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 1,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 2,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 2,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 2,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 3,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 3,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 3,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 4,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 4,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 4,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 5,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 5,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 5,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 6,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 6,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 6,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 7,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 7,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 7,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 8,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 8,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 8,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 9,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 9,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 9,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 10,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 10,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 10,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 11,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 11,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 11,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 12,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 12,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 12,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 13,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 13,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 13,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 14,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 14,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 14,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 15,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 15,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 15,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 16,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 16,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 16,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 17,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 17,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 17,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 18,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 18,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 18,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 19,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 19,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 19,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 20,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 20,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 20,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 21,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 21,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 21,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 22,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 22,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 22,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 40,
+            "y" : 23,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 48,
+            "y" : 23,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 489,
+            "y" : 23,
+            "z" : 50
+         },
+         "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 0,
             "y" : 0,
-            "z" : 50
+            "z" : 0
          },
          "type" : "CubeSand"
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 1,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 1,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 1,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 2,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 2,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 2,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 3,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 3,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 3,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 4,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 4,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 4,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 5,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 5,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 5,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 6,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 6,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 6,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 7,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 7,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 7,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 8,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 8,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 8,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 9,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 9,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 9,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 10,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 10,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 10,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 11,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 11,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 11,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 12,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 12,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 12,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 13,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 13,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 13,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 14,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 14,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 14,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 15,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 15,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 15,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 16,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 16,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 16,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 17,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 17,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 17,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 18,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 18,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 18,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 19,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 19,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 19,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 20,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 20,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 20,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 21,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 21,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 21,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 22,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 22,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 22,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 23,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 23,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
-            "y" : 23,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 24,
             "z" : 50
          },
@@ -104586,7 +104594,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 24,
             "z" : 50
          },
@@ -104594,15 +104602,15 @@
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 24,
-            "z" : 50
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
          },
          "type" : "CubeSand"
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 25,
             "z" : 50
          },
@@ -104610,7 +104618,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 25,
             "z" : 50
          },
@@ -104618,15 +104626,15 @@
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 25,
-            "z" : 50
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
          },
          "type" : "CubeSand"
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 26,
             "z" : 50
          },
@@ -104634,7 +104642,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 26,
             "z" : 50
          },
@@ -104642,15 +104650,15 @@
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 26,
-            "z" : 50
+            "x" : 0,
+            "y" : 0,
+            "z" : 0
          },
          "type" : "CubeSand"
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 27,
             "z" : 50
          },
@@ -104658,7 +104666,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 27,
             "z" : 50
          },
@@ -104666,15 +104674,15 @@
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 27,
+            "x" : 41,
+            "y" : 3,
             "z" : 50
          },
-         "type" : "CubeSand"
+         "type" : "CubeDirt"
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 28,
             "z" : 50
          },
@@ -104682,7 +104690,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 28,
             "z" : 50
          },
@@ -104690,15 +104698,15 @@
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 28,
+            "x" : 39,
+            "y" : 16,
             "z" : 50
          },
-         "type" : "CubeSand"
+         "type" : "CubeDirt"
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 29,
             "z" : 50
          },
@@ -104706,7 +104714,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 29,
             "z" : 50
          },
@@ -104714,15 +104722,15 @@
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 29,
+            "x" : 39,
+            "y" : 18,
             "z" : 50
          },
-         "type" : "CubeSand"
+         "type" : "CubeDirt"
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 30,
             "z" : 50
          },
@@ -104730,15 +104738,7 @@
       },
       {
          "position" : {
-            "x" : 40,
-            "y" : 30,
-            "z" : 50
-         },
-         "type" : "CubeSand"
-      },
-      {
-         "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 30,
             "z" : 50
          },
@@ -104754,7 +104754,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 31,
             "z" : 50
          },
@@ -104762,7 +104762,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 31,
             "z" : 50
          },
@@ -104778,7 +104778,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 32,
             "z" : 50
          },
@@ -104786,7 +104786,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 32,
             "z" : 50
          },
@@ -104802,7 +104802,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 33,
             "z" : 50
          },
@@ -104810,7 +104810,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 33,
             "z" : 50
          },
@@ -104826,7 +104826,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 34,
             "z" : 50
          },
@@ -104834,7 +104834,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 34,
             "z" : 50
          },
@@ -104850,7 +104850,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 35,
             "z" : 50
          },
@@ -104858,7 +104858,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 35,
             "z" : 50
          },
@@ -104874,7 +104874,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 36,
             "z" : 50
          },
@@ -104882,7 +104882,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 36,
             "z" : 50
          },
@@ -104898,7 +104898,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 37,
             "z" : 50
          },
@@ -104906,7 +104906,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 37,
             "z" : 50
          },
@@ -104922,7 +104922,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 38,
             "z" : 50
          },
@@ -104930,7 +104930,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 38,
             "z" : 50
          },
@@ -104946,7 +104946,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 39,
             "z" : 50
          },
@@ -104954,7 +104954,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 39,
             "z" : 50
          },
@@ -104970,7 +104970,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 40,
             "z" : 50
          },
@@ -104978,7 +104978,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 40,
             "z" : 50
          },
@@ -104994,7 +104994,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 41,
             "z" : 50
          },
@@ -105002,7 +105002,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 41,
             "z" : 50
          },
@@ -105018,7 +105018,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 42,
             "z" : 50
          },
@@ -105026,7 +105026,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 42,
             "z" : 50
          },
@@ -105042,7 +105042,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 43,
             "z" : 50
          },
@@ -105050,7 +105050,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 43,
             "z" : 50
          },
@@ -105066,7 +105066,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 44,
             "z" : 50
          },
@@ -105074,7 +105074,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 44,
             "z" : 50
          },
@@ -105090,7 +105090,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 45,
             "z" : 50
          },
@@ -105098,7 +105098,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 45,
             "z" : 50
          },
@@ -105114,7 +105114,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 46,
             "z" : 50
          },
@@ -105122,7 +105122,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 46,
             "z" : 50
          },
@@ -105138,7 +105138,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 47,
             "z" : 50
          },
@@ -105146,7 +105146,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 47,
             "z" : 50
          },
@@ -105162,7 +105162,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 48,
             "z" : 50
          },
@@ -105170,7 +105170,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 48,
             "z" : 50
          },
@@ -105186,7 +105186,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 48,
             "y" : 49,
             "z" : 50
          },
@@ -105194,7 +105194,7 @@
       },
       {
          "position" : {
-            "x" : 40,
+            "x" : 489,
             "y" : 49,
             "z" : 50
          },
@@ -105279,17 +105279,49 @@
             "z" : 14
          },
          "type" : "CubeSand"
+      },
+      {
+         "position" : {
+            "x" : 47,
+            "y" : 39,
+            "z" : 50
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 47,
+            "y" : 34,
+            "z" : 50
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 41,
+            "y" : 32,
+            "z" : 50
+         },
+         "type" : "CubeDirt"
+      },
+      {
+         "position" : {
+            "x" : 39,
+            "y" : 20,
+            "z" : 50
+         },
+         "type" : "CubeDirt"
       }
    ],
    "Player" : {
       "camera" : {
-         "phi" : -4.904375553131104,
-         "theta" : 0.4712389707565308
+         "phi" : 5.800310611724854,
+         "theta" : 1.093741655349731
       },
       "position" : {
-         "x" : 17.44418716430664,
+         "x" : 41.9693717956543,
          "y" : 0.7102176547050476,
-         "z" : 16.44357681274414
+         "z" : 44.12715530395508
       }
    }
 }
