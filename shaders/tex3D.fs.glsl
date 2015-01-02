@@ -12,7 +12,7 @@ out vec3 fFragColor;
 //uniform sampler2D uTexture;
 uniform sampler2DArray uTexture;
 
-vec3 blinnPhong(vec3 uLightIntensity, vec3 vFragPosition, vec3 vFragNormal, vec3 uKd,vec3 uKs, vec3 uLightDir_vs){
+vec3 blinnPhongDirectLight(vec3 uLightIntensity, vec3 vFragPosition, vec3 vFragNormal, vec3 uKd,vec3 uKs, vec3 uLightDir_vs){
     uLightDir_vs = vec3(uViewMatrix * vec4(uLightDir_vs,0));
     float uShininess = 4;
     vec3 w0 = normalize(-vFragPosition);
@@ -21,12 +21,29 @@ vec3 blinnPhong(vec3 uLightIntensity, vec3 vFragPosition, vec3 vFragNormal, vec3
 
     //produit terme à terme
     return clamp(uLightIntensity * ( uKd *dot(wi,vFragNormal) + uKs*(pow(dot(halfVectorW0Wi,vFragNormal),uShininess))),0,1);
+}
+
+vec3 blinnPhongPointLight(vec3 uLightIntensity, vec3 vFragPosition, vec3 vFragNormal, vec3 uKd,vec3 uKs, vec3 uLightPos_vs){
+    uLightPos_vs = vec3(uViewMatrix * vec4(uLightPos_vs,1));
+    float uShininess = 4;
+    vec3 w0 = normalize(-vFragPosition);
+    vec3 wi = normalize(uLightPos_vs - vFragPosition);
+    vec3 halfVectorW0Wi = normalize((w0+wi)*0.5);
+
+    //produit terme à terme
+    float d = distance(uLightPos_vs, vFragPosition);
+    return clamp((uLightIntensity / (d*d))* ( uKd *dot(wi,vFragNormal) + uKs*(pow(dot(halfVectorW0Wi,vFragNormal),uShininess))),0,1);
 
 }
 
 void main(){
     vec3 textureColor= texture2DArray(uTexture, vec3(vFragTexCoords, textureId)).rgb;
     //fFragColor = textureColor;
-    fFragColor = blinnPhong(vec3(0.9,0.8,0.8), vFragPosition,vFragNormal,textureColor,textureColor,vec3(-1,-1,-1));
-    fFragColor += blinnPhong(vec3(0.5,0.5,0.4), vFragPosition,vFragNormal,textureColor,textureColor,vec3(1,0,1));
+    fFragColor  = blinnPhongDirectLight(vec3(0.9,0.8,0.8), vFragPosition,vFragNormal,textureColor,textureColor,vec3(-1,-1,-1));
+    fFragColor += blinnPhongDirectLight(vec3(0.5,0.5,0.4), vFragPosition,vFragNormal,textureColor,textureColor,vec3(1,0,1));
+    fFragColor += blinnPhongPointLight(vec3(100,0,0), vFragPosition,vFragNormal,textureColor,textureColor,vec3(1,1,1));
+
+    fFragColor += blinnPhongPointLight(vec3(100,0,0), vFragPosition,vFragNormal,textureColor,textureColor,vec3(50+10,5,10));
+    fFragColor += blinnPhongPointLight(vec3(100,0,0), vFragPosition,vFragNormal,textureColor,textureColor,vec3(50+40,5,10));
+    fFragColor += blinnPhongPointLight(vec3(100,0,0), vFragPosition,vFragNormal,textureColor,textureColor,vec3(50+60,5,10));
 }
