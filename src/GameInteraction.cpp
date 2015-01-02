@@ -101,7 +101,6 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
         return;
 
     refVoxel->inflictDamage(1);
-    std::cout << "LIFE: " << refVoxel->life() << std::endl;
 
     if(refVoxel->life() <= 0){
         m_player.game()->voxels()[x][y][z] = nullptr;
