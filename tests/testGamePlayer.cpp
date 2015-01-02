@@ -68,6 +68,7 @@ int main(int argc, char** argv) {
                 player1.gameInteraction().handleChoiceCubeType(e);
         }
 
+        //std::cout << player1.currentCubeType() << std::endl;
         player1.handleMove(windowManager);
         player1.gameInteraction().handleInteraction(windowManager);
 

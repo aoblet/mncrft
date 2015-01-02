@@ -50,7 +50,7 @@ void Textures::loadSetImages(){
     for(std::map<int,std::string>::iterator it=m_folderPaths.begin() ; it != m_folderPaths.end() ; ++it){
         m_pictures[it->first].clear();
 
-        for(int j=Textures::SIZE_LEVEL_TEXURES; j>0; --j){
+        for(int j=1; j<=Textures::SIZE_LEVEL_TEXURES; ++j){
             std::unique_ptr<glimac::Image> imageTmp = nullptr;
             bool found_file = false;
 

@@ -46,6 +46,7 @@ void GameUtilities::configureVboVaoCubeData(){
     glBindVertexArray(m_game.m_vao_cubeData);
     glEnableVertexAttribArray(Game::VOXEL_ATTRIBUT_POSITION);
     glEnableVertexAttribArray(Game::VOXEL_ATTRIBUT_TEXTURE_ID);
+    glEnableVertexAttribArray(Game::VOXEL_ATTRIBUT_CURRENT_LEVEL_TEXTURE);
 
     glGenBuffers(1,&m_game.m_vbo_cubeData);
     //Arbitrary size: 1 millions
@@ -77,9 +78,19 @@ void GameUtilities::configureVboVaoCubeData(){
       (const GLvoid*) offsetof(CubeData, m_idTexture)
     );
 
+    glVertexAttribPointer(
+      Game::VOXEL_ATTRIBUT_CURRENT_LEVEL_TEXTURE,
+      1,
+      GL_FLOAT,
+      GL_FALSE,
+      sizeof(CubeData),
+      (const GLvoid*) offsetof(CubeData, m_currentLevel_texture)
+    );
+
     // Iterate for each instance (instanced rendering stuff)
     glVertexAttribDivisor(Game::VOXEL_ATTRIBUT_POSITION, 1);
     glVertexAttribDivisor(Game::VOXEL_ATTRIBUT_TEXTURE_ID, 1);
+    glVertexAttribDivisor(Game::VOXEL_ATTRIBUT_CURRENT_LEVEL_TEXTURE, 1);
     glBindBuffer(GL_ARRAY_BUFFER,0);
     glBindVertexArray(0);
 }

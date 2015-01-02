@@ -7,7 +7,7 @@ enum CubeType {DIRT, SAND, ROCK, LIGHT, FOUNDATION, COUNT};
 
 class CubeData{
     private:
-        int m_life;
+        float m_life;
         bool m_gravity;
         int m_durability;
         int computeCurrentLevel_texture() const;
