@@ -115,7 +115,6 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
 }
 
 void GameInteraction::handleInteraction(glimac::SDLWindowManager const& events){
-    //TODO : add current typeCube for player
 
     //more readable
     bool isMouseRightPressed = events.isMouseButtonPressed(SDL_BUTTON_RIGHT);
