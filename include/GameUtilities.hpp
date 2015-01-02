@@ -19,4 +19,5 @@ class GameUtilities{
         void deleteVboVaoCubeCubeLight();
         void deleteVoxels();
         void configurePositionPlayer();
+        void updateVboCubeData(int startPosCube, int endPosCube);
 };

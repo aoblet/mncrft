@@ -11,6 +11,7 @@ const int Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE = 2;
 const int Game::VOXEL_ATTRIBUT_POSITION = 3;
 const int Game::VOXEL_ATTRIBUT_TEXTURE_ID = 4;
 const int Game::SIZE_MAX_GRID = 500;
+const int Game::FRAME_PER_SECOND = 60;
 
 
 void Game::initScene(){
@@ -24,6 +25,7 @@ void Game::initScene(){
     m_utils.configureVoxels();
     m_utils.configureVboVaoCubeData();
     m_utils.configureVboVaoCubeLight();
+    m_utils.updateVboCubeData(0,m_cube_list.size());
 }
 
 Game::Game(const std::string &currentDir, std::string const& fileLoad, const std::string &fileSave, bool test)
@@ -77,8 +79,8 @@ void Game::generateGridTest(){
 
     for(int z=0; z<50; ++z){
         m_cube_list.push_back(CubeSand(glm::vec3(40,z,50),Textures::INDEX_TEXTURE_SAND));
-        m_cube_list.push_back(CubeSand(glm::vec3(40,z,50),Textures::INDEX_TEXTURE_SAND));
-        m_cube_list.push_back(CubeSand(glm::vec3(40,z,50),Textures::INDEX_TEXTURE_SAND));
+        m_cube_list.push_back(CubeSand(glm::vec3(48,z,50),Textures::INDEX_TEXTURE_SAND));
+        m_cube_list.push_back(CubeSand(glm::vec3(489,z,50),Textures::INDEX_TEXTURE_SAND));
     }
 
     //stair
@@ -157,3 +159,10 @@ Player Game::player() const{
     return m_player;
 }
 
+GameUtilities Game::utils() const{
+    return m_utils;
+}
+
+Textures& Game::textures(){
+    return m_textures;
+}

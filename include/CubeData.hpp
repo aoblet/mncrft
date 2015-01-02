@@ -3,11 +3,13 @@
 #include <glimac/glm.hpp>
 #include <GL/gl.h>
 
+enum CubeType {DIRT, SAND, ROCK, LIGHT, FOUNDATION, COUNT};
+
 class CubeData{
     private:
         int m_life;
         bool m_gravity;
-        const int m_durability;
+        int m_durability;
         int computeCurrentLevel_texture() const;
 
 	public:

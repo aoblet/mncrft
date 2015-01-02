@@ -16,16 +16,14 @@
 using namespace glimac;
 
 // desired framerate in milliseconds
-static const Uint32 FRAMERATE = 1000 / 60;
+static const Uint32 FRAMERATE = 1000 / Game::FRAME_PER_SECOND;
 
 int main(int argc, char** argv) {
-    const int WIDTH = 800;
-    const int HEIGHT = 600;
+    const int WIDTH = 1000;
+    const int HEIGHT = 500;
 
     // Initialize SDL and open a window
     SDLWindowManager windowManager(WIDTH, HEIGHT, "testGamePlayer");
-    SDL_ShowCursor(0);
-    SDL_WM_GrabInput( SDL_GRAB_ON );
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -38,29 +36,25 @@ int main(int argc, char** argv) {
     Game game(argv[0],"../../tests/outputJson/game.json","../../tests/outputJson/game.json",TEST);
     game.m_ProgramShader_main.m_program.use();
 
-    Player& player1 = game.m_player;
+    Player& player1 = game.player();
 
     glm::mat4 matrixView(player1.camera().getViewMatrix());
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
     glm::mat4 MVMatrix = glm::translate(glm::mat4(1),glm::vec3(0,0,-5));
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
-
-    glEnable(GL_DEPTH_TEST);
-    glBindVertexArray(game.m_vao_cubeData);
-    glBindTexture(GL_TEXTURE_2D_ARRAY, game.m_textures.idTexture());
-
-    //faster (test)
-    int sizeCube = game.m_cube_list.size();
     int sizeCubeGL = game.m_cubeGL_model.sizeVertices();
-
     Uint32 startTime;
     Uint32 elapsedTime;
     glm::ivec2 mouseCurrenPosition;
 
+    glEnable(GL_DEPTH_TEST);
+    glBindTexture(GL_TEXTURE_2D_ARRAY, game.textures().idTexture());
+    glBindVertexArray(game.m_vao_cubeData);
+
+
     bool done = false;
     while(!done) {
-
         startTime = SDL_GetTicks();
 
         // Event loop:
@@ -69,13 +63,17 @@ int main(int argc, char** argv) {
             if(e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)) {
                 done = true; // Leave the loop after this iteration
             }
+
+            if(e.type == SDL_MOUSEBUTTONDOWN && (e.button.button == SDL_BUTTON_WHEELDOWN || e.button.button == SDL_BUTTON_WHEELUP))
+                player1.gameInteraction().handleChoiceCubeType(e);
         }
 
         player1.handleMove(windowManager);
+        player1.gameInteraction().handleInteraction(windowManager);
 
         mouseCurrenPosition = windowManager.getMouseMotionRelative();
-        player1.m_camera.rotateLeft(-(mouseCurrenPosition.x)/2.);
-        player1.m_camera.rotateUp(-( mouseCurrenPosition.y)/2.);
+        player1.camera().rotateLeft(-(mouseCurrenPosition.x)/3.);
+        player1.camera().rotateUp(-( mouseCurrenPosition.y)/3.);
 
 
         matrixView = player1.camera().getViewMatrix();
@@ -88,7 +86,7 @@ int main(int argc, char** argv) {
 
         glClearColor(0.45,0.6,0.9,1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glDrawArraysInstanced(GL_TRIANGLES, 0, sizeCubeGL, sizeCube);
+        glDrawArraysInstanced(GL_TRIANGLES, 0, sizeCubeGL, game.m_cube_list.size());
 
         // Update the display
         windowManager.swapBuffers();
@@ -102,3 +100,4 @@ int main(int argc, char** argv) {
 
     return EXIT_SUCCESS;
 }
+

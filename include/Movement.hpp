@@ -11,6 +11,8 @@ class Movement{
         int m_jumpFrameDuration;
         int m_isJumping;
         glm::vec3 m_jumpVector; //avoid multiple declaration inside jump method
+        bool m_lockCtrlKey;
+        glm::vec3 m_lookAtSave;
     public:
         Movement(Player& player);
         void updatePositionPlayer(glimac::SDLWindowManager const& events);

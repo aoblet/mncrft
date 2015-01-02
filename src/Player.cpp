@@ -1,7 +1,8 @@
 #include "Player.hpp"
 
 Player::Player(Game * game, glm::vec3 const& position, std::string const& name, int life)
-               :m_game(game),m_position(position),m_name(name),m_life(life),m_movementModule(*this){
+               :m_game(game),m_position(position),m_name(name),m_life(life),m_movementModule(*this),
+                m_gameInteraction(*this),m_current_CubeType(DIRT){
     m_game = game;
     m_camera.setPosition(glm::vec3(position.x,position.y+1.5,position.z));
 }
@@ -48,4 +49,20 @@ void Player::setGame(Game * game){
 
 void Player::handleMove(glimac::SDLWindowManager const& events){
     m_movementModule.updatePositionPlayer(events);
+}
+
+GameInteraction& Player::gameInteraction(){
+    return m_gameInteraction;
+}
+
+GameInteraction Player::gameInteraction() const{
+    return m_gameInteraction;
+}
+
+CubeType Player::currentCubeType() const{
+    return m_current_CubeType;
+}
+
+void Player::setCurrentCubeType(const CubeType &type){
+    m_current_CubeType = type;
 }

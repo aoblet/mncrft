@@ -1,7 +1,7 @@
 #include "CameraFirstPerson.hpp"
 
 CameraFirstPerson:: CameraFirstPerson(float x, float y, float z):m_Position(glm::vec3(x,y,z)),m_fTheta(0),
-                                                                 m_fPhi(0),m_radAngleMaxY(1.4),m_radAngleMinY(-1.3){
+                                                                 m_fPhi(0),m_radAngleMaxY(1.4),m_radAngleMinY(-1.5){
     //1.4 => 80 degrees
 
     this->computeDirectionVectors();
