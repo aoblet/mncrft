@@ -8,23 +8,22 @@ layout(location = 4) in int  cubeTextureId;
 layout(location = 5) in int  cubeCurrentLevelTexture;
 
 uniform mat4 uMVPMatrix;
-uniform mat4 uMVMatrix;
-uniform mat4 uNormalMatrix;
-
+uniform mat4 uViewMatrix;
 out vec3 vFragPosition;
 out vec3 vFragNormal;
 out vec2 vFragTexCoords;
 
-flat out int index; // Add flat to not interpolate the index
-flat out int textureId;
-flat out vec3 color;
+flat out int textureId; // Add flat to not interpolate the index
 
 void main(){
-        vFragPosition 	= (uMVMatrix * vec4(aVertexPosition,1)).xyz;
-        vFragNormal 	= aVertexNormal;
+
+        vec3 positionWorld = aVertexPosition + cubePosition;
+
+        vFragPosition 	= (uViewMatrix * vec4(positionWorld,1)).xyz;
+        vFragNormal 	= (uViewMatrix * vec4(aVertexNormal,0)).xyz;
         vFragTexCoords 	= aVertexTexCoords;
-        color = cubePosition;
-        index = gl_InstanceID;
+
         textureId = 6*cubeTextureId + cubeCurrentLevelTexture -1 ;
-        gl_Position = uMVPMatrix*(vec4(aVertexPosition,1) + vec4(cubePosition, 0));
+
+        gl_Position = uMVPMatrix*(vec4(positionWorld,1));
 }

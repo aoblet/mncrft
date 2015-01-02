@@ -8,6 +8,6 @@ ProgramShader_main::ProgramShader_main(const std::string &currentDirectory, cons
                                     applicationPath.dirPath() + "/shaders/"+ (nameShader+".fs.glsl"));
 
     m_uMVPMatrix = glGetUniformLocation(m_program.getGLId(), "uMVPMatrix");
-    m_uMVMatrix =  glGetUniformLocation(m_program.getGLId(), "uMVMatrix");
+    m_uViewMatrix =  glGetUniformLocation(m_program.getGLId(), "uViewMatrix");
     m_uNormalMatrix = glGetUniformLocation(m_program.getGLId(), "uNormalMatrix");
 }

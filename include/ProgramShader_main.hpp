@@ -5,7 +5,7 @@
 
 struct ProgramShader_main{
     GLint m_uMVPMatrix;
-    GLint m_uMVMatrix;
+    GLint m_uViewMatrix;
     GLint m_uNormalMatrix;
     glimac::Program m_program;
 
