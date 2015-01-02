@@ -41,8 +41,6 @@ int main(int argc, char** argv) {
     FreeFlyCamera freeCamera(0,0,0);
     glm::mat4 matrixView(freeCamera.getViewMatrix());
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
-    glm::mat4 MVMatrix = glm::translate(glm::mat4(1),glm::vec3(0,0,-5));
-    glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
     glm::ivec2 previousMousePosition= glm::ivec2(0,0);
     double speedMoveKey = 0.01;
@@ -97,12 +95,10 @@ int main(int argc, char** argv) {
         }
 
         matrixView = freeCamera.getViewMatrix();
-        MVMatrix = matrixView ;
-        NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
-        glUniformMatrix4fv(game.m_ProgramShader_main.m_uMVPMatrix, 1,GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
-        glUniformMatrix4fv(game.m_ProgramShader_main.m_uNormalMatrix, 1,GL_FALSE, glm::value_ptr(NormalMatrix));
-        glUniformMatrix4fv(game.m_ProgramShader_main.m_uMVMatrix,1,GL_FALSE, glm::value_ptr(MVMatrix));
+        glUniformMatrix4fv(game.m_ProgramShader_main.m_uMVPMatrix, 1,GL_FALSE, glm::value_ptr(ProjMatrix*matrixView));
+        glUniformMatrix4fv(game.m_ProgramShader_main.m_uNormalMatrix, 1,GL_FALSE, glm::value_ptr(matrixView));
+        glUniformMatrix4fv(game.m_ProgramShader_main.m_uViewMatrix,1,GL_FALSE, glm::value_ptr(matrixView));
 
         glClearColor(0.45,0.6,0.9,1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
