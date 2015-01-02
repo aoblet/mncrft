@@ -16,7 +16,7 @@
 using namespace glimac;
 
 // desired framerate in milliseconds
-static const Uint32 FRAMERATE = 1000 / 60;
+static const Uint32 FRAMERATE = 1000 / Game::FRAME_PER_SECOND;
 
 int main(int argc, char** argv) {
     const int WIDTH = 1000;
