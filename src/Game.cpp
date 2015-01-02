@@ -10,6 +10,7 @@ const int Game::CUBEGL_VERTEX_ATTRIBUT_NORMAL = 1;
 const int Game::CUBEGL_VERTEX_ATTRIBUT_TEXTURE = 2;
 const int Game::VOXEL_ATTRIBUT_POSITION = 3;
 const int Game::VOXEL_ATTRIBUT_TEXTURE_ID = 4;
+const int Game::VOXEL_ATTRIBUT_CURRENT_LEVEL_TEXTURE = 5;
 const int Game::SIZE_MAX_GRID = 500;
 const int Game::FRAME_PER_SECOND = 60;
 

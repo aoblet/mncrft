@@ -91,7 +91,7 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
     int y = positionVoxel.y;
     int z = positionVoxel.z;
 
-    if(x <=0 || y<=0 || z<=0)
+    if(x<=0 || y<=0 || z<=0)
         return;
 
     CubeData* refVoxel = m_player.game()->voxels()[x][y][z];
@@ -100,15 +100,14 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
     if(!refVoxel || refVoxel->durability() == -1)
         return;
 
-    std::cout << x <<"; " << y << ", " << z << std::endl;
+    refVoxel->inflictDamage(1);
+    std::cout << "LIFE: " << refVoxel->life() << std::endl;
 
-    refVoxel->inflictDamage(0.2);
-    if(refVoxel->life() > 0)
-        return;
-
-    m_player.game()->voxels()[x][y][z] = nullptr;
-    refVoxel->setPosition(glm::vec3(0,0,0));
-    m_player.game()->m_cubes_removed.push_back(refVoxel);
+    if(refVoxel->life() <= 0){
+        m_player.game()->voxels()[x][y][z] = nullptr;
+        refVoxel->setPosition(glm::vec3(0,0,0));
+        m_player.game()->m_cubes_removed.push_back(refVoxel);
+    }
 
     int cubePosToUpdate = refVoxel - m_player.game()->m_cube_list.data();
     m_player.game()->utils().updateVboCubeData(cubePosToUpdate,cubePosToUpdate);

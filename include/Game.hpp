@@ -56,6 +56,7 @@ class Game{
         static const int CUBEGL_VERTEX_ATTRIBUT_TEXTURE;
         static const int VOXEL_ATTRIBUT_POSITION ;
         static const int VOXEL_ATTRIBUT_TEXTURE_ID;
+        static const int VOXEL_ATTRIBUT_CURRENT_LEVEL_TEXTURE;
         static const int SIZE_MAX_GRID ;
         static const int FRAME_PER_SECOND ;
 
