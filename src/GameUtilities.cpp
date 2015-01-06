@@ -6,11 +6,13 @@ GameUtilities::GameUtilities(Game & game):m_game(game){}
 void GameUtilities::loadCubes(std::string const& filePath){
     Level level;
     level.jsonToCubes(filePath,m_game.m_cube_list, m_game.m_light_list);
+    this->initLights();
 }
 
 void GameUtilities::saveGame(std::string const& filePath){
     Level level;
     level.gameToJson(m_game,filePath,true,true);
+    std::cout << "SAVE";
 }
 
 void GameUtilities::configurePositionPlayer(){
@@ -35,8 +37,15 @@ void GameUtilities::initVoxels(){
 void GameUtilities::configureVoxels(){
     for(std::vector<CubeData>::iterator it = m_game.m_cube_list.begin(); it != m_game.m_cube_list.end() ; ++it){
         int x = it->position().x, y = it->position().y, z= it->position().z;
-        if(x > Game::SIZE_MAX_GRID || y > Game::SIZE_MAX_GRID || z > Game::SIZE_MAX_GRID)
-            break;
+        if(x > Game::SIZE_MAX_GRID || y > Game::SIZE_MAX_GRID || z > Game::SIZE_MAX_GRID || m_game.m_voxels[x][y][z] != nullptr)
+            continue;
+        m_game.m_voxels[x][y][z] = &(*it);
+    }
+
+    for(std::vector<CubeLight>::iterator it = m_game.m_light_list.begin(); it != m_game.m_light_list.end() ; ++it){
+        int x = it->position().x, y = it->position().y, z= it->position().z;
+        if(x <0 || x > Game::SIZE_MAX_GRID || y > Game::SIZE_MAX_GRID || z > Game::SIZE_MAX_GRID || m_game.m_voxels[x][y][z] != nullptr)
+            continue;
         m_game.m_voxels[x][y][z] = &(*it);
     }
 }
@@ -170,4 +179,12 @@ void GameUtilities::updateVboCubeData(int startPosCube, int endPosCube){
     glBindBuffer(GL_ARRAY_BUFFER,0);
 }
 
+
+void GameUtilities::initLights(){
+    m_game.m_light_list.resize(CubeLight::MAX_LIGHT,CubeLight(glm::vec3(-1,-1,-1),Textures::INDEX_TEXTURE_LIGHT));
+
+    for(int i=0; i<CubeLight::MAX_LIGHT; ++i){
+        m_game.m_uLightsArray[i] = m_game.m_light_list[i].position();
+    }
+}
 
