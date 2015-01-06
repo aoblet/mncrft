@@ -29,15 +29,23 @@ Level::Level(){
     m_arrayTypes_cubes.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_SAND,"CubeSand"));
 }
 
+template<typename T>
+void Level::cubesObjectToJsonArray(Json::Value& arrayCubes, T begin, T end){
+    while(begin != end){
+        if(round(begin->position().x )!= -1){
+            Json::Value jsonObject;
+            Json::Value position;
 
-void Level::cubeObjectToJsonObject(const CubeData &cubeObject, Json::Value &jsonObject){
-    Json::Value position;
-    position["x"]=cubeObject.position().x;
-    position["y"]=cubeObject.position().y;
-    position["z"]=cubeObject.position().z;
+            position["x"]=begin->position().x;
+            position["y"]=begin->position().y;
+            position["z"]=begin->position().z;
 
-    jsonObject["type"] = m_arrayTypes_cubes[cubeObject.idTexture()];
-    jsonObject["position"] = position;
+            jsonObject["type"] = m_arrayTypes_cubes[begin->idTexture()];
+            jsonObject["position"] = position;
+            arrayCubes.append(jsonObject);
+        }
+        ++begin;
+    }
 }
 
 
@@ -46,18 +54,11 @@ void Level::gameToJson(const Game &game, const std::string &filePath, bool save,
     Json::Value arrayCubes;
 
     //cubeData
-    for(std::vector<CubeData>::const_iterator it=game.m_cube_list.begin(); it!= game.m_cube_list.end(); ++it){
-        Json::Value cubeObjectJson;
-        this->cubeObjectToJsonObject(*it,cubeObjectJson);
-        arrayCubes.append(cubeObjectJson);
-    }
+    this->cubesObjectToJsonArray(arrayCubes, game.m_cube_list.begin(),game.m_cube_list.end());
 
     //cubeLight
-    for(std::vector<CubeLight>::const_iterator it=game.m_light_list.begin(); it!= game.m_light_list.end(); ++it){
-        Json::Value cubeObjectJson;
-        this->cubeObjectToJsonObject(*it,cubeObjectJson);
-        arrayCubes.append(cubeObjectJson);
-    }
+    this->cubesObjectToJsonArray(arrayCubes, game.m_light_list.begin(),game.m_light_list.end());
+
 
     //Player
     fromScratch["Player"]["position"]["x"] = game.player().position().x;
@@ -113,7 +114,7 @@ void Level::jsonToCubes(std::string const& filePath, std::vector<CubeData> & cub
         else if(type=="CubeRock")
             tmp = new CubeLight(position,Textures::INDEX_TEXTURE_ROCK);
         else if(type=="CubeSand")
-            tmp = new CubeLight(position,Textures::INDEX_TEXTURE_SAND);
+            tmp = new CubeSand(position,Textures::INDEX_TEXTURE_SAND);
         else
             break;
 
@@ -172,18 +173,11 @@ void Level::test_cubesToJson(bool save){
     Json::Value fromScratch;
     Json::Value arrayCubes;
 
-    //CubeData
-    for(std::vector<CubeData>::iterator it=list.begin(); it!= list.end(); ++it){
-        Json::Value cubeObjectJson;
-        this->cubeObjectToJsonObject(*it,cubeObjectJson);
-        arrayCubes.append(cubeObjectJson);
-    }
+    //cubeData
+    this->cubesObjectToJsonArray(arrayCubes, list.begin(),list.end());
 
-    for(std::vector<CubeLight>::iterator it=listLight.begin(); it!= listLight.end(); ++it){
-        Json::Value cubeObjectJson;
-        this->cubeObjectToJsonObject(*it,cubeObjectJson);
-        arrayCubes.append(cubeObjectJson);
-    }
+    //cubeLight
+    this->cubesObjectToJsonArray(arrayCubes, list.begin(),list.end());
 
 
     fromScratch["Cubes"] = arrayCubes;

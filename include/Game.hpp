@@ -9,6 +9,7 @@
 #include "glimac/CubeGL.hpp"
 #include <vector>
 #include "ProgramShader_main.hpp"
+#include "CubeLight.hpp"
 
 
 class Game{
@@ -16,7 +17,6 @@ class Game{
         CubeData* ***m_voxels ; //pointers in 3d
         time_t m_time; //timestamp
 
-        GLuint m_vbo_cubeLight;
         GameUtilities m_utils;
         std::string m_fileLoad;
         std::string m_fileSave;
@@ -28,14 +28,18 @@ class Game{
         std::vector<CubeData> m_cube_list;
         std::vector<CubeData*> m_cubes_removed;
         std::vector<CubeLight> m_light_list;
+        glm::vec3 m_uLightsArray[CubeLight::MAX_LIGHT];
+
         std::vector<Player> m_players;
-        GLuint m_vbo_cubeData;
 
         ProgramShader_main m_ProgramShader_main;
         glimac::CubeGL m_cubeGL_model;
 
-        GLuint m_vao_cubeData;
         GLuint m_vao_cubeLight;
+        GLuint m_vbo_cubeLight;
+        GLuint m_vao_cubeData;
+        GLuint m_vbo_cubeData;
+
 
         Game(std::string const& currentDir, const std::string &fileLoad, const std::string &fileSave, bool test=false);
         ~Game();
@@ -43,9 +47,10 @@ class Game{
         Textures& textures();
         std::vector<Player>& players();
         std::vector<Player> players() const;
+
         Player& player();
         Player player() const;
-        GameUtilities utils() const;
+        GameUtilities& utils();
         CubeData* *** const voxels() const;
 
         void initScene();

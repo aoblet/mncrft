@@ -10,4 +10,5 @@ ProgramShader_main::ProgramShader_main(const std::string &currentDirectory, cons
     m_uMVPMatrix = glGetUniformLocation(m_program.getGLId(), "uMVPMatrix");
     m_uViewMatrix =  glGetUniformLocation(m_program.getGLId(), "uViewMatrix");
     m_uNormalMatrix = glGetUniformLocation(m_program.getGLId(), "uNormalMatrix");
+    m_uLights = glGetUniformLocation(m_program.getGLId(), "uLights");
 }

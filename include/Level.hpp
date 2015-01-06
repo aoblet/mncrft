@@ -5,6 +5,7 @@
 #include "CubeData.hpp"
 #include "CubeLight.hpp"
 #include <json/value.h>
+#include <iterator>
 
 class Game;
 class Player;
@@ -12,7 +13,9 @@ class Level{
     private:
         std::string m_pathFile;
         std::map<int,std::string> m_arrayTypes_cubes;
-        void cubeObjectToJsonObject(CubeData const& cubeObject, Json::Value &jsonObject);
+
+        template<typename T>
+        void cubesObjectToJsonArray(Json::Value& arrayCubes, T begin, T end);
     public:
         Level();
         void test_cubesToJson(bool save=true);

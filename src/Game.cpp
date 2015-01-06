@@ -160,7 +160,7 @@ Player Game::player() const{
     return m_player;
 }
 
-GameUtilities Game::utils() const{
+GameUtilities &Game::utils(){
     return m_utils;
 }
 

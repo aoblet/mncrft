@@ -8,13 +8,24 @@ SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* 
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
-    if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL)) {
+    if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL | SDL_RESIZABLE)) {
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
     SDL_WM_SetCaption(title, nullptr);
-    SDL_ShowCursor(0);
-    SDL_WM_GrabInput( SDL_GRAB_ON );
+    m_isCursorShown = true;
+    m_isCursorWrapped = false;
+    this->toogleCursorMode();
+}
+
+void SDLWindowManager::toogleCursorMode(){
+    SDL_ShowCursor((m_isCursorShown = !m_isCursorShown));
+
+    m_isCursorWrapped = !m_isCursorWrapped;
+    if(m_isCursorWrapped)
+        SDL_WM_GrabInput( SDL_GRAB_ON );
+    else
+        SDL_WM_GrabInput( SDL_GRAB_OFF );
 }
 
 SDLWindowManager::~SDLWindowManager() {
