@@ -78,22 +78,27 @@ int main(int argc, char** argv) {
     GLint uMVPMatrix;
     GLint uMVMatrix;
     GLint uNormalMatrix;
+    GLint uViewRotateOnlyMatrix;
 
     uMVPMatrix = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+    uViewRotateOnlyMatrix = glGetUniformLocation(program.getGLId(), "uViewRotateOnlyMatrix");
     std::cout << uMVPMatrix << std::endl;
 
-    sk. bindSkyboxBuffer(cubeVBO, cubeVAO);
+    sk.bindSkyboxBuffer(cubeVBO, cubeVAO);
 
     glEnable(GL_DEPTH_TEST);
     // Application loop:
-    FreeFlyCamera freeCamera(0,0,0);
+    FreeFlyCamera freeCamera(0,0,10);
 
     glm::mat4 matrixView(freeCamera.getViewMatrix());
     glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
     glm::mat4 MVMatrix = glm::translate(glm::mat4(1),glm::vec3(0,0,-5));
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
+
+    //Getting cameraView without translations
+    glm::mat4 viewRotateMatrix = glm::mat4(glm::mat3(freeCamera.getViewMatrix()));
 
     glm::ivec2 previousMousePosition= glm::ivec2(0,0);
     double speedMoveKey = 0.001;
@@ -139,9 +144,13 @@ int main(int argc, char** argv) {
         MVMatrix = matrixView ;
         NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
+        viewRotateMatrix = glm::mat4(glm::mat3(freeCamera.getViewMatrix()));
+
         glUniformMatrix4fv(uMVPMatrix, 1,GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
         glUniformMatrix4fv(uNormalMatrix, 1,GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniformMatrix4fv(uMVMatrix,1,GL_FALSE, glm::value_ptr(MVMatrix));
+        // 4
+        glUniformMatrix4fv(uViewRotateOnlyMatrix,1,GL_FALSE, glm::value_ptr(ProjMatrix*viewRotateMatrix));
 
         /*********************************
          * HERE SHOULD COME THE RENDERING CODE
