@@ -19,8 +19,8 @@ using namespace glimac;
 static const Uint32 FRAMERATE = 1000 / Game::FRAME_PER_SECOND;
 
 int main(int argc, char** argv) {
-    const int WIDTH = 1000;
-    const int HEIGHT = 500;
+    int WIDTH = 1350;
+    int HEIGHT = 750;
 
     // Initialize SDL and open a window
     SDLWindowManager windowManager(WIDTH, HEIGHT, "testGamePlayer");
@@ -33,9 +33,70 @@ int main(int argc, char** argv) {
     }
 
     bool TEST = false;
-    Game game(argv[0],"../../tests/outputJson/game.json","../../tests/outputJson/game.json",TEST);
+    Game game(argv[0],"../../tests/outputJson/gameCircle.json","../../tests/outputJson/gameCircle.json",TEST);
     game.m_ProgramShader_main.m_program.use();
 
+
+
+//    int xStart = 150,yStart = 1, zStart= 150;
+//    int rMax = 100; int rMin = 50;
+
+//    int x =20;
+//    bool depass = false;
+//    int z = 0;
+//    for(int y=1; y<50; ++y){
+//    x=20;
+//    while(x>=20){
+//        if(x<40 && !depass){
+//            ++x;
+//        }
+//        else{
+//            depass = true;
+//            --x;
+//        }
+
+//        for(int i=0; i < x; ++i){
+//            game.m_cube_list.push_back(CubeDirt(glm::vec3(i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
+//            game.m_cube_list.push_back(CubeDirt(glm::vec3(-i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
+//        }
+
+//        z++;
+//    }
+//    }
+
+//    int xStart = 150,yStart = 1, zStart= 150;
+//    int rMax = 100; int rMin = 50;
+
+//    int x =20;
+//    bool depass = false;
+//    int z = 0;
+//    int cpt = 0;
+//    for(int y=1; y<50; ++y){
+//    z=0;
+//    x=20;
+//    depass = false;
+//    while(x>=20 - cpt){
+//        if(x<40-cpt && !depass){
+//            ++x;
+//        }
+//        else{
+//            depass = true;
+//            --x;
+//        }
+
+//        for(int i=0; i < x; ++i){
+//            game.m_cube_list.push_back(CubeDirt(glm::vec3(i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
+//            game.m_cube_list.push_back(CubeDirt(glm::vec3(-i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
+//        }
+
+//        z++;
+//    }
+//    cpt++;
+//    }
+
+//    return 5;
+
+    std::cout << game.m_cube_list.size() << std::endl;
     Player& player1 = game.player();
 
     glm::mat4 matrixView(player1.camera().getViewMatrix());
@@ -64,6 +125,20 @@ int main(int argc, char** argv) {
 
             if(e.type == SDL_MOUSEBUTTONDOWN && (e.button.button == SDL_BUTTON_WHEELDOWN || e.button.button == SDL_BUTTON_WHEELUP))
                 player1.gameInteraction().handleChoiceCubeType(e);
+            if(e.type == SDL_RESIZABLE){
+                WIDTH = e.resize.w;
+                HEIGHT = e.resize.h;
+                ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+            }
+
+            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_o)
+                windowManager.toogleCursorMode();
+
+            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_b)
+                ProjMatrix = glm::perspective(glm::radians(120.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+
+            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_n)
+                ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
         }
 
         //std::cout << player1.currentCubeType() << std::endl;
@@ -71,6 +146,7 @@ int main(int argc, char** argv) {
         player1.gameInteraction().handleInteraction(windowManager);
 
         mouseCurrenPosition = windowManager.getMouseMotionRelative();
+        std::cout << mouseCurrenPosition << std::endl;
         player1.camera().rotateLeft(-(mouseCurrenPosition.x)/3.);
         player1.camera().rotateUp(-( mouseCurrenPosition.y)/3.);
 
@@ -80,6 +156,8 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(game.m_ProgramShader_main.m_uMVPMatrix, 1,GL_FALSE, glm::value_ptr(ProjMatrix*matrixView));
         glUniformMatrix4fv(game.m_ProgramShader_main.m_uNormalMatrix, 1,GL_FALSE, glm::value_ptr(matrixView));
         glUniformMatrix4fv(game.m_ProgramShader_main.m_uViewMatrix,1,GL_FALSE, glm::value_ptr(matrixView));
+        glUniform3fv(game.m_ProgramShader_main.m_uLights,CubeLight::MAX_LIGHT,&(game.m_uLightsArray[0][0]));
+
 
         glClearColor(0.45,0.6,0.9,1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -94,6 +172,9 @@ int main(int argc, char** argv) {
           SDL_Delay(FRAMERATE - elapsedTime);
         }
     }
+
+    std::cout << player1.camera().phi() << std::endl;
+    std::cout << player1.camera().theta() << std::endl;
 
     return EXIT_SUCCESS;
 }
