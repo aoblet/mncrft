@@ -78,12 +78,20 @@ int main(int argc, char** argv) {
     GLint uMVPMatrix;
     GLint uMVMatrix;
     GLint uNormalMatrix;
+
+    /******************************************************/
+    // ADD : IDENTIFIER FOR NEW MATRIX
     GLint uViewRotateOnlyMatrix;
+    /*****************************************************/
 
     uMVPMatrix = glGetUniformLocation(program.getGLId(), "uMVPMatrix");
     uMVMatrix = glGetUniformLocation(program.getGLId(), "uMVMatrix");
     uNormalMatrix = glGetUniformLocation(program.getGLId(), "uNormalMatrix");
+
+    /****************************************************************************************/
+    // GET NEW MATRIX FROM SHADER
     uViewRotateOnlyMatrix = glGetUniformLocation(program.getGLId(), "uViewRotateOnlyMatrix");
+    /****************************************************************************************/
     std::cout << uMVPMatrix << std::endl;
 
     sk.bindSkyboxBuffer(cubeVBO, cubeVAO);
@@ -97,8 +105,10 @@ int main(int argc, char** argv) {
     glm::mat4 MVMatrix = glm::translate(glm::mat4(1),glm::vec3(0,0,-5));
     glm::mat4 NormalMatrix = glm::transpose(glm::inverse(MVMatrix));
 
-    //Getting cameraView without translations
+    /***********************************************************************************/
+    // ADD : Getting cameraView without translations
     glm::mat4 viewRotateMatrix = glm::mat4(glm::mat3(freeCamera.getViewMatrix()));
+    /***********************************************************************************/
 
     glm::ivec2 previousMousePosition= glm::ivec2(0,0);
     double speedMoveKey = 0.001;
@@ -149,8 +159,11 @@ int main(int argc, char** argv) {
         glUniformMatrix4fv(uMVPMatrix, 1,GL_FALSE, glm::value_ptr(ProjMatrix*MVMatrix));
         glUniformMatrix4fv(uNormalMatrix, 1,GL_FALSE, glm::value_ptr(NormalMatrix));
         glUniformMatrix4fv(uMVMatrix,1,GL_FALSE, glm::value_ptr(MVMatrix));
-        // 4
+
+        /****************************************************************************************************/
+        // ADD : UNIFORME LOCATION FOR CAMERA ROTATION MATRIX
         glUniformMatrix4fv(uViewRotateOnlyMatrix,1,GL_FALSE, glm::value_ptr(ProjMatrix*viewRotateMatrix));
+        /****************************************************************************************************/
 
         /*********************************
          * HERE SHOULD COME THE RENDERING CODE
