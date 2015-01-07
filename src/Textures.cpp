@@ -13,7 +13,7 @@ const int Textures::INDEX_TEXTURE_LIGHT      = Textures::TEXTURE_CPT++;
 
 const int Textures::SIZE_LEVEL_TEXURES       = 6; //textures for damage on cube, same for each cube
 const std::vector<std::string> Textures::EXTENSIONS_FILES_TEXTURES {"png","jpg","jpeg"};
-const std::vector<std::string> Textures::UNIVERS {"default","candy"};
+const std::vector<std::string> Textures::UNIVERS {"default","candy","adventuretime"};
 
 Textures::~Textures(){
     glDeleteTextures(1,&m_idTextures);
@@ -31,7 +31,7 @@ Textures::Textures(bool setUp){
 }
 
 void Textures::loadFolderPaths(){
-    int indexUnivers = !(Textures::RAND_UNIVERS%Textures::UNIVERS.size()) ? 0 : 1;
+    int indexUnivers = Textures::RAND_UNIVERS%Textures::UNIVERS.size();
     std::string defaultUnivers = Textures::UNIVERS[indexUnivers];
     m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_FOUNDATION,"assets/textures/cubes/"+defaultUnivers+"/foundation/"));
     m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_DIRT,"assets/textures/cubes/"+defaultUnivers+"/dirt/"));
