@@ -3,6 +3,8 @@
 #include <iostream>
 //way to define in cpp static: c++ legacy
 int Textures::TEXTURE_CPT = 0;
+int Textures::RAND_UNIVERS = 0;
+
 const int Textures::INDEX_TEXTURE_FOUNDATION = Textures::TEXTURE_CPT++;
 const int Textures::INDEX_TEXTURE_DIRT       = Textures::TEXTURE_CPT++;
 const int Textures::INDEX_TEXTURE_ROCK       = Textures::TEXTURE_CPT++;
@@ -11,6 +13,7 @@ const int Textures::INDEX_TEXTURE_LIGHT      = Textures::TEXTURE_CPT++;
 
 const int Textures::SIZE_LEVEL_TEXURES       = 6; //textures for damage on cube, same for each cube
 const std::vector<std::string> Textures::EXTENSIONS_FILES_TEXTURES {"png","jpg","jpeg"};
+const std::vector<std::string> Textures::UNIVERS {"default","candy"};
 
 Textures::~Textures(){
     glDeleteTextures(1,&m_idTextures);
@@ -28,11 +31,13 @@ Textures::Textures(bool setUp){
 }
 
 void Textures::loadFolderPaths(){
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_FOUNDATION,"assets/textures/cubes/default/foundation/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_DIRT,"assets/textures/cubes/default/dirt/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_ROCK,"assets/textures/cubes/default/rock/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_SAND,"assets/textures/cubes/default/sand/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_LIGHT,"assets/textures/cubes/default/light/"));
+    int indexUnivers = !(Textures::RAND_UNIVERS%Textures::UNIVERS.size()) ? 0 : 1;
+    std::string defaultUnivers = Textures::UNIVERS[indexUnivers];
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_FOUNDATION,"assets/textures/cubes/"+defaultUnivers+"/foundation/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_DIRT,"assets/textures/cubes/"+defaultUnivers+"/dirt/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_ROCK,"assets/textures/cubes/"+defaultUnivers+"/rock/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_SAND,"assets/textures/cubes/"+defaultUnivers+"/sand/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_LIGHT,"assets/textures/cubes/"+defaultUnivers+"/light/"));
 }
 
 void Textures::loadSetImages(){
@@ -138,7 +143,11 @@ GLuint Textures::idTexture() const{
     return m_idTextures;
 }
 
-
+void Textures::changeUniverse() noexcept{
+    Textures::RAND_UNIVERS ++;
+    Textures newUniverse;
+    std::swap(newUniverse.m_idTextures, m_idTextures);
+}
 
 
 

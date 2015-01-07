@@ -29,6 +29,8 @@ class Textures{
         static const int SIZE_LEVEL_TEXURES       ; //textures for damage on cube, same for each cube! IMPORTANT
 
         static const std::vector<std::string> EXTENSIONS_FILES_TEXTURES;
+        static const std::vector<std::string> UNIVERS;
+        static int RAND_UNIVERS;
 
         GLuint idTexture() const;
 
@@ -38,5 +40,7 @@ class Textures{
 
         ~Textures();
         Textures(bool setUp=true);
+        void changeUniverse() noexcept;
+
 };
 

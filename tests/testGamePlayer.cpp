@@ -13,6 +13,8 @@
 #include "Game.hpp"
 #include "Level.hpp"
 #include <glimac/Skybox.hpp>
+#include <thread>
+#include <X11/Xlib.h>
 
 using namespace glimac;
 
@@ -55,6 +57,7 @@ int main(int argc, char** argv) {
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
 
     bool done = false;
+
     while(!done) {
         startTime = SDL_GetTicks();
 
@@ -87,9 +90,12 @@ int main(int argc, char** argv) {
                 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
                 glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
             }
+            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_t){
+                game.textures().changeUniverse();
+                skybox.changeUniverse();
+            }
         }
 
-        //std::cout << player1.currentCubeType() << std::endl;
         player1.handleMove(windowManager);
         player1.gameInteraction().handleInteraction(windowManager);
 
@@ -121,4 +127,3 @@ int main(int argc, char** argv) {
     }
     return EXIT_SUCCESS;
 }
-
