@@ -5,12 +5,18 @@ in vec3 vFragPosition;
 in vec3 vFragNormal;
 in vec2 vFragTexCoords;
 flat in int textureId; // Add flat to avoid interpolation
-uniform mat4 uViewMatrix;
+
+layout(std140) uniform GlobalMatrices{
+    mat4 uMVPMatrix;
+    mat4 uViewMatrix;
+    mat4 uProjMatrix;
+};
+
 
 out vec3 fFragColor;
 uniform sampler2DArray uTexture;
 
-const int MAX_LIGHT = 10;
+const int MAX_LIGHT = 5;
 uniform vec3 uLights[MAX_LIGHT];
 
 

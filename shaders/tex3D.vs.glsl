@@ -7,8 +7,12 @@ layout(location = 3) in vec3 cubePosition;
 layout(location = 4) in int  cubeTextureId;
 layout(location = 5) in int  cubeCurrentLevelTexture;
 
-uniform mat4 uMVPMatrix;
-uniform mat4 uViewMatrix;
+layout(std140) uniform GlobalMatrices{
+    mat4 uMVPMatrix;
+    mat4 uViewMatrix;
+    mat4 uProjMatrix;
+};
+
 out vec3 vFragPosition;
 out vec3 vFragNormal;
 out vec2 vFragTexCoords;
