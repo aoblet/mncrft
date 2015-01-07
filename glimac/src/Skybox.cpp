@@ -1,9 +1,10 @@
 #include <GL/glew.h>
 #include "glimac/Skybox.hpp"
-
+#include <string>
 #include "glimac/glm.hpp"
 #include <stdexcept>
 #include <iostream>
+#include "Game.hpp"
 
 namespace glimac{
 
@@ -15,28 +16,41 @@ namespace glimac{
            m_position(m_position), m_txcoord(m_txcoord) {}
     };
 
+    Skybox::Skybox(const std::string &currentDirectory, const std::string &nameShader, const Game &game){
+        glimac::FilePath applicationPath(currentDirectory);
+
+        std::cout << applicationPath.dirPath() + "/shaders/cubeMap.vs.glsl" << std::endl;
+        m_program = glimac::loadProgram(applicationPath.dirPath() + ("/shaders/"+nameShader+".vs.glsl"),
+                                        applicationPath.dirPath() + ("/shaders/"+nameShader+".fs.glsl"));
+
+        m_globalUniformBlockIndex = glGetUniformBlockIndex(m_program.getGLId(), "GlobalMatrices");
+        glBindBuffer(GL_UNIFORM_BUFFER, game.m_ProgramShader_main.m_ubo_matricesGlobales);
+        glUniformBlockBinding(m_program.getGLId(), m_globalUniformBlockIndex, 0);
+        glBindBufferRange(GL_UNIFORM_BUFFER, 0, game.m_ProgramShader_main.m_ubo_matricesGlobales, 0, sizeof(glm::mat4) * 2);
+        this->bindSkyboxBuffer();
+        this->loadSkyboxTexture();
+    }
+
     Skybox::~Skybox(){
         glDeleteBuffers(1, &m_skyboxVBO);
         glDeleteVertexArrays(1, &m_skyboxVAO);
     }
 
-    void Skybox::renderSkybox(GLuint &texture){
-        glDepthMask(GL_FALSE);
+    void Skybox::renderSkybox(){
+        m_program.use();
         glDisable(GL_DEPTH_TEST);
-        glDisable(GL_LIGHTING);
         glBindVertexArray(m_skyboxVAO);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_textures);
         glDrawArrays(GL_TRIANGLES, 0, 36);
 
         glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 
         glBindVertexArray(0);
         glDepthMask(GL_TRUE);
-        glEnable(GL_LIGHTING);
         glEnable(GL_DEPTH_TEST);
     }
 
-    void Skybox::loadSkyboxTexture(GLuint &texture, FilePath path){
+    void Skybox::loadSkyboxTexture(){
 
         std::vector<std::string> imgFile;
 
@@ -47,12 +61,12 @@ namespace glimac{
         imgFile.push_back("front.png");
         imgFile.push_back("back.png");
 
-        glGenTextures(1, &texture);
+        glGenTextures(1, &m_textures);
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, texture);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_textures);
 
         for(int i = 0; i<6; i++){
-            auto skBTex = loadImage(path + "/assets/textures/skybox/"+imgFile[i]);
+            auto skBTex = loadImage("assets/textures/skybox/"+imgFile[i]);
 
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, skBTex->getWidth(), skBTex->getHeight(), 0, GL_RGBA, GL_FLOAT, skBTex->getPixels());
         }
@@ -64,52 +78,7 @@ namespace glimac{
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     }
 
-    void Skybox::bindSkyboxBuffer(GLuint &cubeVBO, GLuint &cubeVAO){
-
-        Vertex3DCube cubeVertices[] = {
-                                    // Positions          // Texture Coords
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f), glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 0.0f)),
-
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f),  glm::vec2(0.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-
-           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(0.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f, -0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f, -0.5f),  glm::vec2(1.0f, 1.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(0.5f,  0.5f,  0.5f),  glm::vec2(1.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f,  0.5f), glm::vec2(0.0f, 0.0f)),
-           Vertex3DCube(glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec2(0.0f, 1.0f))
-               };
+    void Skybox::bindSkyboxBuffer(){
 
         glm::vec3 skyboxVertices[] = {
             // Positions
@@ -156,33 +125,17 @@ namespace glimac{
             glm::vec3(1.0f, -1.0f,  1.0f)
         };
 
-        // Setup cubeMap VAO
-        glGenVertexArrays(1, &cubeVAO);
-        glGenBuffers(1, &cubeVBO);
-        glBindVertexArray(cubeVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex3DCube), (GLvoid*) offsetof(Vertex3DCube, m_position));
-        glEnableVertexAttribArray(1);
-
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex3DCube), (GLvoid*) offsetof(Vertex3DCube, m_txcoord));
-        glBindVertexArray(0);
-
         // Setup skybox VAO
         //GLuint skyboxVAO, skyboxVBO;
         glGenVertexArrays(1, &m_skyboxVAO);
         glGenBuffers(1, &m_skyboxVBO);
         glBindVertexArray(m_skyboxVAO);
         glBindBuffer(GL_ARRAY_BUFFER, m_skyboxVBO);
+        glEnableVertexAttribArray(0);
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (GLvoid*)0);
         glBindVertexArray(0);
     }
-
-
 }

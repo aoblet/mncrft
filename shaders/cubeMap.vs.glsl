@@ -2,31 +2,22 @@
 layout (location = 0) in vec3 position;
 out vec3 TexCoords;
 
-uniform mat4 uMVPMatrix;
-uniform mat4 uMVMatrix;
-uniform mat4 uNormalMatrix;
+layout(std140) uniform GlobalMatrices{
+    mat4 uMVPMatrix;
+    mat4 uViewMatrix;
+    mat4 uProjMatrix;
+};
 
-/********************************************/
-// ADD : NEW MATRIX (GET THE CAMERA ROTATION ONLY)
-uniform mat4 uViewRotateOnlyMatrix;
-/*******************************************/
 
-/********************************************/
-// ADD : SCALE FUNCTION
 mat3 scale(float s){
     mat3 M = mat3(vec3(s,0,0), vec3(0,s,0), vec3(0,0,s));
     return M;
 }
-/*******************************************/
 
-void main()
-{
-    /*******************************************/
-    // ADD : SCALE FUNCTION
-    vec3 scaled = (scale(100) * position).xyz;
-    // new calcul for gl_Position (previously : gl_Position =  uMVPMatrix * vec4(position, 1.0);
-    gl_Position =  uViewRotateOnlyMatrix * vec4(scaled, 1.0);
-    /*******************************************/
-
+void main(){
+    vec3 scaled = scale(10) * position;
     TexCoords = position;
+
+    // new calcul for gl_Position (previously : gl_Position =  uMVPMatrix * vec4(position, 1.0);
+    gl_Position =  (uProjMatrix*mat4(uViewMatrix[0],uViewMatrix[1],uViewMatrix[2], vec4(0,0,0,1)))*vec4(scaled, 1.0);
 }

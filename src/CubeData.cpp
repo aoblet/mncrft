@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 #include <cstddef>
+#include <algorithm>
+
 CubeData::CubeData(glm::vec3 const& position, bool gravity, int life, GLint idTexture, int durability):
                     m_position(position), m_gravity(gravity), m_life(life),
                     m_idTexture(idTexture), m_currentLevel_texture(Textures::SIZE_LEVEL_TEXURES),m_durability(durability){}
@@ -37,7 +39,7 @@ void CubeData::setIdTexture(GLint idText){
 }
 
 int CubeData::computeCurrentLevel_texture() const{
-    return round( this->m_life * Textures::SIZE_LEVEL_TEXURES/ (float)(this->durability()));
+    return round( std::max(1.f,this->m_life * Textures::SIZE_LEVEL_TEXURES/ (float)(this->durability())));
 }
 
 void CubeData::inflictDamage(float damage){

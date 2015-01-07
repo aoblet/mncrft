@@ -55,6 +55,7 @@ class Game{
 
         void initScene();
         void generateGridTest();
+        void renderGame();
 
         static const int CUBEGL_VERTEX_ATTRIBUT_POSITION ;
         static const int CUBEGL_VERTEX_ATTRIBUT_NORMAL ;

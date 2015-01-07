@@ -28,11 +28,11 @@ Textures::Textures(bool setUp){
 }
 
 void Textures::loadFolderPaths(){
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_FOUNDATION,"assets/textures/cubes/foundation/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_DIRT,"assets/textures/cubes/dirt/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_ROCK,"assets/textures/cubes/rock/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_SAND,"assets/textures/cubes/sand/"));
-    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_LIGHT,"assets/textures/cubes/light/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_FOUNDATION,"assets/textures/cubes/default/foundation/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_DIRT,"assets/textures/cubes/default/dirt/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_ROCK,"assets/textures/cubes/default/rock/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_SAND,"assets/textures/cubes/default/sand/"));
+    m_folderPaths.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_LIGHT,"assets/textures/cubes/default/light/"));
 }
 
 void Textures::loadSetImages(){

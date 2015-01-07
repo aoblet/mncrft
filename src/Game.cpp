@@ -167,3 +167,10 @@ GameUtilities &Game::utils(){
 Textures& Game::textures(){
     return m_textures;
 }
+
+void Game::renderGame(){
+    m_ProgramShader_main.m_program.use();
+    glBindTexture(GL_TEXTURE_2D_ARRAY, this->textures().idTexture());
+    glBindVertexArray(m_vao_cubeData);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, m_cubeGL_model.sizeVertices(), m_cube_list.size());
+}

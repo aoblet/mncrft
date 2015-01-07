@@ -5,5 +5,5 @@
 class CubeLight: public CubeData{
     public:
         CubeLight(glm::vec3 const& post, GLint idTexture);
-        const static int MAX_LIGHT = 10;
+        const static int MAX_LIGHT = 5;
 };
