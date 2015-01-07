@@ -11,6 +11,7 @@
 #include <json/reader.h>
 #include "Textures.hpp"
 #include "Game.hpp"
+#include <set>
 
 void output(const Json::Value & value){
     // querying the json object is very simple

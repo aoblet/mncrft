@@ -67,7 +67,7 @@ namespace glimac{
         glGenTextures(1, &m_textures);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP, m_textures);
-        int indexUniverse = !(Skybox::RAND_UNIVERS%Textures::UNIVERS.size()) ? 0 :1;
+        int indexUniverse = Skybox::RAND_UNIVERS%Textures::UNIVERS.size();
         for(int i = 0; i<6; i++){
             auto skBTex = loadImage("assets/textures/skybox/"+Textures::UNIVERS[indexUniverse]+"/"+imgFile[i]);
 
