@@ -3,20 +3,26 @@
 #include <glimac/Program.hpp>
 #include <glimac/Image.hpp>
 #include <vector>
+#include "Game.hpp"
 
 namespace glimac {
 
     class Skybox{
 
         public:
+            Skybox(const std::string &currentDirectory, const std::string &nameShader, Game const& game);
             ~Skybox();
 
             GLuint m_skyboxVBO;
             GLuint m_skyboxVAO;
+            GLuint m_textures;
 
-            void renderSkybox(GLuint &texture);
-            void loadSkyboxTexture(GLuint &texture, FilePath path);
-            void bindSkyboxBuffer(GLuint &cubeVBO, GLuint &cubeVAO);
+            Program m_shaderProgram;
+            GLuint m_globalUniformBlockIndex;
+            glimac::Program m_program;
 
+            void renderSkybox();
+            void loadSkyboxTexture();
+            void bindSkyboxBuffer();
     };
 }
