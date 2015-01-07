@@ -38,65 +38,6 @@ int main(int argc, char** argv) {
     Skybox skybox(argv[0], "cubeMap",game);
 
 
-
-//    int xStart = 150,yStart = 1, zStart= 150;
-//    int rMax = 100; int rMin = 50;
-
-//    int x =20;
-//    bool depass = false;
-//    int z = 0;
-//    for(int y=1; y<50; ++y){
-//    x=20;
-//    while(x>=20){
-//        if(x<40 && !depass){
-//            ++x;
-//        }
-//        else{
-//            depass = true;
-//            --x;
-//        }
-
-//        for(int i=0; i < x; ++i){
-//            game.m_cube_list.push_back(CubeDirt(glm::vec3(i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
-//            game.m_cube_list.push_back(CubeDirt(glm::vec3(-i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
-//        }
-
-//        z++;
-//    }
-//    }
-
-//    int xStart = 150,yStart = 1, zStart= 150;
-//    int rMax = 100; int rMin = 50;
-
-//    int x =20;
-//    bool depass = false;
-//    int z = 0;
-//    int cpt = 0;
-//    for(int y=1; y<50; ++y){
-//    z=0;
-//    x=20;
-//    depass = false;
-//    while(x>=20 - cpt){
-//        if(x<40-cpt && !depass){
-//            ++x;
-//        }
-//        else{
-//            depass = true;
-//            --x;
-//        }
-
-//        for(int i=0; i < x; ++i){
-//            game.m_cube_list.push_back(CubeDirt(glm::vec3(i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
-//            game.m_cube_list.push_back(CubeDirt(glm::vec3(-i+100,y,z+50),Textures::INDEX_TEXTURE_DIRT));
-//        }
-
-//        z++;
-//    }
-//    cpt++;
-//    }
-
-//    return 5;
-
     std::cout << game.m_cube_list.size() << std::endl;
     Player& player1 = game.player();
 
@@ -178,7 +119,6 @@ int main(int argc, char** argv) {
           SDL_Delay(FRAMERATE - elapsedTime);
         }
     }
-
     return EXIT_SUCCESS;
 }
 
