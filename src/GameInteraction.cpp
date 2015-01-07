@@ -116,7 +116,8 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
         return;
 
     refVoxel->inflictDamage(1);
-
+    std::cout << refVoxel->life() << std::endl;
+    std::cout << refVoxel->currentLevel_texture() << std::endl;
     if(refVoxel->life() <= 0){
         m_player.game()->voxels()[x][y][z] = nullptr;
         refVoxel->setPosition(glm::vec3(-1,0,0)); //-1 for save file && light
@@ -124,13 +125,15 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
         if(refVoxel->durability() != 1){
             //not light
             m_player.game()->m_cubes_removed.push_back(refVoxel);
-            int cubePosToUpdate = refVoxel - m_player.game()->m_cube_list.data();
-            m_player.game()->utils().updateVboCubeData(cubePosToUpdate,cubePosToUpdate);
         }
         else{
             m_player.game()->m_uLightsArray[(CubeLight*)refVoxel -m_player.game()->m_light_list.data() ] = refVoxel->position();
+            return;
         }
     }
+
+    int cubePosToUpdate = refVoxel - m_player.game()->m_cube_list.data();
+    m_player.game()->utils().updateVboCubeData(cubePosToUpdate,cubePosToUpdate);
 }
 
 void GameInteraction::handleInteraction(glimac::SDLWindowManager const& events){
