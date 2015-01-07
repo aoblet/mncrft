@@ -12,6 +12,7 @@
 #include "CubeSand.hpp"
 #include "Game.hpp"
 #include "Level.hpp"
+#include <glimac/Skybox.hpp>
 
 using namespace glimac;
 
@@ -34,7 +35,7 @@ int main(int argc, char** argv) {
 
     bool TEST = false;
     Game game(argv[0],"../../tests/outputJson/gameCircle.json","../../tests/outputJson/gameCircle.json",TEST);
-    game.m_ProgramShader_main.m_program.use();
+    Skybox skybox(argv[0], "cubeMap",game);
 
 
 
@@ -108,9 +109,9 @@ int main(int argc, char** argv) {
     glm::ivec2 mouseCurrenPosition;
 
     glEnable(GL_DEPTH_TEST);
-    glBindTexture(GL_TEXTURE_2D_ARRAY, game.textures().idTexture());
     glBindVertexArray(game.m_vao_cubeData);
-
+    glBindBuffer(GL_UNIFORM_BUFFER, game.m_ProgramShader_main.m_ubo_matricesGlobales);
+    glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
 
     bool done = false;
     while(!done) {
@@ -129,16 +130,22 @@ int main(int argc, char** argv) {
                 WIDTH = e.resize.w;
                 HEIGHT = e.resize.h;
                 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+                glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
+
             }
 
             if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_o)
                 windowManager.toogleCursorMode();
 
-            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_b)
+            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_b){
                 ProjMatrix = glm::perspective(glm::radians(120.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+                glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
+            }
 
-            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_n)
+            if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_n){
                 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+                glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
+            }
         }
 
         //std::cout << player1.currentCubeType() << std::endl;
@@ -146,22 +153,21 @@ int main(int argc, char** argv) {
         player1.gameInteraction().handleInteraction(windowManager);
 
         mouseCurrenPosition = windowManager.getMouseMotionRelative();
-        std::cout << mouseCurrenPosition << std::endl;
         player1.camera().rotateLeft(-(mouseCurrenPosition.x)/3.);
         player1.camera().rotateUp(-( mouseCurrenPosition.y)/3.);
 
 
         matrixView = player1.camera().getViewMatrix();
-
-        glUniformMatrix4fv(game.m_ProgramShader_main.m_uMVPMatrix, 1,GL_FALSE, glm::value_ptr(ProjMatrix*matrixView));
-        glUniformMatrix4fv(game.m_ProgramShader_main.m_uNormalMatrix, 1,GL_FALSE, glm::value_ptr(matrixView));
-        glUniformMatrix4fv(game.m_ProgramShader_main.m_uViewMatrix,1,GL_FALSE, glm::value_ptr(matrixView));
+        glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(ProjMatrix*matrixView)); //mvp
+        glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(matrixView));//view
         glUniform3fv(game.m_ProgramShader_main.m_uLights,CubeLight::MAX_LIGHT,&(game.m_uLightsArray[0][0]));
 
 
         glClearColor(0.45,0.6,0.9,1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glDrawArraysInstanced(GL_TRIANGLES, 0, sizeCubeGL, game.m_cube_list.size());
+
+        skybox.renderSkybox();
+        game.renderGame();
 
         // Update the display
         windowManager.swapBuffers();
@@ -172,9 +178,6 @@ int main(int argc, char** argv) {
           SDL_Delay(FRAMERATE - elapsedTime);
         }
     }
-
-    std::cout << player1.camera().phi() << std::endl;
-    std::cout << player1.camera().theta() << std::endl;
 
     return EXIT_SUCCESS;
 }

@@ -97,7 +97,6 @@ int main(int argc, char** argv) {
         matrixView = freeCamera.getViewMatrix();
 
         glUniformMatrix4fv(game.m_ProgramShader_main.m_uMVPMatrix, 1,GL_FALSE, glm::value_ptr(ProjMatrix*matrixView));
-        glUniformMatrix4fv(game.m_ProgramShader_main.m_uNormalMatrix, 1,GL_FALSE, glm::value_ptr(matrixView));
         glUniformMatrix4fv(game.m_ProgramShader_main.m_uViewMatrix,1,GL_FALSE, glm::value_ptr(matrixView));
 
         glClearColor(0.45,0.6,0.9,1);
