@@ -15,7 +15,7 @@ mat3 scale(float s){
 }
 
 void main(){
-    vec3 scaled = scale(10) * position;
+    vec3 scaled = scale(100) * position;
     TexCoords = position;
 
     // new calcul for gl_Position (previously : gl_Position =  uMVPMatrix * vec4(position, 1.0);

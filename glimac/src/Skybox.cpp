@@ -5,8 +5,10 @@
 #include <stdexcept>
 #include <iostream>
 #include "Game.hpp"
+#include "Textures.hpp"
 
 namespace glimac{
+    int Skybox::RAND_UNIVERS = 0;
 
     struct Vertex3DCube{
         glm::vec3 m_position;
@@ -54,8 +56,9 @@ namespace glimac{
 
         std::vector<std::string> imgFile;
 
-        imgFile.push_back("right.png");
         imgFile.push_back("left.png");
+        imgFile.push_back("right.png");
+
         imgFile.push_back("top.png");
         imgFile.push_back("bottom.png");
         imgFile.push_back("front.png");
@@ -64,9 +67,9 @@ namespace glimac{
         glGenTextures(1, &m_textures);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP, m_textures);
-
+        int indexUniverse = !(Skybox::RAND_UNIVERS%Textures::UNIVERS.size()) ? 0 :1;
         for(int i = 0; i<6; i++){
-            auto skBTex = loadImage("assets/textures/skybox/"+imgFile[i]);
+            auto skBTex = loadImage("assets/textures/skybox/"+Textures::UNIVERS[indexUniverse]+"/"+imgFile[i]);
 
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, skBTex->getWidth(), skBTex->getHeight(), 0, GL_RGBA, GL_FLOAT, skBTex->getPixels());
         }
@@ -137,5 +140,12 @@ namespace glimac{
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (GLvoid*)0);
         glBindVertexArray(0);
+    }
+
+    void Skybox::changeUniverse(){
+        Skybox::RAND_UNIVERS ++;
+        glDeleteTextures(1,&m_textures);
+        glGenTextures(1,&m_textures);
+        this->loadSkyboxTexture();
     }
 }

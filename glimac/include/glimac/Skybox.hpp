@@ -21,8 +21,11 @@ namespace glimac {
             GLuint m_globalUniformBlockIndex;
             glimac::Program m_program;
 
+            static int RAND_UNIVERS;
+
             void renderSkybox();
             void loadSkyboxTexture();
             void bindSkyboxBuffer();
+            void changeUniverse();
     };
 }
