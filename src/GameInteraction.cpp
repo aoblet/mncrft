@@ -116,8 +116,6 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
         return;
 
     refVoxel->inflictDamage(1);
-    std::cout << refVoxel->life() << std::endl;
-    std::cout << refVoxel->currentLevel_texture() << std::endl;
     if(refVoxel->life() <= 0){
         m_player.game()->voxels()[x][y][z] = nullptr;
         refVoxel->setPosition(glm::vec3(-1,0,0)); //-1 for save file && light

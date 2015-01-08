@@ -79,17 +79,16 @@ macro(ADD_ASSET_DIRECTORY directory)
 endmacro()
 
 file(GLOB_RECURSE HEADER_FILES src/*.hpp include/*.hpp) # get all headers
-file(GLOB_RECURSE SRC_FILES src/*.cpp) # get all sources files
+file(GLOB_RECURSE SRC_FILES src/*.cpp game_save/*) # get all sources files
 file(GLOB_RECURSE SHADER_FILES shaders/*.glsl) # get all shaders
 file(GLOB_RECURSE ASSET_FILES assets/*) # get all the assets
-
 
 add_executable(${EXECUTABLE_NAME} ${SRC_FILES} ${HEADER_FILES} ${SHADER_FILES} ${ASSET_FILES}) # add the executable
 target_link_libraries(${EXECUTABLE_NAME} ${ALL_LIBRARIES}) # and link  to the libraries
 
 
 # Add tests
-add_subdirectory(tests)
+# add_subdirectory(tests)
 
 if(WIN32)
     # on windows, copy dll files to the executable directory

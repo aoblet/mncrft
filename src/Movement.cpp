@@ -26,6 +26,10 @@ void Movement::jump(){
 }
 
 void Movement::updatePositionPlayer(const glimac::SDLWindowManager &events){
+    glm::ivec2 mouseCurrenPosition =  events.getMouseMotionRelative();
+    m_player.camera().rotateLeft(-(mouseCurrenPosition.x)/3.);
+    m_player.camera().rotateUp(-( mouseCurrenPosition.y)/3.);
+
     m_collisionModule.setPositionRoundPlayer(m_player.position());
     //std::cout << m_player.position() << std::endl;
     if(m_isJumping)

@@ -113,11 +113,11 @@ void Level::jsonToCubes(std::string const& filePath, std::vector<CubeData> & cub
         else if(type=="CubeFoundation")
             tmp = new CubeFoundation(position,Textures::INDEX_TEXTURE_FOUNDATION);
         else if(type=="CubeRock")
-            tmp = new CubeLight(position,Textures::INDEX_TEXTURE_ROCK);
+            tmp = new CubeRock(position,Textures::INDEX_TEXTURE_ROCK);
         else if(type=="CubeSand")
             tmp = new CubeSand(position,Textures::INDEX_TEXTURE_SAND);
         else
-            break;
+            continue;
 
         if(tmp){
             cubeDataOutput.push_back(*tmp);

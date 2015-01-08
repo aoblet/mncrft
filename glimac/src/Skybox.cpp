@@ -21,7 +21,6 @@ namespace glimac{
     Skybox::Skybox(const std::string &currentDirectory, const std::string &nameShader, const Game &game){
         glimac::FilePath applicationPath(currentDirectory);
 
-        std::cout << applicationPath.dirPath() + "/shaders/cubeMap.vs.glsl" << std::endl;
         m_program = glimac::loadProgram(applicationPath.dirPath() + ("/shaders/"+nameShader+".vs.glsl"),
                                         applicationPath.dirPath() + ("/shaders/"+nameShader+".fs.glsl"));
 
