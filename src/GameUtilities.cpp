@@ -11,7 +11,7 @@ void GameUtilities::loadCubes(std::string const& filePath){
 
 void GameUtilities::saveGame(std::string const& filePath){
     Level level;
-    level.gameToJson(m_game,filePath,true,true);
+    level.gameToJson(m_game,filePath,true,false);
     std::cout << "SAVE";
 }
 

@@ -12,7 +12,7 @@ const int Game::VOXEL_ATTRIBUT_POSITION = 3;
 const int Game::VOXEL_ATTRIBUT_TEXTURE_ID = 4;
 const int Game::VOXEL_ATTRIBUT_CURRENT_LEVEL_TEXTURE = 5;
 const int Game::SIZE_MAX_GRID = 500;
-const int Game::FRAME_PER_SECOND = 60;
+const int Game::FRAME_PER_SECOND = 30;
 
 
 void Game::initScene(){
@@ -31,7 +31,7 @@ void Game::initScene(){
 
 Game::Game(const std::string &currentDir, std::string const& fileLoad, const std::string &fileSave, bool test)
            :m_textures(!test), m_ProgramShader_main(currentDir,"tex3D"), m_utils(*this), m_fileLoad(fileLoad),
-            m_fileSave(fileSave), m_test(test),m_player(this,glm::vec3(40,60,50)){
+            m_fileSave(fileSave), m_test(test),m_player(this,glm::vec3(135,120,150)){
 
     glGenVertexArrays(1,&m_vao_cubeLight);
     glGenVertexArrays(1,&m_vao_cubeData);

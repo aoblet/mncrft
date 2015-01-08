@@ -15,7 +15,7 @@ SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* 
     SDL_WM_SetCaption(title, nullptr);
     m_isCursorShown = true;
     m_isCursorWrapped = false;
-    //this->toogleCursorMode();
+    this->toogleCursorMode();
 }
 
 void SDLWindowManager::toogleCursorMode(){
