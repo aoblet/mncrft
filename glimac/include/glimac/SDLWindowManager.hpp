@@ -7,19 +7,21 @@
 namespace glimac {
 
 class SDLWindowManager {
+    private:
+        bool m_isCursorShown;
+        bool m_isCursorWrapped;
 public:
     SDLWindowManager(uint32_t width, uint32_t height, const char* title);
-
     ~SDLWindowManager();
-
     bool pollEvent(SDL_Event& e);
-
     bool isKeyPressed(SDLKey key) const;
+    void toogleCursorMode();
 
     // button can SDL_BUTTON_LEFT, SDL_BUTTON_RIGHT and SDL_BUTTON_MIDDLE
     bool isMouseButtonPressed(uint32_t button) const;
 
     glm::ivec2 getMousePosition() const;
+    glm::ivec2 getMouseMotionRelative() const;
 
     void swapBuffers();
 

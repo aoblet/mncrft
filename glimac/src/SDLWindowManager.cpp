@@ -8,11 +8,24 @@ SDLWindowManager::SDLWindowManager(uint32_t width, uint32_t height, const char* 
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
-    if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL)) {
+    if(!SDL_SetVideoMode(width, height, 32, SDL_OPENGL | SDL_RESIZABLE)) {
         std::cerr << SDL_GetError() << std::endl;
         return;
     }
     SDL_WM_SetCaption(title, nullptr);
+    m_isCursorShown = true;
+    m_isCursorWrapped = false;
+    this->toogleCursorMode();
+}
+
+void SDLWindowManager::toogleCursorMode(){
+    SDL_ShowCursor((m_isCursorShown = !m_isCursorShown));
+
+    m_isCursorWrapped = !m_isCursorWrapped;
+    if(m_isCursorWrapped)
+        SDL_WM_GrabInput( SDL_GRAB_ON );
+    else
+        SDL_WM_GrabInput( SDL_GRAB_OFF );
 }
 
 SDLWindowManager::~SDLWindowManager() {
@@ -35,6 +48,12 @@ bool SDLWindowManager::isMouseButtonPressed(uint32_t button) const {
 glm::ivec2 SDLWindowManager::getMousePosition() const {
     glm::ivec2 mousePos;
     SDL_GetMouseState(&mousePos.x, &mousePos.y);
+    return mousePos;
+}
+
+glm::ivec2 SDLWindowManager::getMouseMotionRelative() const {
+    glm::ivec2 mousePos;
+    SDL_GetRelativeMouseState(&mousePos.x, &mousePos.y);
     return mousePos;
 }
 
