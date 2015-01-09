@@ -36,7 +36,7 @@ void Player::movePosition(glm::vec3 const& vectorMovement){
 
 void Player::setPosition(glm::vec3 const& position){
     m_position = position;
-    m_camera.setPosition(glm::vec3(position.x,position.y+1.5, position.z));
+    m_camera.setPosition(glm::vec3(position.x,position.y+1.4, position.z));
 }
 
 void Player::setName(std::string const& name){
