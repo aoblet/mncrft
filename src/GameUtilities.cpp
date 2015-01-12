@@ -62,7 +62,7 @@ void GameUtilities::configureVboVaoCubeData(){
     glBindBuffer(GL_ARRAY_BUFFER, m_game.m_vbo_cubeData);
     glBufferData(
       GL_ARRAY_BUFFER,
-      sizeof(CubeData) * 1000000,
+      sizeof(CubeData) * 10000000,
       NULL,
       GL_DYNAMIC_DRAW
     );
@@ -186,5 +186,8 @@ void GameUtilities::initLights(){
     for(int i=0; i<CubeLight::MAX_LIGHT; ++i){
         m_game.m_uLightsArray[i] = m_game.m_light_list[i].position();
     }
+}
+
+void GameUtilities::updateHiddenCubes(){
 }
 
