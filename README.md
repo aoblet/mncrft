@@ -45,15 +45,10 @@ Possible problems:
 	- jsoncpp
 		- problems may be encoutered because of pc architecture
 			- exception possible: "Json reader parse error"
-
-
 		- solution
 			- compile with your own pc jsoncpp:
 				- ./compile_install_jsoncpp.sh
-
-
 	- compilation shader
-
 		- No problem on our own pc. But we observed a problem on others whith following function at: shaders/tex3D.fs.glsl(49): texture2Darray "(error c1115)" 
 
 Tips:
