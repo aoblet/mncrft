@@ -4,7 +4,6 @@ Team: 		Mncrft3000
 Software:	mncrft
 
 Members:
-
 	- Armand 	Biteau
 	- Alexis 	Oblet
 	- Hugo  	Garrido
