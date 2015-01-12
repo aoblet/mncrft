@@ -5,25 +5,45 @@ Team: 		Mncrft3000
 Software:	mncrft
 
 Members:
+=======
+#IMAC2 - OpenGL project
+Team: 		Mncrft3000  
+Software:	mncrft
+
+Members:  
 
 	- Armand 	Biteau
 	- Alexis 	Oblet
 	- Hugo  	Garrido
 	- Mathias 	Goyheneche
+	
+Scripts shell for easy use: scripts/  
 
+<<<<<<< HEAD
 Scripts shell for easy use: scripts/
 
+=======
+>>>>>>> develop
 	- compile project
 	- launch minecraft default
 	- launch minecraft other map
 	- compile/install jsoncpp if error 
 
+<<<<<<< HEAD
 Just for fun
 
 	- possibility to change map for adventure: ./launchNice.sh or ./Imacraft perfo 
 	  (just for visit, map is not fully filled of cubes)
 
 Shorkeys:
+=======
+Just for fun  
+	
+	- possibility to change map for adventure: ./launchNice.sh or ./Imacraft perfo 
+	  (just for visit, map is not fully filled of cubes)
+
+Shorkeys:  
+>>>>>>> develop
 
 	- z q s d 		=> regulary move
 	- space   		=> jump
@@ -38,7 +58,11 @@ Shorkeys:
 	- right click 	=> build cube(can stay pressed)
 	- scroll 		=> change current type cube(no callback for the moment)
 
+<<<<<<< HEAD
 Possible problems:
+=======
+Possible problems:  
+>>>>>>> develop
 
 	- texture error
 		- if you use bash and not our scripts, be sure to be in build/bin path, it's not possible to do that: ./smth/mncrft/build/bin/Imacraft. But cd smth/mncrft/build/bin/ && ./Imacraft (perfo?)
@@ -52,6 +76,10 @@ Possible problems:
 	- compilation shader
 		- No problem on our own pc. But we observed a problem on others whith following function at: shaders/tex3D.fs.glsl(49): texture2Darray "(error c1115)" 
 
+<<<<<<< HEAD
 Tips:
 
+=======
+Tips:  
+>>>>>>> develop
 	- tests folder is inactive from cmake: to active uncomment in CMakeLists.txt  add_subdirectory(tests) (line 91)
