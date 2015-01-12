@@ -12,7 +12,7 @@ class Player;
 class Level{
     private:
         std::string m_pathFile;
-        std::map<int,std::string> m_arrayTypes_cubes;
+        std::map<int,int> m_arrayTypes_cubes;
 
         template<typename T>
         void cubesObjectToJsonArray(Json::Value& arrayCubes, T begin, T end);
