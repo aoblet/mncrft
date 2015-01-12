@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     int HEIGHT = 750;
 
     // Initialize SDL and open a window
-    SDLWindowManager windowManager(WIDTH, HEIGHT, "testGamePlayer");
+    SDLWindowManager windowManager(WIDTH, HEIGHT, "Minecraft 3000");
 
     // Initialize glew for OpenGL3+ support
     GLenum glewInitError = glewInit();
@@ -37,27 +37,28 @@ int main(int argc, char** argv) {
     }
 
     /**** INIT GAME ****/
-    Game game(argv[0],"../../game_save/game.json","../../game_save/game.json",false);
-    Skybox skybox(argv[0], "cubeMap",game);
-    Player& player1 = game.player();
+    std::string level = argc >1 && std::string(argv[1]).find("perfo") != std::string::npos ? "perfo" : "game";
+    std::cout << argv[1] << std::endl;
+    Game::createSingleton(argv[0],"../../game_save/"+level+".json","../../game_save/"+level+".json");
+    Skybox skybox(argv[0], "cubeMap",*Game::singletonGame());
+    Player& player1 = Game::singletonGame()->player();
     /******************/
 
-    std::cout << game.m_cube_list.size() << " cubes" << std::endl;
+    std::cout << Game::singletonGame()->m_cube_list.size() << " cubes" << std::endl;
 
     glm::mat4 matrixView(player1.camera().getViewMatrix());
-    glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 400.f);
+    glm::mat4 ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 1000.f);
 
     Uint32 startTime;
     Uint32 elapsedTime;
 
     glEnable(GL_DEPTH_TEST);
-    glBindBuffer(GL_UNIFORM_BUFFER, game.m_ProgramShader_main.m_ubo_matricesGlobales);
+    glBindBuffer(GL_UNIFORM_BUFFER, Game::singletonGame()->m_ProgramShader_main.m_ubo_matricesGlobales);
     glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
 
     bool done = false;
     while(!done) {
         startTime = SDL_GetTicks();
-
         // Event loop:
         SDL_Event e;
         while(windowManager.pollEvent(e)) {
@@ -70,7 +71,7 @@ int main(int argc, char** argv) {
             if(e.type == SDL_RESIZABLE){
                 WIDTH = e.resize.w;
                 HEIGHT = e.resize.h;
-                ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+                ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 1000.f);
                 glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
 
             }
@@ -79,16 +80,16 @@ int main(int argc, char** argv) {
                 windowManager.toogleCursorMode();
 
             if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_b){
-                ProjMatrix = glm::perspective(glm::radians(120.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+                ProjMatrix = glm::perspective(glm::radians(120.f),(float)(WIDTH)/HEIGHT ,0.1f, 1000.f);
                 glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
             }
 
             if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_n){
-                ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 250.f);
+                ProjMatrix = glm::perspective(glm::radians(70.f),(float)(WIDTH)/HEIGHT ,0.1f, 1000.f);
                 glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4)*2, sizeof(glm::mat4), glm::value_ptr(ProjMatrix));
             }
             if(e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_t){
-                game.textures().changeUniverse();
+                Game::singletonGame()->textures().changeUniverse();
                 skybox.changeUniverse();
             }
         }
@@ -99,14 +100,14 @@ int main(int argc, char** argv) {
         matrixView = player1.camera().getViewMatrix();
         glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(ProjMatrix*matrixView)); //mvp
         glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(matrixView));//view
-        glUniform3fv(game.m_ProgramShader_main.m_uLights,CubeLight::MAX_LIGHT,&(game.m_uLightsArray[0][0]));
+        glUniform3fv(Game::singletonGame()->m_ProgramShader_main.m_uLights,CubeLight::MAX_LIGHT,&(Game::singletonGame()->m_uLightsArray[0][0]));
 
 
         glClearColor(0.45,0.6,0.9,1);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         skybox.renderSkybox();
-        game.renderGame();
+        Game::singletonGame()->renderGame();
 
         // Update the display
         windowManager.swapBuffers();

@@ -1,15 +1,16 @@
 #pragma once
 #include "Collision.hpp"
 #include "glimac/SDLWindowManager.hpp"
+#include "MovementAbstract.hpp"
 
 class Player;
-class Movement{
+class Movement: public MovementAbstract{
     private:
         Collision m_collisionModule;
-        Player& m_player;
         int m_jumpCurrentFrame;
         int m_jumpFrameDuration;
         int m_isJumping;
+        //float m_falling_inertie;
         glm::vec3 m_jumpVector; //avoid multiple declaration inside jump method
         bool m_lockCtrlKey;
         glm::vec3 m_lookAtSave;

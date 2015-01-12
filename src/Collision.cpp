@@ -27,8 +27,8 @@ bool Collision::isCubePresent(int x, int y, int z) const{
     if(x<0 || y<0 || z<0)
         return true;
 
-    if(m_player.game()->voxels()[x][y][z]  == nullptr &&
-       m_player.game()->voxels()[x][y+1][z]== nullptr )
+    if(Game::singletonGame()->voxels()[x][y][z]  == nullptr &&
+       Game::singletonGame()->voxels()[x][y+1][z]== nullptr )
         return false;
 
     return true;
@@ -60,10 +60,10 @@ bool Collision::isFalling() const{
     int y = round(m_player.position().y - m_stepMoveAnticipated);
     int z = m_positionRoundPlayer.z;
 
-    if(y>0 && m_player.game()->voxels()[x][y][z] == nullptr)
+    if(y>0 && Game::singletonGame()->voxels()[x][y][z] == nullptr)
         return true;
 
-    return false;
+    return 0;
 }
 
 bool Collision::isImpactUp() const{
@@ -72,7 +72,7 @@ bool Collision::isImpactUp() const{
     int y = round(m_player.position().y + m_stepMoveAnticipated + 1.6);
     int z = m_positionRoundPlayer.z;
 
-    if(y>0 && m_player.game()->voxels()[x][y][z] == nullptr)
+    if(y>0 && Game::singletonGame()->voxels()[x][y][z] == nullptr)
         return false;
 
     return true;

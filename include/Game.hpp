@@ -14,6 +14,9 @@
 
 class Game{
     private:
+        Game(std::string const& currentDir, const std::string &fileLoad, const std::string &fileSave, bool test=false);
+
+        static std::unique_ptr<Game> m_singleton;
         CubeData* ***m_voxels ; //pointers in 3d
         time_t m_time; //timestamp
 
@@ -40,8 +43,6 @@ class Game{
         GLuint m_vao_cubeData;
         GLuint m_vbo_cubeData;
 
-
-        Game(std::string const& currentDir, const std::string &fileLoad, const std::string &fileSave, bool test=false);
         ~Game();
 
         Textures& textures();
@@ -56,6 +57,9 @@ class Game{
         void initScene();
         void generateGridTest();
         void renderGame();
+
+        static Game*     singletonGame();
+        static void      createSingleton(std::string const& currentDirForShader,const std::string &fileLoad, const std::string &fileSave);
 
         static const int CUBEGL_VERTEX_ATTRIBUT_POSITION ;
         static const int CUBEGL_VERTEX_ATTRIBUT_NORMAL ;
