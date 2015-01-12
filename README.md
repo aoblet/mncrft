@@ -4,6 +4,7 @@ Team: 		Mncrft3000
 Software:	mncrft
 
 Members:
+
 	- Armand 	Biteau
 	- Alexis 	Oblet
 	- Hugo  	Garrido
@@ -42,9 +43,7 @@ Possible problems:
 		- if you use bash and not our scripts, be sure to be in build/bin path, it's not possible to do that: ./smth/mncrft/build/bin/Imacraft. But cd smth/mncrft/build/bin/ && ./Imacraft (perfo?)
 
 	- jsoncpp
-
 		- problems may be encoutered because of pc architecture
-
 			- exception possible: "Json reader parse error"
 
 
