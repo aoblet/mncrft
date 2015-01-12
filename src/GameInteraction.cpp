@@ -24,7 +24,7 @@ int  GameInteraction::distanceIntersectionCube(int distanceMax) const{
         if(positionToCompare_voxelSpace.x <0 || positionToCompare_voxelSpace.y <0 || positionToCompare_voxelSpace.z <0)
             return -1;
 
-        if(m_player.game()->voxels()[(int)positionToCompare_voxelSpace.x]
+        if(Game::singletonGame()->voxels()[(int)positionToCompare_voxelSpace.x]
                                     [(int)positionToCompare_voxelSpace.y]
                                     [(int)positionToCompare_voxelSpace.z] != nullptr){
             return i;
@@ -38,7 +38,7 @@ void GameInteraction::addCube(glm::vec3 const& positionVoxel, CubeType const& ty
     int y = positionVoxel.y;
     int z = positionVoxel.z;
 
-    if(x <0 || y<0 || z<0 || m_player.game()->voxels()[x][y][z] != nullptr)
+    if(x <0 || y<0 || z<0 || Game::singletonGame()->voxels()[x][y][z] != nullptr)
         return;
 
     glm::vec3 posEyePlayerRound = glm::round(m_player.camera().position());
@@ -65,7 +65,7 @@ void GameInteraction::addCube(glm::vec3 const& positionVoxel, CubeType const& ty
     int posCubeUpdateVBO;
 
     if(type == CubeType::LIGHT){
-        std::vector<CubeLight>& arrayLight = m_player.game()->m_light_list; //more readable
+        std::vector<CubeLight>& arrayLight = Game::singletonGame()->m_light_list; //more readable
         //search empty place in vector
         if(arrayLight.size() > CubeLight::MAX_LIGHT)
             throw std::invalid_argument("addCube: bad init of lights");
@@ -79,25 +79,25 @@ void GameInteraction::addCube(glm::vec3 const& positionVoxel, CubeType const& ty
         indexFree = indexFree == CubeLight::MAX_LIGHT ? indexFree -1: indexFree; //clamp
         arrayLight[indexFree].setPosition(positionVoxel);
         refToAdd = &(arrayLight[indexFree]);
-        m_player.game()->m_uLightsArray[indexFree] = refToAdd->position();
+        Game::singletonGame()->m_uLightsArray[indexFree] = refToAdd->position();
     }
     else{
         //for cubes != light: same operation
-        if(m_player.game()->m_cubes_removed.size() != 0){
-            refToAdd = m_player.game()->m_cubes_removed.back();
-            m_player.game()->m_cubes_removed.pop_back();
+        if(Game::singletonGame()->m_cubes_removed.size() != 0){
+            refToAdd = Game::singletonGame()->m_cubes_removed.back();
+            Game::singletonGame()->m_cubes_removed.pop_back();
             *refToAdd = *cubeToAdd;
-            posCubeUpdateVBO = refToAdd - m_player.game()->m_cube_list.data();
+            posCubeUpdateVBO = refToAdd - Game::singletonGame()->m_cube_list.data();
         }
         else{
-            m_player.game()->m_cube_list.push_back(*cubeToAdd);
-            refToAdd = &(m_player.game()->m_cube_list.back());
-            posCubeUpdateVBO = m_player.game()->m_cube_list.size() -1 ;
+            Game::singletonGame()->m_cube_list.push_back(*cubeToAdd);
+            refToAdd = &(Game::singletonGame()->m_cube_list.back());
+            posCubeUpdateVBO = Game::singletonGame()->m_cube_list.size() -1 ;
         }
-        m_player.game()->utils().updateVboCubeData(posCubeUpdateVBO,posCubeUpdateVBO);
+        Game::singletonGame()->utils().updateVboCubeData(posCubeUpdateVBO,posCubeUpdateVBO);
     }
 
-    m_player.game()->voxels()[x][y][z] =refToAdd;
+    Game::singletonGame()->voxels()[x][y][z] =refToAdd;
     delete cubeToAdd;
 }
 
@@ -109,7 +109,7 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
     if(x<=0 || y<=0 || z<=0)
         return;
 
-    CubeData* refVoxel = m_player.game()->voxels()[x][y][z];
+    CubeData* refVoxel = Game::singletonGame()->voxels()[x][y][z];
 
     //durability -1 : foundation
     if(!refVoxel || refVoxel->durability() == -1)
@@ -117,21 +117,37 @@ void GameInteraction::hitCube(glm::vec3 const& positionVoxel){
 
     refVoxel->inflictDamage(1);
     if(refVoxel->life() <= 0){
-        m_player.game()->voxels()[x][y][z] = nullptr;
+        Game::singletonGame()->voxels()[x][y][z] = nullptr;
         refVoxel->setPosition(glm::vec3(-1,0,0)); //-1 for save file && light
 
         if(refVoxel->durability() != 1){
             //not light
-            m_player.game()->m_cubes_removed.push_back(refVoxel);
+            Game::singletonGame()->m_cubes_removed.push_back(refVoxel);
+//            glm::vec3 rounded = glm::round(glm::normalize(m_player.camera().frontVectorYconstant()));
+//            bool lol = false;
+//            if(Game::singletonGame()->voxels()[x][y-1][z]  == nullptr && (lol=true)){
+//                Game::singletonGame()->m_cube_list.push_back(CubeDirt(glm::vec3(x,y-1,z),Textures::INDEX_TEXTURE_DIRT));
+//                Game::singletonGame()->voxels()[x][y-1][z] =  &Game::singletonGame()->m_cube_list.back();
+//                Game::singletonGame()->utils().updateVboCubeData(Game::singletonGame()->m_cube_list.size()-1,Game::singletonGame()->m_cube_list.size()-1);
+
+//            }
+//            if(Game::singletonGame()->voxels()[int(x+rounded.x)][y-1][int(z+rounded.z)]  == nullptr && (lol=true)){
+//                Game::singletonGame()->m_cube_list.push_back(CubeDirt(glm::vec3(x,y-1,z),Textures::INDEX_TEXTURE_DIRT));
+//                Game::singletonGame()->voxels()[int(x+rounded.x)][y-1][int(z+rounded.z)] = &Game::singletonGame()->m_cube_list.back();
+//                Game::singletonGame()->utils().updateVboCubeData(Game::singletonGame()->m_cube_list.size()-1,Game::singletonGame()->m_cube_list.size()-1);
+
+//            }
+
         }
         else{
-            m_player.game()->m_uLightsArray[(CubeLight*)refVoxel -m_player.game()->m_light_list.data() ] = refVoxel->position();
+            Game::singletonGame()->m_uLightsArray[(CubeLight*)refVoxel -Game::singletonGame()->m_light_list.data() ] = refVoxel->position();
             return;
         }
     }
 
-    int cubePosToUpdate = refVoxel - m_player.game()->m_cube_list.data();
-    m_player.game()->utils().updateVboCubeData(cubePosToUpdate,cubePosToUpdate);
+    int cubePosToUpdate = refVoxel - Game::singletonGame()->m_cube_list.data();
+    Game::singletonGame()->utils().updateVboCubeData(cubePosToUpdate,cubePosToUpdate);
+    Game::singletonGame()->utils().updateVboCubeData(Game::singletonGame()->m_cube_list.size()-1,Game::singletonGame()->m_cube_list.size()-1);
 }
 
 void GameInteraction::handleInteraction(glimac::SDLWindowManager const& events){

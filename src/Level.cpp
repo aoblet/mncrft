@@ -6,6 +6,7 @@
 #include "CubeLight.hpp"
 #include "CubeFoundation.hpp"
 #include <json/value.h>
+#include <json/customwriter.h>
 #include <iostream>
 #include <json/writer.h>
 #include <json/reader.h>
@@ -13,42 +14,27 @@
 #include "Game.hpp"
 #include <set>
 
-void output(const Json::Value & value){
-    // querying the json object is very simple
-    std::cout << value["hello"];
-    std::cout << value["number"];
-    std::cout << value["array"][0] << value["array"][1];
-    std::cout << value["object"]["hello"];
-}
-
 Level::Level(){
     //init array
-    m_arrayTypes_cubes.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_DIRT,"CubeDirt"));
-    m_arrayTypes_cubes.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_FOUNDATION,"CubeFoundation"));
-    m_arrayTypes_cubes.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_LIGHT,"CubeLight"));
-    m_arrayTypes_cubes.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_ROCK,"CubeRock"));
-    m_arrayTypes_cubes.insert(std::pair<int,std::string>(Textures::INDEX_TEXTURE_SAND,"CubeSand"));
+    m_arrayTypes_cubes.insert(std::pair<int,int>(Textures::INDEX_TEXTURE_DIRT,CubeType::DIRT));
+    m_arrayTypes_cubes.insert(std::pair<int,int>(Textures::INDEX_TEXTURE_FOUNDATION,CubeType::FOUNDATION));
+    m_arrayTypes_cubes.insert(std::pair<int,int>(Textures::INDEX_TEXTURE_LIGHT,CubeType::LIGHT));
+    m_arrayTypes_cubes.insert(std::pair<int,int>(Textures::INDEX_TEXTURE_ROCK,CubeType::ROCK));
+    m_arrayTypes_cubes.insert(std::pair<int,int>(Textures::INDEX_TEXTURE_SAND,CubeType::SAND));
 }
 
 template<typename T>
 void Level::cubesObjectToJsonArray(Json::Value& arrayCubes, T begin, T end){
     while(begin != end){
         if(round(begin->position().x )!= -1){
-            Json::Value jsonObject;
-            Json::Value position;
-
-            position["x"]=begin->position().x;
-            position["y"]=begin->position().y;
-            position["z"]=begin->position().z;
-
-            jsonObject["type"] = m_arrayTypes_cubes[begin->idTexture()];
-            jsonObject["position"] = position;
-            arrayCubes.append(jsonObject);
+            arrayCubes["x"].append(begin->position().x);
+            arrayCubes["y"].append(begin->position().y);
+            arrayCubes["z"].append(begin->position().z);
+            arrayCubes["type"].append(m_arrayTypes_cubes[begin->idTexture()]);
         }
         ++begin;
     }
 }
-
 
 void Level::gameToJson(const Game &game, const std::string &filePath, bool save, bool readable){
     Json::Value fromScratch;
@@ -59,7 +45,6 @@ void Level::gameToJson(const Game &game, const std::string &filePath, bool save,
 
     //cubeLight
     this->cubesObjectToJsonArray(arrayCubes, game.m_light_list.begin(),game.m_light_list.end());
-
 
     //Player
     fromScratch["Player"]["position"]["x"] = game.player().position().x;
@@ -74,7 +59,6 @@ void Level::gameToJson(const Game &game, const std::string &filePath, bool save,
     if(save){
         // write in a nice readible way
         Json::Writer * jsonWriter; //abstract
-
         if(readable)
             jsonWriter = new Json::StyledWriter;
         else
@@ -96,25 +80,32 @@ void Level::jsonToCubes(std::string const& filePath, std::vector<CubeData> & cub
         throw std::invalid_argument("fail to parse json");
 
     Json::Value rootCubes = parsedFromString["Cubes"];
-    for(Json::Value::iterator it=rootCubes.begin(); it != rootCubes.end(); ++it){
-        int x = (*it)["position"]["x"].asInt();
-        int y = (*it)["position"]["y"].asInt();
-        int z = (*it)["position"]["z"].asInt();
+    Json::Value::iterator it_x = rootCubes["x"].begin();
+    Json::Value::iterator it_y = rootCubes["y"].begin();
+    Json::Value::iterator it_z = rootCubes["z"].begin();
+    Json::Value::iterator it_typeCube = rootCubes["type"].begin();
+
+    CubeType type;
+    CubeData * tmp = nullptr;
+    CubeLight * tmpLight = nullptr;
+
+    while(it_x != rootCubes["x"].end()){
+        int x = it_x->asInt();
+        int y = it_y->asInt();
+        int z = it_z->asInt();
         glm::vec3 position = glm::vec3(x,y,z);
 
-        std::string type = (*it)["type"].asString() ;
-        CubeData * tmp = nullptr;
-        CubeLight * tmpLight = nullptr;
+        type = (CubeType)(it_typeCube->asInt());
 
-        if(type=="CubeDirt")
+        if(type==CubeType::DIRT)
             tmp = new CubeDirt(position,Textures::INDEX_TEXTURE_DIRT);
-        else if(type=="CubeLight")
+        else if(type==CubeType::LIGHT)
             tmpLight = new CubeLight(position,Textures::INDEX_TEXTURE_LIGHT);
-        else if(type=="CubeFoundation")
+        else if(type==CubeType::FOUNDATION)
             tmp = new CubeFoundation(position,Textures::INDEX_TEXTURE_FOUNDATION);
-        else if(type=="CubeRock")
+        else if(type==CubeType::ROCK)
             tmp = new CubeRock(position,Textures::INDEX_TEXTURE_ROCK);
-        else if(type=="CubeSand")
+        else if(type==CubeType::SAND)
             tmp = new CubeSand(position,Textures::INDEX_TEXTURE_SAND);
         else
             continue;
@@ -131,6 +122,11 @@ void Level::jsonToCubes(std::string const& filePath, std::vector<CubeData> & cub
         }
         else
             throw std::logic_error("Level:jsonToCubes(): error: bad type of cube: see sources for details Level.cpp");
+
+        ++it_x;
+        ++it_y;
+        ++it_z;
+        ++it_typeCube;
     }
 }
 

@@ -13,7 +13,6 @@ class Player{
         std::string m_name;
         int m_life;
         Movement m_movementModule;
-        Game * m_game;
         glm::vec3 m_position;
         GameInteraction m_gameInteraction;
         CubeType m_current_CubeType;

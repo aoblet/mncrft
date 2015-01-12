@@ -1,0 +1,1 @@
+cd .. && mkdir -p mncrft/build && cd mncrft/build && cmake .. && make -j && cd bin;

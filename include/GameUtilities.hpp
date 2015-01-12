@@ -21,4 +21,5 @@ class GameUtilities{
         void configurePositionPlayer();
         void updateVboCubeData(int startPosCube, int endPosCube);
         void initLights();
+        void updateHiddenCubes();
 };

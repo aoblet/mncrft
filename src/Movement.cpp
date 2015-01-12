@@ -4,17 +4,17 @@
 #include <glimac/SDLWindowManager.hpp>
 #include <iostream>
 #include "Game.hpp"
-const float Movement::METER_WALKED_PER_FRAME = (15000/(60*60.))/Game::FRAME_PER_SECOND; //60fps 15kmh: jogging
 
-Movement::Movement(Player& player): m_jumpCurrentFrame(0), m_isJumping(false), m_player(player),
-                                    m_collisionModule(player, Movement::METER_WALKED_PER_FRAME*4){ //raise distance compare collision: avoid display bugs
-    m_jumpVector = glm::vec3(0,Movement::METER_WALKED_PER_FRAME,0);
-    m_jumpFrameDuration = 1.2 / Movement::METER_WALKED_PER_FRAME; //1.2 metter in Y
+Movement::Movement(Player& player):MovementAbstract(player),m_jumpCurrentFrame(0), m_isJumping(false),
+    m_collisionModule(player, MovementAbstract::METER_WALKED_PER_FRAME*4){ //raise distance compare collision: avoid display bugs
+    m_jumpVector = glm::vec3(0,MovementAbstract::METER_WALKED_PER_FRAME,0);
+    m_jumpFrameDuration = 1.2 / MovementAbstract::METER_WALKED_PER_FRAME; //1.2 metter in Y
     m_lockCtrlKey = false;
 }
 
 void Movement::jump(){
-    if(!m_collisionModule.isImpactUp() && m_isJumping && m_jumpCurrentFrame < m_jumpFrameDuration){
+
+    if(!m_collisionModule.isImpactUp() && m_isJumping && m_jumpCurrentFrame < m_jumpFrameDuration /*&& m_falling_inertie < m_jumpVector.y*/){
         m_player.movePosition(m_jumpVector);
         m_player.camera().movePosition(m_jumpVector);
         ++m_jumpCurrentFrame;
@@ -22,16 +22,17 @@ void Movement::jump(){
     else{
         m_isJumping = false;
         m_jumpCurrentFrame = 0;
+       // m_falling_inertie -= m_jumpVector.y;
     }
 }
 
 void Movement::updatePositionPlayer(const glimac::SDLWindowManager &events){
+
     glm::ivec2 mouseCurrenPosition =  events.getMouseMotionRelative();
     m_player.camera().rotateLeft(-(mouseCurrenPosition.x)/3.);
     m_player.camera().rotateUp(-( mouseCurrenPosition.y)/3.);
 
     m_collisionModule.setPositionRoundPlayer(m_player.position());
-    //std::cout << m_player.position() << std::endl;
     if(m_isJumping)
         this->jump();
 
@@ -68,7 +69,7 @@ void Movement::updatePositionPlayer(const glimac::SDLWindowManager &events){
 
     if(vectorMovement != glm::vec3(0,0,0)){
         vectorMovement = glm::normalize(vectorMovement);
-        vectorMovement *= Movement::METER_WALKED_PER_FRAME;
+        vectorMovement *= MovementAbstract::METER_WALKED_PER_FRAME;
 
         if((vectorMovement.z >0 && m_collisionModule.isImpactFront()) || vectorMovement.z <0 && m_collisionModule.isImpactBack())
             vectorMovement.z = 0;
@@ -78,12 +79,11 @@ void Movement::updatePositionPlayer(const glimac::SDLWindowManager &events){
         m_player.movePosition(vectorMovement);
         m_player.camera().movePosition(vectorMovement);
     }
-
-
     if(!m_isJumping){
         m_collisionModule.setPositionRoundPlayer(m_player.position());
+        //m_falling_inertie += 0.091/Game::FRAME_PER_SECOND;
         if(m_collisionModule.isFalling()){
-            glm::vec3 vectorMoveY = glm::vec3(0,-Movement::METER_WALKED_PER_FRAME,0);
+            glm::vec3 vectorMoveY = glm::vec3(0,-MovementAbstract::METER_WALKED_PER_FRAME,0);
             m_player.movePosition(vectorMoveY);
             m_player.camera().movePosition(vectorMoveY);
         }

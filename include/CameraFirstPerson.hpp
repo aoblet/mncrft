@@ -1,11 +1,10 @@
 #pragma once
-
+#include "CameraAbstract.hpp"
 #include <ostream>
 #include <glimac/glm.hpp>
 
-class CameraFirstPerson{
+class CameraFirstPerson: public CameraAbstract{
     private:
-        glm::vec3 m_Position;
         float m_fPhi;
         float m_fTheta;
         float m_radAngleMaxY;
@@ -15,8 +14,6 @@ class CameraFirstPerson{
         glm::vec3 m_FrontVectorConstantY;//simulate real movement y=0
         glm::vec3 m_LeftVector;
         glm::vec3 m_UpVector;
-        float convertDegreesToRadians(float degrees);
-
     public:
         CameraFirstPerson(float x =0, float y=0 ,float z=0);
         void computeDirectionVectors();
@@ -34,7 +31,6 @@ class CameraFirstPerson{
         glm::vec3 frontVector() const;
         glm::vec3 frontVectorYconstant() const;
         glm::vec3 leftVector() const;
-        glm::vec3 position() const;
 
         glm::mat4 getViewMatrix() const;
         friend std::ostream& operator<<(std::ostream & flux, CameraFirstPerson const& camera);
