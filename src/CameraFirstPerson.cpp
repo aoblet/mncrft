@@ -1,7 +1,7 @@
 #include "CameraFirstPerson.hpp"
 
-CameraFirstPerson:: CameraFirstPerson(float x, float y, float z):m_Position(glm::vec3(x,y,z)),m_fTheta(0),
-                                                                 m_fPhi(0),m_radAngleMaxY(1.4),m_radAngleMinY(-1.5){
+CameraFirstPerson:: CameraFirstPerson(float x, float y, float z):CameraAbstract(x,y,z),m_fTheta(),
+                                                                 m_fPhi(glm::pi<float>()),m_radAngleMaxY(1.4),m_radAngleMinY(-1.5){
     //1.4 => 80 degrees
 
     this->computeDirectionVectors();
@@ -29,10 +29,6 @@ glm::vec3 CameraFirstPerson::frontVectorYconstant() const{
     return m_FrontVectorConstantY;
 }
 
-glm::vec3 CameraFirstPerson::position() const{
-    return m_Position;
-}
-
 void CameraFirstPerson::movePosition(const glm::vec3 &vectorMovement){
     m_Position += vectorMovement;
 }
@@ -45,12 +41,9 @@ void CameraFirstPerson::moveFront(float t){
     m_Position += m_FrontVectorConstantY*t;
 }
 
-float CameraFirstPerson::convertDegreesToRadians(float degrees){
-    return glm::pi<float>() * degrees /180;
-}
 
 void CameraFirstPerson::rotateLeft(float degrees){
-    m_fPhi += this->convertDegreesToRadians(degrees);
+    m_fPhi += CameraAbstract::convertDegreesToRadians(degrees);
     this->computeDirectionVectors();
 }
 
