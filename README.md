@@ -1,6 +1,7 @@
 #IMAC2 - OpenGL project
 Team: 		Mncrft3000  
-Software:	mncrft
+
+mncrft is a 3D game based on Minecraft.
 
 Members:  
 
